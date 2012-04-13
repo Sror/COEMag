@@ -21,11 +21,17 @@
 
 @interface ModelController()
 @property (readonly, strong, nonatomic) NSArray *pageData;
+@property CGPDFPageRef page;
+@property CGPDFDocumentRef pdf;
+
+@property CGFloat pdfScale;   // current pdf zoom scale
+
 @end
 
 @implementation ModelController
 
 @synthesize pageData = _pageData;
+@synthesize page, pdf, pdfScale;
 
 - (id)init
 {
@@ -34,6 +40,19 @@
         // Create the data model.
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         _pageData = [[dateFormatter monthSymbols] copy];
+        
+        // Open the PDF document
+		NSURL *pdfURL = [[NSBundle mainBundle] URLForResource:@"TestPage.pdf" withExtension:nil];
+		pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)pdfURL);
+        
+        // Get the PDF Page that we will be drawing
+		page = CGPDFDocumentGetPage(pdf, 1);
+		CGPDFPageRetain(page);
+        
+        // determine the size of the PDF page
+		CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+		pdfScale = self.frame.size.width/pageRect.size.width;
+		pageRect.size = CGSizeMake(pageRect.size.width*pdfScale, pageRect.size.height*pdfScale);
     }
     return self;
 }
