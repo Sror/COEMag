@@ -1,0 +1,296 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD4852D1538823B00B00D76 /* UIKit.framework */; };
+		AFD485301538823B00B00D76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD4852F1538823B00B00D76 /* Foundation.framework */; };
+		AFD485321538823B00B00D76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD485311538823B00B00D76 /* CoreGraphics.framework */; };
+		AFD485381538823B00B00D76 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AFD485361538823B00B00D76 /* InfoPlist.strings */; };
+		AFD4853A1538823B00B00D76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD485391538823B00B00D76 /* main.m */; };
+		AFD4853E1538823B00B00D76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD4853D1538823B00B00D76 /* AppDelegate.m */; };
+		AFD485411538823B00B00D76 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD485401538823B00B00D76 /* RootViewController.m */; };
+		AFD485441538823B00B00D76 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD485431538823B00B00D76 /* DataViewController.m */; };
+		AFD485471538823B00B00D76 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD485461538823B00B00D76 /* ModelController.m */; };
+		AFD4854A1538823B00B00D76 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFD485481538823B00B00D76 /* MainStoryboard.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AFD485291538823B00B00D76 /* COEMag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COEMag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD4852D1538823B00B00D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AFD4852F1538823B00B00D76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AFD485311538823B00B00D76 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AFD485351538823B00B00D76 /* COEMag-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "COEMag-Info.plist"; sourceTree = "<group>"; };
+		AFD485371538823B00B00D76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AFD485391538823B00B00D76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "COEMag-Prefix.pch"; sourceTree = "<group>"; };
+		AFD4853C1538823B00B00D76 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AFD4853D1538823B00B00D76 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AFD4853F1538823B00B00D76 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		AFD485401538823B00B00D76 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		AFD485421538823B00B00D76 /* DataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
+		AFD485431538823B00B00D76 /* DataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
+		AFD485451538823B00B00D76 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
+		AFD485461538823B00B00D76 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
+		AFD485491538823B00B00D76 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFD485261538823B00B00D76 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */,
+				AFD485301538823B00B00D76 /* Foundation.framework in Frameworks */,
+				AFD485321538823B00B00D76 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AFD4851E1538823B00B00D76 = {
+			isa = PBXGroup;
+			children = (
+				AFD485331538823B00B00D76 /* COEMag */,
+				AFD4852C1538823B00B00D76 /* Frameworks */,
+				AFD4852A1538823B00B00D76 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AFD4852A1538823B00B00D76 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFD485291538823B00B00D76 /* COEMag.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFD4852C1538823B00B00D76 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AFD4852D1538823B00B00D76 /* UIKit.framework */,
+				AFD4852F1538823B00B00D76 /* Foundation.framework */,
+				AFD485311538823B00B00D76 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AFD485331538823B00B00D76 /* COEMag */ = {
+			isa = PBXGroup;
+			children = (
+				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
+				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
+				AFD4853F1538823B00B00D76 /* RootViewController.h */,
+				AFD485401538823B00B00D76 /* RootViewController.m */,
+				AFD485421538823B00B00D76 /* DataViewController.h */,
+				AFD485431538823B00B00D76 /* DataViewController.m */,
+				AFD485451538823B00B00D76 /* ModelController.h */,
+				AFD485461538823B00B00D76 /* ModelController.m */,
+				AFD485481538823B00B00D76 /* MainStoryboard.storyboard */,
+				AFD485341538823B00B00D76 /* Supporting Files */,
+			);
+			path = COEMag;
+			sourceTree = "<group>";
+		};
+		AFD485341538823B00B00D76 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AFD485351538823B00B00D76 /* COEMag-Info.plist */,
+				AFD485361538823B00B00D76 /* InfoPlist.strings */,
+				AFD485391538823B00B00D76 /* main.m */,
+				AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFD485281538823B00B00D76 /* COEMag */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "COEMag" */;
+			buildPhases = (
+				AFD485251538823B00B00D76 /* Sources */,
+				AFD485261538823B00B00D76 /* Frameworks */,
+				AFD485271538823B00B00D76 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = COEMag;
+			productName = COEMag;
+			productReference = AFD485291538823B00B00D76 /* COEMag.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFD485201538823B00B00D76 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Penn State University";
+			};
+			buildConfigurationList = AFD485231538823B00B00D76 /* Build configuration list for PBXProject "COEMag" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AFD4851E1538823B00B00D76;
+			productRefGroup = AFD4852A1538823B00B00D76 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFD485281538823B00B00D76 /* COEMag */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFD485271538823B00B00D76 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD485381538823B00B00D76 /* InfoPlist.strings in Resources */,
+				AFD4854A1538823B00B00D76 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFD485251538823B00B00D76 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD4853A1538823B00B00D76 /* main.m in Sources */,
+				AFD4853E1538823B00B00D76 /* AppDelegate.m in Sources */,
+				AFD485411538823B00B00D76 /* RootViewController.m in Sources */,
+				AFD485441538823B00B00D76 /* DataViewController.m in Sources */,
+				AFD485471538823B00B00D76 /* ModelController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AFD485361538823B00B00D76 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFD485371538823B00B00D76 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AFD485481538823B00B00D76 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFD485491538823B00B00D76 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AFD4854B1538823B00B00D76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		AFD4854C1538823B00B00D76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFD4854E1538823B00B00D76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
+				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AFD4854F1538823B00B00D76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
+				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFD485231538823B00B00D76 /* Build configuration list for PBXProject "COEMag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD4854B1538823B00B00D76 /* Debug */,
+				AFD4854C1538823B00B00D76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "COEMag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD4854E1538823B00B00D76 /* Debug */,
+				AFD4854F1538823B00B00D76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFD485201538823B00B00D76 /* Project object */;
+}
