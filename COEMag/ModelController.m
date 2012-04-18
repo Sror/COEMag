@@ -20,7 +20,8 @@
  */
 
 @interface ModelController()
-@property (readonly, strong, nonatomic) NSArray *pageData;
+@property (readonly, strong, nonatomic) NSMutableArray *pageData;
+@property size_t count;
 @property CGPDFPageRef page;
 @property CGPDFDocumentRef pdf;
 
@@ -30,29 +31,33 @@
 
 @implementation ModelController
 
-@synthesize pageData = _pageData;
+@synthesize pageData;
 @synthesize page, pdf, pdfScale;
+@synthesize count;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        // Create the data model.
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        _pageData = [[dateFormatter monthSymbols] copy];
+        
         
         // Open the PDF document
-		NSURL *pdfURL = [[NSBundle mainBundle] URLForResource:@"TestPage.pdf" withExtension:nil];
+		NSURL *pdfURL = [[NSBundle mainBundle] URLForResource:@"2012winter.pdf" withExtension:nil];
 		pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)pdfURL);
+        count = CGPDFDocumentGetNumberOfPages(pdf);
+        
+        // Create the Model
+        pageData = [[NSMutableArray alloc] initWithCapacity:count];
+        for (int i=0; i<count; i++) {
+            [pageData addObject:[NSNull null]];
+        }
         
         // Get the PDF Page that we will be drawing
 		page = CGPDFDocumentGetPage(pdf, 1);
 		CGPDFPageRetain(page);
+        //[pageData replaceObjectAtIndex:0 withObject:(__bridge id)page];
         
-        // determine the size of the PDF page
-		CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-		pdfScale = self.frame.size.width/pageRect.size.width;
-		pageRect.size = CGSizeMake(pageRect.size.width*pdfScale, pageRect.size.height*pdfScale);
+       
     }
     return self;
 }
@@ -64,9 +69,19 @@
         return nil;
     }
     
-    // Create a new view controller and pass suitable data.
-    DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
-    dataViewController.dataObject = [self.pageData objectAtIndex:index];
+    DataViewController *dataViewController;
+    if ([pageData objectAtIndex:index] == [NSNull null]) {
+        if (index==0) {
+            dataViewController = [[DataViewController alloc] init];  //blank
+        } else {
+        // Create a new view controller and pass suitable data.
+        CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
+        dataViewController = [[DataViewController alloc] initWithPage:p];   //[storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
+        }
+        [pageData replaceObjectAtIndex:index withObject:dataViewController];
+    } else {
+        dataViewController = [pageData objectAtIndex:index];
+    }
     return dataViewController;
 }
 
@@ -74,7 +89,7 @@
 {   
      // Return the index of the given data view controller.
      // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
-    return [self.pageData indexOfObject:viewController.dataObject];
+    return [self.pageData indexOfObject:viewController];
 }
 
 #pragma mark - Page View Controller Data Source
@@ -82,7 +97,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = [self indexOfViewController:(DataViewController *)viewController];
-    if ((index == 0) || (index == NSNotFound)) {
+    if (index == NSNotFound) {
         return nil;
     }
     
