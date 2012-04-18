@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA188B8153F136E007C9939 /* TiledPDFView.m */; };
+		AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA188BB153F1513007C9939 /* QuartzCore.framework */; };
+		AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFD2A7AC153E071D001A7ADD /* DataViewController.xib */; };
 		AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD4852D1538823B00B00D76 /* UIKit.framework */; };
 		AFD485301538823B00B00D76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD4852F1538823B00B00D76 /* Foundation.framework */; };
 		AFD485321538823B00B00D76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD485311538823B00B00D76 /* CoreGraphics.framework */; };
@@ -21,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AFA188B7153F136D007C9939 /* TiledPDFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledPDFView.h; sourceTree = "<group>"; };
+		AFA188B8153F136E007C9939 /* TiledPDFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TiledPDFView.m; sourceTree = "<group>"; };
+		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AFD2A7AC153E071D001A7ADD /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataViewController.xib; sourceTree = "<group>"; };
 		AFD485291538823B00B00D76 /* COEMag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COEMag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD4852D1538823B00B00D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AFD4852F1538823B00B00D76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */,
 				AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */,
 				AFD485301538823B00B00D76 /* Foundation.framework in Frameworks */,
 				AFD485321538823B00B00D76 /* CoreGraphics.framework in Frameworks */,
@@ -58,6 +66,7 @@
 		AFD4851E1538823B00B00D76 = {
 			isa = PBXGroup;
 			children = (
+				AFA188BB153F1513007C9939 /* QuartzCore.framework */,
 				AFD485331538823B00B00D76 /* COEMag */,
 				AFD4852C1538823B00B00D76 /* Frameworks */,
 				AFD4852A1538823B00B00D76 /* Products */,
@@ -92,6 +101,9 @@
 				AFD485401538823B00B00D76 /* RootViewController.m */,
 				AFD485421538823B00B00D76 /* DataViewController.h */,
 				AFD485431538823B00B00D76 /* DataViewController.m */,
+				AFD2A7AC153E071D001A7ADD /* DataViewController.xib */,
+				AFA188B7153F136D007C9939 /* TiledPDFView.h */,
+				AFA188B8153F136E007C9939 /* TiledPDFView.m */,
 				AFD485451538823B00B00D76 /* ModelController.h */,
 				AFD485461538823B00B00D76 /* ModelController.m */,
 				AFD485481538823B00B00D76 /* MainStoryboard.storyboard */,
@@ -174,6 +186,7 @@
 				AFD485381538823B00B00D76 /* InfoPlist.strings in Resources */,
 				AFD4854A1538823B00B00D76 /* MainStoryboard.storyboard in Resources */,
 				AFD4858D1538ADE700B00D76 /* 2012winter.pdf in Resources */,
+				AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */,
 				AFD4853A1538823B00B00D76 /* main.m in Sources */,
 				AFD4853E1538823B00B00D76 /* AppDelegate.m in Sources */,
 				AFD485411538823B00B00D76 /* RootViewController.m in Sources */,
