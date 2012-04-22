@@ -52,6 +52,7 @@
 }
 
 - (id)initWithFrame:(CGRect)frame andScale:(CGFloat)scale;
+- (id)initWithPage:(CGPDFPageRef)page withWidth:(CGFloat)width;
 - (void)setPage:(CGPDFPageRef)newPage;
 
 @end

@@ -9,6 +9,9 @@
 #import "ModelController.h"
 
 #import "DataViewController.h"
+#import "UIImageView+PDFPage.h"
+
+#define kthumbnailViewHeight 100
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -24,6 +27,7 @@
 @property size_t count;
 @property CGPDFPageRef page;
 @property CGPDFDocumentRef pdf;
+@property (nonatomic,strong) NSArray *thumbnails;
 
 @property CGFloat pdfScale;   // current pdf zoom scale
 
@@ -34,6 +38,7 @@
 @synthesize pageData;
 @synthesize page, pdf, pdfScale;
 @synthesize count;
+@synthesize thumbnails;
 
 - (id)init
 {
@@ -53,14 +58,50 @@
         }
         
         // Get the PDF Page that we will be drawing
-		page = CGPDFDocumentGetPage(pdf, 1);
-		CGPDFPageRetain(page);
+		//page = CGPDFDocumentGetPage(pdf, 1);
+		//CGPDFPageRetain(page);
         //[pageData replaceObjectAtIndex:0 withObject:(__bridge id)page];
         
-       
+        // Prep for thumbnail data
+        
     }
     return self;
 }
+
+-(NSArray *) thumbnailViews {
+    NSMutableArray *thumbs = [[NSMutableArray alloc] initWithCapacity:count];
+    for (int i=1; i<=count; i++) {
+        CGPDFPageRef thepage = CGPDFDocumentGetPage(pdf,i);
+        UIImageView *thumbView = [UIImageView imageViewFromPage:thepage withWidth:kthumbnailViewHeight];
+        [thumbs addObject:thumbView];
+    }
+    thumbnails = [[NSArray alloc] initWithArray:thumbs];
+    return thumbnails;
+}
+
+- (DataViewController *)viewControllerAtIndex:(NSUInteger)index
+{   
+    // Return the data view controller for the given index.
+    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+        return nil;
+    }
+    
+    DataViewController *dataViewController;
+    if ([pageData objectAtIndex:index] == [NSNull null]) {
+        if (index==0) {
+            dataViewController = [[DataViewController alloc] init];  //blank
+        } else {
+            // Create a new view controller and pass suitable data.
+            CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
+            dataViewController = [[DataViewController alloc] initWithPage:p];  
+        }
+        [pageData replaceObjectAtIndex:index withObject:dataViewController];
+    } else {
+        dataViewController = [pageData objectAtIndex:index];
+    }
+    return dataViewController;
+}
+
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {   
@@ -74,9 +115,9 @@
         if (index==0) {
             dataViewController = [[DataViewController alloc] init];  //blank
         } else {
-        // Create a new view controller and pass suitable data.
-        CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
-        dataViewController = [[DataViewController alloc] initWithPage:p];   //[storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
+            // Create a new view controller and pass suitable data.
+            CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
+            dataViewController = [[DataViewController alloc] initWithPage:p];   //[storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
         }
         [pageData replaceObjectAtIndex:index withObject:dataViewController];
     } else {
@@ -87,8 +128,8 @@
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController
 {   
-     // Return the index of the given data view controller.
-     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
+    // Return the index of the given data view controller.
+    // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
     return [self.pageData indexOfObject:viewController];
 }
 

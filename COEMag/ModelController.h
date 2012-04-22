@@ -12,7 +12,9 @@
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
+- (DataViewController *)viewControllerAtIndex:(NSUInteger)index;
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
+- (NSArray *)thumbnailViews;
 
 @end

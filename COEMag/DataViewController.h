@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DataViewController : UIViewController <UIScrollViewDelegate>
+@interface DataViewController : UIViewController 
+
 
 @property CGPDFPageRef page;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 -(id)initWithPage:(CGPDFPageRef)p;
 -(void)loadPage;
 @end

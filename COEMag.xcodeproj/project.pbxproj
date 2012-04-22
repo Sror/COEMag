@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */; };
 		AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA188B8153F136E007C9939 /* TiledPDFView.m */; };
 		AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA188BB153F1513007C9939 /* QuartzCore.framework */; };
 		AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFD2A7AC153E071D001A7ADD /* DataViewController.xib */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PDFPage.h"; sourceTree = "<group>"; };
+		AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PDFPage.m"; sourceTree = "<group>"; };
 		AFA188B7153F136D007C9939 /* TiledPDFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledPDFView.h; sourceTree = "<group>"; };
 		AFA188B8153F136E007C9939 /* TiledPDFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TiledPDFView.m; sourceTree = "<group>"; };
 		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -101,6 +104,8 @@
 				AFD485401538823B00B00D76 /* RootViewController.m */,
 				AFD485421538823B00B00D76 /* DataViewController.h */,
 				AFD485431538823B00B00D76 /* DataViewController.m */,
+				AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */,
+				AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */,
 				AFD2A7AC153E071D001A7ADD /* DataViewController.xib */,
 				AFA188B7153F136D007C9939 /* TiledPDFView.h */,
 				AFA188B8153F136E007C9939 /* TiledPDFView.m */,
@@ -203,6 +208,7 @@
 				AFD485411538823B00B00D76 /* RootViewController.m in Sources */,
 				AFD485441538823B00B00D76 /* DataViewController.m in Sources */,
 				AFD485471538823B00B00D76 /* ModelController.m in Sources */,
+				AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

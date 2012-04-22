@@ -69,6 +69,15 @@
     return self;
 }
 
+- (id)initWithPage:(CGPDFPageRef)page withWidth:(CGFloat)width {
+    CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+    CGFloat pdfScale = width/pageRect.size.width;
+    pageRect.size = CGSizeMake(pageRect.size.width*pdfScale, pageRect.size.height*pdfScale);
+    
+    self = [self initWithFrame:pageRect andScale:pdfScale];
+    return self;
+}
+
 // Set the layer's class to be CATiledLayer.
 + (Class)layerClass {
 	return [CATiledLayer class];

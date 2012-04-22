@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate>
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
 @end
