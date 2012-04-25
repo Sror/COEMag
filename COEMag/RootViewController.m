@@ -284,7 +284,7 @@
 
 -(void)handleTap:(id)sender {
     //UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
-    NSLog(@"Tapped");
+    //NSLog(@"Tapped");
     if (self.toolbarHidden) {
         [self showToolbar];
     } else {

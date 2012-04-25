@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D618D1545CED30014B8FD /* Icon@2x.png */; };
+		AF5D61911545CED80014B8FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61901545CED80014B8FD /* Icon.png */; };
+		AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5D61921545D43A0014B8FD /* NewsstandKit.framework */; };
+		AF5D61991545F2580014B8FD /* Issues.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61981545F2580014B8FD /* Issues.plist */; };
+		AF5D61AA1546FDD50014B8FD /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5D61A91546FDD50014B8FD /* Library.m */; };
+		AF5D61AD1547245F0014B8FD /* IssueTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61AC1547245F0014B8FD /* IssueTableCell.xib */; };
+		AF5D61B1154729060014B8FD /* LibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5D61AF154729060014B8FD /* LibraryTableViewController.m */; };
+		AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61B0154729060014B8FD /* LibraryTableViewController.xib */; };
+		AF5D61B5154734880014B8FD /* IssueTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5D61B4154734880014B8FD /* IssueTableCell.m */; };
 		AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */; };
 		AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA188B8153F136E007C9939 /* TiledPDFView.m */; };
 		AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA188BB153F1513007C9939 /* QuartzCore.framework */; };
@@ -25,12 +34,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		AF5D61921545D43A0014B8FD /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
+		AF5D61981545F2580014B8FD /* Issues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Issues.plist; sourceTree = "<group>"; };
+		AF5D61A81546FDD50014B8FD /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Library.h; sourceTree = "<group>"; };
+		AF5D61A91546FDD50014B8FD /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Library.m; sourceTree = "<group>"; };
+		AF5D61AC1547245F0014B8FD /* IssueTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssueTableCell.xib; sourceTree = "<group>"; };
+		AF5D61AE154729060014B8FD /* LibraryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryTableViewController.h; sourceTree = "<group>"; };
+		AF5D61AF154729060014B8FD /* LibraryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryTableViewController.m; sourceTree = "<group>"; };
+		AF5D61B0154729060014B8FD /* LibraryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LibraryTableViewController.xib; sourceTree = "<group>"; };
+		AF5D61B3154734880014B8FD /* IssueTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueTableCell.h; sourceTree = "<group>"; };
+		AF5D61B4154734880014B8FD /* IssueTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueTableCell.m; sourceTree = "<group>"; };
 		AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PDFPage.h"; sourceTree = "<group>"; };
 		AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PDFPage.m"; sourceTree = "<group>"; };
 		AFA188B7153F136D007C9939 /* TiledPDFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledPDFView.h; sourceTree = "<group>"; };
 		AFA188B8153F136E007C9939 /* TiledPDFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TiledPDFView.m; sourceTree = "<group>"; };
 		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		AFD2A7AC153E071D001A7ADD /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataViewController.xib; sourceTree = "<group>"; };
+		AFD2A7AC153E071D001A7ADD /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataViewController.xib; path = COEMag/DataViewController.xib; sourceTree = "<group>"; };
 		AFD485291538823B00B00D76 /* COEMag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COEMag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD4852D1538823B00B00D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AFD4852F1538823B00B00D76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,12 +62,12 @@
 		AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "COEMag-Prefix.pch"; sourceTree = "<group>"; };
 		AFD4853C1538823B00B00D76 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AFD4853D1538823B00B00D76 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AFD4853F1538823B00B00D76 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		AFD485401538823B00B00D76 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		AFD485421538823B00B00D76 /* DataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
-		AFD485431538823B00B00D76 /* DataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
-		AFD485451538823B00B00D76 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelController.h; sourceTree = "<group>"; };
-		AFD485461538823B00B00D76 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelController.m; sourceTree = "<group>"; };
+		AFD4853F1538823B00B00D76 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = COEMag/RootViewController.h; sourceTree = "<group>"; };
+		AFD485401538823B00B00D76 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = COEMag/RootViewController.m; sourceTree = "<group>"; };
+		AFD485421538823B00B00D76 /* DataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DataViewController.h; path = COEMag/DataViewController.h; sourceTree = "<group>"; };
+		AFD485431538823B00B00D76 /* DataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DataViewController.m; path = COEMag/DataViewController.m; sourceTree = "<group>"; };
+		AFD485451538823B00B00D76 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelController.h; path = COEMag/ModelController.h; sourceTree = "<group>"; };
+		AFD485461538823B00B00D76 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ModelController.m; path = COEMag/ModelController.m; sourceTree = "<group>"; };
 		AFD485491538823B00B00D76 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		AFD4858C1538ADE700B00D76 /* 2012winter.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 2012winter.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */,
 				AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */,
 				AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */,
 				AFD485301538823B00B00D76 /* Foundation.framework in Frameworks */,
@@ -66,10 +88,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF5D61A61546F04B0014B8FD /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AFD4853F1538823B00B00D76 /* RootViewController.h */,
+				AFD485401538823B00B00D76 /* RootViewController.m */,
+				AFD485421538823B00B00D76 /* DataViewController.h */,
+				AFD485431538823B00B00D76 /* DataViewController.m */,
+				AFD2A7AC153E071D001A7ADD /* DataViewController.xib */,
+				AF5D61AE154729060014B8FD /* LibraryTableViewController.h */,
+				AF5D61AF154729060014B8FD /* LibraryTableViewController.m */,
+				AF5D61B0154729060014B8FD /* LibraryTableViewController.xib */,
+			);
+			name = "View Controllers";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		AF5D61A71546FD960014B8FD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AF5D61A81546FDD50014B8FD /* Library.h */,
+				AF5D61A91546FDD50014B8FD /* Library.m */,
+				AFD485451538823B00B00D76 /* ModelController.h */,
+				AFD485461538823B00B00D76 /* ModelController.m */,
+			);
+			name = Model;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		AFD4851E1538823B00B00D76 = {
 			isa = PBXGroup;
 			children = (
-				AFA188BB153F1513007C9939 /* QuartzCore.framework */,
+				AF5D61901545CED80014B8FD /* Icon.png */,
+				AF5D618D1545CED30014B8FD /* Icon@2x.png */,
 				AFD485331538823B00B00D76 /* COEMag */,
 				AFD4852C1538823B00B00D76 /* Frameworks */,
 				AFD4852A1538823B00B00D76 /* Products */,
@@ -87,6 +138,8 @@
 		AFD4852C1538823B00B00D76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF5D61921545D43A0014B8FD /* NewsstandKit.framework */,
+				AFA188BB153F1513007C9939 /* QuartzCore.framework */,
 				AFD4852D1538823B00B00D76 /* UIKit.framework */,
 				AFD4852F1538823B00B00D76 /* Foundation.framework */,
 				AFD485311538823B00B00D76 /* CoreGraphics.framework */,
@@ -97,21 +150,19 @@
 		AFD485331538823B00B00D76 /* COEMag */ = {
 			isa = PBXGroup;
 			children = (
+				AF5D61A61546F04B0014B8FD /* View Controllers */,
+				AF5D61A71546FD960014B8FD /* Model */,
 				AFD4858A1538ADC300B00D76 /* Resources */,
 				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
 				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
-				AFD4853F1538823B00B00D76 /* RootViewController.h */,
-				AFD485401538823B00B00D76 /* RootViewController.m */,
-				AFD485421538823B00B00D76 /* DataViewController.h */,
-				AFD485431538823B00B00D76 /* DataViewController.m */,
 				AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */,
 				AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */,
-				AFD2A7AC153E071D001A7ADD /* DataViewController.xib */,
 				AFA188B7153F136D007C9939 /* TiledPDFView.h */,
 				AFA188B8153F136E007C9939 /* TiledPDFView.m */,
-				AFD485451538823B00B00D76 /* ModelController.h */,
-				AFD485461538823B00B00D76 /* ModelController.m */,
+				AF5D61AC1547245F0014B8FD /* IssueTableCell.xib */,
 				AFD485481538823B00B00D76 /* MainStoryboard.storyboard */,
+				AF5D61B3154734880014B8FD /* IssueTableCell.h */,
+				AF5D61B4154734880014B8FD /* IssueTableCell.m */,
 				AFD485341538823B00B00D76 /* Supporting Files */,
 			);
 			path = COEMag;
@@ -132,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				AFD4858C1538ADE700B00D76 /* 2012winter.pdf */,
+				AF5D61981545F2580014B8FD /* Issues.plist */,
 			);
 			name = Resources;
 			path = ..;
@@ -192,6 +244,11 @@
 				AFD4854A1538823B00B00D76 /* MainStoryboard.storyboard in Resources */,
 				AFD4858D1538ADE700B00D76 /* 2012winter.pdf in Resources */,
 				AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */,
+				AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */,
+				AF5D61911545CED80014B8FD /* Icon.png in Resources */,
+				AF5D61991545F2580014B8FD /* Issues.plist in Resources */,
+				AF5D61AD1547245F0014B8FD /* IssueTableCell.xib in Resources */,
+				AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +266,9 @@
 				AFD485441538823B00B00D76 /* DataViewController.m in Sources */,
 				AFD485471538823B00B00D76 /* ModelController.m in Sources */,
 				AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */,
+				AF5D61AA1546FDD50014B8FD /* Library.m in Sources */,
+				AF5D61B1154729060014B8FD /* LibraryTableViewController.m in Sources */,
+				AF5D61B5154734880014B8FD /* IssueTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

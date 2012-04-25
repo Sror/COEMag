@@ -14,3 +14,5 @@
 #endif
 
 #define kthumbnailViewHeight 100
+static NSString * const LibraryDidUpdateNotification = @"LibraryDidUpdate";
+static NSString * const LibraryFailedUpdateNotification = @"LibraryFailedUpdate";
