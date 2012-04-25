@@ -44,8 +44,11 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
                                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                    if (data) { // success
                                        NSError *error2;
-                                       issues = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable
-                                                                                           format:NULL error:&error2];
+                                       
+                                       NSDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable
+                                                                                                       format:NULL error:&error2];
+                                       NSLog(@"dict: %@", dict);
+                                       issues = [dict objectForKey:@"Issues"];
                                        [self addIssues:issues];
                                        
                                        [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidUpdateNotification object:issues];
@@ -65,7 +68,7 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 // We've just downloaded the list of issues;  add any that aren't in our library already.
 -(void)addIssues:(NSArray *)issuesList {
     coverImages = [[NSMutableDictionary alloc] initWithCapacity:[issuesList count]];
-    
+    NSLog(@"IssuesList: %@", issuesList);
     NKLibrary *nkLib = [NKLibrary sharedLibrary];
     
     for (NSDictionary *dict in issuesList) {
@@ -73,18 +76,17 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
         NKIssue *nkIssue = [nkLib issueWithName:name];
         if(!nkIssue) {
             nkIssue = [nkLib addIssueWithName:name date:[dict objectForKey:@"Date"]];
-            
-            NSString *coverString = [CoverURLBase stringByAppendingPathComponent:name];
+            NSString *imageName = [name stringByAppendingString:@".jpg"];
+            NSString *coverString = [CoverURLBase stringByAppendingPathComponent:imageName];
+            NSLog(@"Cover URL: %@", coverString);
             NSURL *coverURL = [NSURL URLWithString:coverString];
-            NSData *imageData = [NSData dataWithContentsOfURL:coverURL];
-            [imageData writeToFile:imageString atomically:YES];
-            UIImage *coverImage = [UIImage imageWithData:imageData];
-            [coverImages setObject:coverImage  forKey:name];
+            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:coverURL];
+            
+            NKAssetDownload *nkAsset = [nkIssue addAssetWithRequest:urlRequest];
+            [nkAsset downloadWithDelegate:self];
         }
         
-        NSString *contentString = [[nkIssue contentURL] absoluteString];
-        NSString *imageString = [contentString stringByAppendingPathComponent:name];
-        NSLog(@"Issue: %@",nkIssue);
+       // NSLog(@"Issue: %@",[nkIssue description]);
         }
 }
 
@@ -93,12 +95,41 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
     return [[nkLibrary issues] count];
 }
 
--(NSString *)nameOfIssueAtIndex:(NSInteger)index {
+-(NKIssue *)issueAtIndex:(NSInteger)index {
     NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
     NSArray *issues2 = [nkLibrary issues];
     NKIssue *issue = [issues2 objectAtIndex:index];
+    return issue;
+}
+
+-(NSString *)titleOfIssueAtIndex:(NSInteger)index {
+    NKIssue *issue = [self issueAtIndex:index];
     return [issue name];    
 }
 
+-(UIImage *)coverImageOfIssueAtIndex:(NSInteger)index {
+    NKIssue *issue = [self issueAtIndex:index];
+    NSURL *contentURL = [issue contentURL];
+    NSString *name = [issue name];
+    NSURL *imageURL = [NSURL URLWithString:name relativeToURL:contentURL];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    UIImage *image = [UIImage imageWithData:imageData];
+    return image;
+}
+
+
+#pragma mark - NSURLConnectionDownloadDelegate Protocol
+- (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
+    
+}
+
+- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL {
+    NSLog(@"Wrote to %@", [[destinationURL path] description]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidUpdateNotification object:nil];
+}
+
+- (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
+    
+}
 
 @end

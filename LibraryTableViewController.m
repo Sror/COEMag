@@ -32,6 +32,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,11 +43,16 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    if([library isReady]) {
-        [self showIssues];
-    } else {
-        [self loadIssues];
-    }
+    library = [[Library alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
+    
+//    if([library isReady]) {
+//        [self showIssues];
+//    } else {
+//        [self loadIssues];
+//    }
 
 }
 
@@ -72,8 +78,8 @@
 }
 
 -(void)publisherReady:(NSNotification *)not {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryDidUpdateNotification object:library];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryFailedUpdateNotification object:library];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryDidUpdateNotification object:library];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryFailedUpdateNotification object:library];
     [self showIssues];
 }
 

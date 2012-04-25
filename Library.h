@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <NewsstandKit/NewsstandKit.h>
 
-@interface Library : NSObject
+@interface Library : NSObject <NSURLConnectionDownloadDelegate>
 
 @property (nonatomic,readonly,getter = isReady) BOOL ready;
 
