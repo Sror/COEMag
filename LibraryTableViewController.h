@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RootViewController.h"
 
-@interface LibraryTableViewController : UITableViewController
+@interface LibraryTableViewController : UITableViewController <RootModal>   
 
 @end

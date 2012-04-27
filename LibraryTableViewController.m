@@ -10,6 +10,7 @@
 #import "Library.h"
 #import "IssueTableCell.h"
 
+
 @interface LibraryTableViewController ()
 @property (nonatomic,retain) Library *library;
 
@@ -48,6 +49,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetUpdate:) name:LibraryAssetUpdateNotification object:library];
+    
 //    if([library isReady]) {
 //        [self showIssues];
 //    } else {
@@ -70,6 +73,17 @@
 
 
 #pragma mark - Library interaction
+
+-(void)assetUpdate:(NSNotification *)notification {
+    NSDictionary *dictionary = [notification userInfo];
+    NSNumber *number = [dictionary objectForKey:@"Index"];
+    NSInteger index = [number intValue];
+    NSUInteger indexArr[] = {0,index};
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexArr length:2];
+    NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
+    [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 
 -(void)loadIssues {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
@@ -173,12 +187,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    RootViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+        //[[RootViewController alloc] initWithNibName:nil bundle:nil];
+    rootViewController.delegate = self;
+    rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentModalViewController:rootViewController animated:YES];
+     
+     
+}
+
+#pragma  mark - Root Modal Protocol
+-(void)dismissModal {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

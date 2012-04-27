@@ -17,6 +17,7 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 @property (nonatomic,strong) NSArray* issues;
 @property (nonatomic,strong) NSMutableDictionary* coverImages;
 -(void)addIssues:(NSArray*)issues;
+-(NSString *)downloadPathForAsset:(NKAssetDownload *)nkAsset;
 @end
 
 @implementation Library
@@ -83,6 +84,10 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
             NSURLRequest *urlRequest = [NSURLRequest requestWithURL:coverURL];
             
             NKAssetDownload *nkAsset = [nkIssue addAssetWithRequest:urlRequest];
+            NSInteger index = [issuesList indexOfObject:dict];
+            [nkAsset setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithInt:index],@"Index", 
+                                    name, @"Name", nil]];
             [nkAsset downloadWithDelegate:self];
         }
         
@@ -119,17 +124,49 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 
 
 #pragma mark - NSURLConnectionDownloadDelegate Protocol
+-(void)updateProgressOfConnection:(NSURLConnection *)connection withTotalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
+    // get asset
+    NKAssetDownload *dnl = [connection newsstandAssetDownload];
+    //UITableViewCell *cell = [table_ cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[[dnl.userInfo objectForKey:@"Index"] intValue] inSection:0]];
+   // UIProgressView *progressView = (UIProgressView *)[cell viewWithTag:102]; progressView.alpha=1.0;
+    //[[cell viewWithTag:103] setAlpha:0.0]; progressView.progress=1.f*totalBytesWritten/expectedTotalBytes;
+}
+
 - (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
-    
+    [self updateProgressOfConnection:connection
+      withTotalBytesWritten:totalBytesWritten expectedTotalBytes:expectedTotalBytes];
 }
 
 - (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL {
     NSLog(@"Wrote to %@", [[destinationURL path] description]);
     [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidUpdateNotification object:nil];
+    
+    // copy file to destination URL
+    NKAssetDownload *nkAsset = [connection newsstandAssetDownload];
+    //NKIssue *nkIssue = [nkAsset issue];
+    NSDictionary *dictionary = [nkAsset userInfo];
+    
+    NSString *contentPath = [self downloadPathForAsset:nkAsset]; 
+    NSError *moveError=nil;
+    if([[NSFileManager defaultManager] moveItemAtPath:[destinationURL path] toPath:contentPath error:&moveError]==NO) {
+        NSLog(@"Error copying file from %@ to %@",destinationURL,contentPath);
+    } else {
+        NSLog(@"Copied file from %@ to %@",destinationURL,contentPath);
+        [[NSNotificationCenter defaultCenter] postNotificationName:LibraryAssetUpdateNotification object:issues userInfo:dictionary];
+    }
+    //[table_ reloadData];
+
 }
 
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
     
+}
+
+-(NSString *)downloadPathForAsset:(NKAssetDownload *)nkAsset {
+    NKIssue *nkIssue = [nkAsset issue];
+    NSDictionary *dictionary = [nkAsset userInfo];
+    NSString *name = [[dictionary objectForKey:@"Name"] stringByAppendingString:@".pdf"];
+    return [[nkIssue.contentURL path] stringByAppendingPathComponent:name];
 }
 
 @end

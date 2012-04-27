@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol RootModal <NSObject>
+
+-(void)dismissModal;
+
+@end
+
 @interface RootViewController : UIViewController <UIPageViewControllerDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (weak,nonatomic) id<RootModal> delegate;
+-(IBAction)dismissMe:(id)sender;
 
 @end

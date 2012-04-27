@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "ModelController.h"
 #import "DataViewController.h"
+#import "TiledPDFView.h"
 
 #define kthumbnailScrollViewHeight 150
 //#define kthumbnailViewHeight 100
@@ -34,6 +35,7 @@
 @synthesize scrollView, thumbnailScrollView;
 @synthesize toolbarHidden;
 @synthesize timer;
+@synthesize delegate;
 
 - (void)viewDidLoad
 {
@@ -58,6 +60,7 @@
     // set up the PageViewController
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
+    NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
     
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:1 storyboard:self.storyboard];
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
@@ -94,6 +97,10 @@
     
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    for (UIGestureRecognizer *gR in self.view.gestureRecognizers) {
+        gR.delegate = self;
+    }
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapGesture.delegate = self;
     [self.view addGestureRecognizer:tapGesture];
@@ -272,19 +279,26 @@
 
 #pragma mark - Tap Gesture
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    //CGPoint location = [touch locationInView:self.view];
-    if ([touch.view isKindOfClass:[UIButton class]]) {      //change it to your condition
+    CGPoint location = [touch locationInView:self.view];
+    NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
+    NSLog(@"Touched View: %@", touch.view.description);
+    if ([touch.view isKindOfClass:[TiledPDFView class]])
+        return YES;
+    else {
         return NO;
     }
-//    if (location.y > self.view.bounds.size.height * 0.8) {
-//        return NO;
-//    }
+    if ([touch.view isKindOfClass:[UIButton class]] || [touch.view isKindOfClass:[UIBarButtonItem class]]) {      //change it to your condition
+        return NO;
+    }
+   if (location.y < self.toolbar.bounds.size.height) {
+        return NO;
+    }
     return YES;
 }
 
 -(void)handleTap:(id)sender {
     //UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
-    //NSLog(@"Tapped");
+    NSLog(@"Tapped");
     if (self.toolbarHidden) {
         [self showToolbar];
     } else {
@@ -315,6 +329,12 @@
         self.thumbnailScrollView.frame = newscrollbarFrame;}];
     timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(hideToolbar) userInfo:nil repeats:NO];
     self.toolbarHidden = NO;
+}
+
+
+#pragma mark - Modal Dismiss
+-(IBAction)dismissMe:(id)sender {
+    [self.delegate dismissModal];
 }
 
 
