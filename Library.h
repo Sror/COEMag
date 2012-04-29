@@ -13,17 +13,21 @@
 
 @property (nonatomic,readonly,getter = isReady) BOOL ready;
 
--(void)addIssuesInNewsstand;
--(void)getIssuesList;
+//-(void)addIssuesInNewsstand;
+//-(void)getIssuesList;
+
 -(NSInteger)numberOfIssues;
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index;
 -(UIImage *)coverImageOfIssueAtIndex:(NSInteger)index;
+-(BOOL)issueDownloadedAtIndex:(NSInteger)index;
+-(void)downloadIssueAtIndex:(NSInteger)index;
+-(CGPDFDocumentRef)PDFForIssueAtIndex:(NSInteger)index;
 
--(NSString *)nameOfIssueAtIndex:(NSInteger)index;
--(void)setCoverOfIssueAtIndex:(NSInteger)index completionBlock:(void(^)(UIImage *img))block;
--(NSURL *)contentURLForIssueWithName:(NSString *)name;
--(NSString *)downloadPathForIssue:(NKIssue *)nkIssue;
--(UIImage *)coverImageForIssue:(NKIssue *)nkIssue;
+//-(NSString *)nameOfIssueAtIndex:(NSInteger)index;
+//-(void)setCoverOfIssueAtIndex:(NSInteger)index completionBlock:(void(^)(UIImage *img))block;
+//-(NSURL *)contentURLForIssueWithName:(NSString *)name;
+//-(NSString *)downloadPathForIssue:(NKIssue *)nkIssue;
+//-(UIImage *)coverImageForIssue:(NKIssue *)nkIssue;
 
 
 @end

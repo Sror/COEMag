@@ -12,6 +12,7 @@
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
+-(id)initWithPDF:(CGPDFDocumentRef)pdf;
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index;
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;

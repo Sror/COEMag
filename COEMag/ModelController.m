@@ -40,16 +40,17 @@
 @synthesize count;
 @synthesize thumbnails;
 
-- (id)init
+- (id)initWithPDF:(CGPDFDocumentRef)thePDF
 {
     self = [super init];
     if (self) {
         
         
         // Open the PDF document
-		NSURL *pdfURL = [[NSBundle mainBundle] URLForResource:@"2012winter.pdf" withExtension:nil];
-		pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)pdfURL);
-        count = CGPDFDocumentGetNumberOfPages(pdf);
+		//NSURL *pdfURL = [[NSBundle mainBundle] URLForResource:@"2012winter.pdf" withExtension:nil];
+		//pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)pdfURL);
+        self.pdf = thePDF;
+        count = CGPDFDocumentGetNumberOfPages(self.pdf);
         
         // Create the Model
         pageData = [[NSMutableArray alloc] initWithCapacity:count];

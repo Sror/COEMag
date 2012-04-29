@@ -44,12 +44,15 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    library = [[Library alloc] init];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetUpdate:) name:LibraryAssetUpdateNotification object:library];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressUpdate:) name:LibraryProgressUpdateNotification object:library];
+    library = [[Library alloc] init];
     
 //    if([library isReady]) {
 //        [self showIssues];
@@ -81,14 +84,35 @@
     NSUInteger indexArr[] = {0,index};
     
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexArr length:2];
+    
+    IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.progressView.alpha = 0.0;
+
     NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
     [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+-(void)progressUpdate:(NSNotification *)notification {
+    NSDictionary *dictionary = [notification userInfo];
+    NSNumber *number = [dictionary objectForKey:@"Index"];
+    NSInteger index = [number intValue];
+    NSUInteger indexArr[] = {0,index};
+    CGFloat progress = [[dictionary objectForKey:@"Progress"] floatValue];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexArr length:2];
+    NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
+    
+    IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.progressView.progress = progress;
+    cell.progressView.alpha = 1.0;
+    [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
 -(void)loadIssues {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
-    [library getIssuesList];    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
+//    [library getIssuesList];    
 }
 
 -(void)publisherReady:(NSNotification *)not {
@@ -105,7 +129,7 @@
 -(void)publisherFailed:(NSNotification *)not {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryDidUpdateNotification object:library];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryFailedUpdateNotification object:library];
-    NSLog(@"%@",not);
+    //NSLog(@"%@",not);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Cannot get issues from Server."
                                                    delegate:nil
@@ -126,6 +150,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    //NSLog(@"Rows: %d", [library numberOfIssues]);
     return [library numberOfIssues];
 }
 
@@ -137,7 +162,12 @@
     // Configure the cell...
     NSInteger index = indexPath.row;
     cell.title.text = [library titleOfIssueAtIndex:index];
-    cell.tap.text = @"Download";
+    if ([library issueDownloadedAtIndex:index]) {
+        cell.tap.text = @"View";
+    } else {
+        cell.tap.text = @"Download";
+    }
+    
     cell.coverImageView.image = [library coverImageOfIssueAtIndex:index];
     
     return cell;
@@ -186,16 +216,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    
-    RootViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+    // Download or View
+    NSInteger index = indexPath.row;
+    if ([library issueDownloadedAtIndex:index]) {
+        
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        
+        RootViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
         //[[RootViewController alloc] initWithNibName:nil bundle:nil];
-    rootViewController.delegate = self;
-    rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-    rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentModalViewController:rootViewController animated:YES];
-     
+        CGPDFDocumentRef pdf = [library PDFForIssueAtIndex:index];
+        rootViewController.pdf = pdf;
+        rootViewController.delegate = self;
+        rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentModalViewController:rootViewController animated:YES];
+    } else {
+        // show cell's progresss bar
+        IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        cell.progressView.alpha = 1.0;
+        [library downloadIssueAtIndex:index];
+    }
      
 }
 

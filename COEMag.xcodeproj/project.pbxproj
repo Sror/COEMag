@@ -17,6 +17,7 @@
 		AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61B0154729060014B8FD /* LibraryTableViewController.xib */; };
 		AF5D61B5154734880014B8FD /* IssueTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5D61B4154734880014B8FD /* IssueTableCell.m */; };
 		AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */; };
+		AF9BC81F154C3F7300A623C1 /* defaultCover.png in Resources */ = {isa = PBXBuildFile; fileRef = AF9BC81E154C3F7300A623C1 /* defaultCover.png */; };
 		AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA188B8153F136E007C9939 /* TiledPDFView.m */; };
 		AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA188BB153F1513007C9939 /* QuartzCore.framework */; };
 		AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFD2A7AC153E071D001A7ADD /* DataViewController.xib */; };
@@ -48,6 +49,7 @@
 		AF5D61B4154734880014B8FD /* IssueTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueTableCell.m; sourceTree = "<group>"; };
 		AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PDFPage.h"; sourceTree = "<group>"; };
 		AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PDFPage.m"; sourceTree = "<group>"; };
+		AF9BC81E154C3F7300A623C1 /* defaultCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultCover.png; sourceTree = "<group>"; };
 		AFA188B7153F136D007C9939 /* TiledPDFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledPDFView.h; sourceTree = "<group>"; };
 		AFA188B8153F136E007C9939 /* TiledPDFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TiledPDFView.m; sourceTree = "<group>"; };
 		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -182,6 +184,7 @@
 		AFD4858A1538ADC300B00D76 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AF9BC81E154C3F7300A623C1 /* defaultCover.png */,
 				AFD4858C1538ADE700B00D76 /* 2012winter.pdf */,
 				AF5D61981545F2580014B8FD /* Issues.plist */,
 			);
@@ -249,6 +252,7 @@
 				AF5D61991545F2580014B8FD /* Issues.plist in Resources */,
 				AF5D61AD1547245F0014B8FD /* IssueTableCell.xib in Resources */,
 				AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */,
+				AF9BC81F154C3F7300A623C1 /* defaultCover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

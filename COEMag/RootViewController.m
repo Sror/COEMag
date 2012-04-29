@@ -36,6 +36,7 @@
 @synthesize toolbarHidden;
 @synthesize timer;
 @synthesize delegate;
+@synthesize pdf;
 
 - (void)viewDidLoad
 {
@@ -60,7 +61,7 @@
     // set up the PageViewController
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
-    NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
+    //NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
     
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:1 storyboard:self.storyboard];
     NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
@@ -147,7 +148,7 @@
     // Return the model controller object, creating it if necessary.
     // In more complex implementations, the model controller may be passed to the view controller.
     if (!_modelController) {
-        _modelController = [[ModelController alloc] init];
+        _modelController = [[ModelController alloc] initWithPDF:pdf];
     }
     return _modelController;
 }
@@ -280,8 +281,8 @@
 #pragma mark - Tap Gesture
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     CGPoint location = [touch locationInView:self.view];
-    NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
-    NSLog(@"Touched View: %@", touch.view.description);
+    //NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
+    //NSLog(@"Touched View: %@", touch.view.description);
     if ([touch.view isKindOfClass:[TiledPDFView class]])
         return YES;
     else {
@@ -298,7 +299,7 @@
 
 -(void)handleTap:(id)sender {
     //UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
-    NSLog(@"Tapped");
+    //NSLog(@"Tapped");
     if (self.toolbarHidden) {
         [self showToolbar];
     } else {
