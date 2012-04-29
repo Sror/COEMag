@@ -42,48 +42,154 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXn-jP-NGu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="2bj-X1-8Mi" customClass="LibraryTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="159" sectionHeaderHeight="22" sectionFooterHeight="22" id="l8f-XY-DVN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="250" sectionHeaderHeight="22" sectionFooterHeight="22" id="l8f-XY-DVN">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IssueCell" rowHeight="159" id="SbU-Jy-weN" customClass="IssueTableCell">
-                                <rect key="frame" x="0.0" y="22" width="768" height="159"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IssueCell" rowHeight="250" id="SbU-Jy-weN" customClass="IssueTableCell">
+                                <rect key="frame" x="0.0" y="22" width="768" height="250"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="158"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="249"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="defaultCover.png" id="A23-Wk-l7P">
-                                            <rect key="frame" x="20" y="14" width="100" height="130"/>
+                                        <view contentMode="scaleToFill" id="MsG-BQ-Ksj" customClass="IssueView">
+                                            <rect key="frame" x="37" y="20" width="170" height="209"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="49Y-S9-lkp">
-                                            <rect key="frame" x="184" y="20" width="248" height="21"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GY2-Y9-cQD">
+                                                    <rect key="frame" x="35" y="40" width="100" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="uHe-a7-nLA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zeB-es-mBW">
+                                                    <rect key="frame" x="0.0" y="183" width="170" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" id="E7c-xR-sKJ">
+                                                    <rect key="frame" x="10" y="189" width="150" height="9"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </progressView>
+                                            </subviews>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <connections>
+                                                <outlet property="coverButton" destination="GY2-Y9-cQD" id="bAY-Lo-lB5"/>
+                                                <outlet property="progressView" destination="E7c-xR-sKJ" id="TEZ-Hj-I74"/>
+                                                <outlet property="tap" destination="zeB-es-mBW" id="vrM-oC-cqe"/>
+                                                <outlet property="title" destination="uHe-a7-nLA" id="2Ti-Uf-jEo"/>
+                                            </connections>
+                                        </view>
+                                        <view contentMode="scaleToFill" id="Nsp-uz-pNC" customClass="IssueView">
+                                            <rect key="frame" x="312" y="20" width="170" height="209"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Download" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="FfZ-iV-6vX">
-                                            <rect key="frame" x="184" y="93" width="77" height="21"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uo0-t6-1ZS">
+                                                    <rect key="frame" x="35" y="40" width="100" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="cwW-q8-4bv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="rzb-u7-s6U">
+                                                    <rect key="frame" x="0.0" y="183" width="170" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" id="f6r-Ru-A1n">
+                                                    <rect key="frame" x="10" y="189" width="150" height="9"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </progressView>
+                                            </subviews>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <connections>
+                                                <outlet property="coverButton" destination="uo0-t6-1ZS" id="ic0-jE-IoO"/>
+                                                <outlet property="progressView" destination="f6r-Ru-A1n" id="Eca-TV-xBG"/>
+                                                <outlet property="tap" destination="rzb-u7-s6U" id="gCc-sd-DXH"/>
+                                                <outlet property="title" destination="cwW-q8-4bv" id="cHy-85-0Ko"/>
+                                            </connections>
+                                        </view>
+                                        <view contentMode="scaleToFill" id="35H-s0-lhq" customClass="IssueView">
+                                            <rect key="frame" x="572" y="20" width="170" height="209"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" progress="0.5" id="sIu-01-mha">
-                                            <rect key="frame" x="351" y="70" width="254" height="9"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </progressView>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="I3Y-1M-V1B">
+                                                    <rect key="frame" x="35" y="40" width="100" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="BMz-uN-EJO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="170" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xdn-Tw-02m">
+                                                    <rect key="frame" x="0.0" y="183" width="170" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" id="5QO-0c-MSf">
+                                                    <rect key="frame" x="10" y="189" width="150" height="9"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </progressView>
+                                            </subviews>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <connections>
+                                                <outlet property="coverButton" destination="I3Y-1M-V1B" id="BOZ-mq-NZ6"/>
+                                                <outlet property="progressView" destination="5QO-0c-MSf" id="BjN-gm-AEu"/>
+                                                <outlet property="tap" destination="xdn-Tw-02m" id="42u-pe-mza"/>
+                                                <outlet property="title" destination="BMz-uN-EJO" id="vzM-85-ttf"/>
+                                            </connections>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="coverImageView" destination="A23-Wk-l7P" id="mOf-we-SVw"/>
-                                    <outlet property="progressView" destination="sIu-01-mha" id="Puq-lI-kq6"/>
-                                    <outlet property="tap" destination="FfZ-iV-6vX" id="4SW-ai-WHL"/>
-                                    <outlet property="title" destination="49Y-S9-lkp" id="grB-eT-d8J"/>
+                                    <outlet property="issueView1" destination="MsG-BQ-Ksj" id="6dk-MO-5fs"/>
+                                    <outlet property="issueView2" destination="Nsp-uz-pNC" id="90b-BE-Tda"/>
+                                    <outlet property="issueView3" destination="35H-s0-lhq" id="bAf-js-Kj6"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -94,7 +200,7 @@
                     </tableView>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-899" y="-243"/>
+            <point key="canvasLocation" x="-1167" y="-419"/>
         </scene>
         <!--Data View Controller-->
         <scene sceneID="7">
@@ -112,9 +218,6 @@
             <point key="canvasLocation" x="1248" y="-251"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="defaultCover.png" width="100" height="130"/>
-    </resources>
     <classes>
         <class className="DataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DataViewController.h"/>
@@ -122,7 +225,15 @@
         <class className="IssueTableCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IssueTableCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="coverImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="issueView1" candidateClass="IssueView"/>
+                <relationship kind="outlet" name="issueView2" candidateClass="IssueView"/>
+                <relationship kind="outlet" name="issueView3" candidateClass="IssueView"/>
+            </relationships>
+        </class>
+        <class className="IssueView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IssueView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="coverButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="progressView" candidateClass="UIProgressView"/>
                 <relationship kind="outlet" name="tap" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="title" candidateClass="UILabel"/>

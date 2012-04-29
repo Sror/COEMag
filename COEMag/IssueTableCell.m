@@ -9,7 +9,8 @@
 #import "IssueTableCell.h"
 
 @implementation IssueTableCell
-@synthesize title, tap, progressView, coverImageView;
+//@synthesize title, tap, progressView, coverImageView;
+@synthesize issueView1, issueView2, issueView3;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

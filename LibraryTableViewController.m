@@ -9,6 +9,9 @@
 #import "LibraryTableViewController.h"
 #import "Library.h"
 #import "IssueTableCell.h"
+#import "IssueView.h"
+
+#define kColumns 3
 
 
 @interface LibraryTableViewController ()
@@ -71,22 +74,37 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
 #pragma mark - Library interaction
 
+
+-(IssueView*)issueView:(NSInteger)i inCell:(IssueTableCell*)cell {
+    IssueView *issueView = (i%3==0) ? cell.issueView1 :
+    ((i%3 == 1) ? cell.issueView2 : cell.issueView3);
+    return issueView;
+}
+
+-(NSIndexPath*) indexPathForIssue:(NSInteger)issue {
+    NSUInteger indexArr[] = {0,issue/kColumns};
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexArr length:2];
+    return indexPath;
+}
+
+
 -(void)assetUpdate:(NSNotification *)notification {
     NSDictionary *dictionary = [notification userInfo];
     NSNumber *number = [dictionary objectForKey:@"Index"];
     NSInteger index = [number intValue];
-    NSUInteger indexArr[] = {0,index};
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexArr length:2];
+    NSIndexPath *indexPath = [self indexPathForIssue:index];
     
     IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.progressView.alpha = 0.0;
+    IssueView *issueView = [self issueView:index inCell:cell];
+    issueView.progressView.alpha = 0.0;
+    issueView.tap.alpha = 1.0;
 
     NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
     [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -96,16 +114,17 @@
     NSDictionary *dictionary = [notification userInfo];
     NSNumber *number = [dictionary objectForKey:@"Index"];
     NSInteger index = [number intValue];
-    NSUInteger indexArr[] = {0,index};
+    
     CGFloat progress = [[dictionary objectForKey:@"Progress"] floatValue];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexArr length:2];
-    NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
+    NSIndexPath *indexPath = [self indexPathForIssue:index];
+    //NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
     
     IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.progressView.progress = progress;
-    cell.progressView.alpha = 1.0;
-    [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    IssueView *issueView = [self issueView:index inCell:cell];
+    issueView.progressView.progress = progress;
+    issueView.progressView.alpha = 1.0;
+    //[self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -141,6 +160,7 @@
 
 #pragma mark - Table view data source
 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -151,7 +171,10 @@
 {
     // Return the number of rows in the section.
     //NSLog(@"Rows: %d", [library numberOfIssues]);
-    return [library numberOfIssues];
+    NSInteger count = [library numberOfIssues];
+    NSInteger rowCount = (count + (kColumns -1)) / kColumns;
+    //NSLog(@"Row Count: %d", rowCount);
+    return rowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,6 +184,23 @@
     
     // Configure the cell...
     NSInteger index = indexPath.row;
+    
+    NSInteger numberOfIssues = [library numberOfIssues];
+    // three issues per row (cell)
+    for (int i=3*index; i<3*(index+1) && i<numberOfIssues; i++) {
+        NSString *title = [library titleOfIssueAtIndex:i];
+        NSString *tap = [library issueDownloadedAtIndex:i] ? @"View" : @"Download";
+        UIImage *image = [library coverImageOfIssueAtIndex:i];
+        
+        IssueView *issueView = [self issueView:i inCell:cell];
+        [issueView setIssue:i withImage:image title:title andTap:tap];
+        [issueView.coverButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
+        //issueView.center = CGPointMake(cell.contentView.bounds.size.width * (i*2+1)/6.0, 
+         //                              cell.contentView.bounds.size.height/2.0);
+        //[cell.contentView addSubview:issueView];
+    }
+    
+    /*
     cell.title.text = [library titleOfIssueAtIndex:index];
     if ([library issueDownloadedAtIndex:index]) {
         cell.tap.text = @"View";
@@ -169,6 +209,7 @@
     }
     
     cell.coverImageView.image = [library coverImageOfIssueAtIndex:index];
+    */
     
     return cell;
 }
@@ -214,6 +255,7 @@
 
 #pragma mark - Table view delegate
 
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Download or View
@@ -238,6 +280,39 @@
         [library downloadIssueAtIndex:index];
     }
      
+}
+*/
+
+//user selects an issue (button) from the table View
+-(void)issueSelected:(id)sender {
+    UIButton *button = (UIButton*)sender;
+    NSInteger issueNumber = button.tag;
+    
+    // Download or View
+    
+    if ([library issueDownloadedAtIndex:issueNumber]) {
+        
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        
+        RootViewController *rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+        //[[RootViewController alloc] initWithNibName:nil bundle:nil];
+        CGPDFDocumentRef pdf = [library PDFForIssueAtIndex:issueNumber];
+        rootViewController.pdf = pdf;
+        rootViewController.delegate = self;
+        rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentModalViewController:rootViewController animated:YES];
+    } else {
+        // show cell's progresss bar
+        NSIndexPath *indexPath = [self indexPathForIssue:issueNumber];
+        IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        IssueView *issueView = [self issueView:(issueNumber/kColumns) inCell:cell];
+        issueView.progressView.alpha = 1.0;
+        issueView.tap.alpha = 0.0;
+        [library downloadIssueAtIndex:issueNumber];
+    }
+
 }
 
 #pragma  mark - Root Modal Protocol
