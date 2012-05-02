@@ -36,8 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		AF5D61921545D43A0014B8FD /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
 		AF5D61981545F2580014B8FD /* Issues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Issues.plist; sourceTree = "<group>"; };
 		AF5D61A81546FDD50014B8FD /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Library.h; sourceTree = "<group>"; };
@@ -93,6 +93,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF349D18154ECAD100FCAF2C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AFD485481538823B00B00D76 /* MainStoryboard.storyboard */,
+				AFA188B7153F136D007C9939 /* TiledPDFView.h */,
+				AFA188B8153F136E007C9939 /* TiledPDFView.m */,
+				AF9BC820154D9CC900A623C1 /* IssueView.h */,
+				AF9BC821154D9CCA00A623C1 /* IssueView.m */,
+				AF5D61B3154734880014B8FD /* IssueTableCell.h */,
+				AF5D61B4154734880014B8FD /* IssueTableCell.m */,
+				AF5D61AC1547245F0014B8FD /* IssueTableCell.xib */,
+				AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */,
+				AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		AF5D61A61546F04B0014B8FD /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,8 +141,6 @@
 		AFD4851E1538823B00B00D76 = {
 			isa = PBXGroup;
 			children = (
-				AF5D61901545CED80014B8FD /* Icon.png */,
-				AF5D618D1545CED30014B8FD /* Icon@2x.png */,
 				AFD485331538823B00B00D76 /* COEMag */,
 				AFD4852C1538823B00B00D76 /* Frameworks */,
 				AFD4852A1538823B00B00D76 /* Products */,
@@ -155,21 +170,12 @@
 		AFD485331538823B00B00D76 /* COEMag */ = {
 			isa = PBXGroup;
 			children = (
+				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
+				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
+				AF349D18154ECAD100FCAF2C /* View */,
 				AF5D61A61546F04B0014B8FD /* View Controllers */,
 				AF5D61A71546FD960014B8FD /* Model */,
 				AFD4858A1538ADC300B00D76 /* Resources */,
-				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
-				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
-				AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */,
-				AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */,
-				AFA188B7153F136D007C9939 /* TiledPDFView.h */,
-				AFA188B8153F136E007C9939 /* TiledPDFView.m */,
-				AF5D61AC1547245F0014B8FD /* IssueTableCell.xib */,
-				AFD485481538823B00B00D76 /* MainStoryboard.storyboard */,
-				AF9BC820154D9CC900A623C1 /* IssueView.h */,
-				AF9BC821154D9CCA00A623C1 /* IssueView.m */,
-				AF5D61B3154734880014B8FD /* IssueTableCell.h */,
-				AF5D61B4154734880014B8FD /* IssueTableCell.m */,
 				AFD485341538823B00B00D76 /* Supporting Files */,
 			);
 			path = COEMag;
@@ -178,6 +184,8 @@
 		AFD485341538823B00B00D76 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AF5D61901545CED80014B8FD /* Icon.png */,
+				AF5D618D1545CED30014B8FD /* Icon@2x.png */,
 				AFD485351538823B00B00D76 /* COEMag-Info.plist */,
 				AFD485361538823B00B00D76 /* InfoPlist.strings */,
 				AFD485391538823B00B00D76 /* main.m */,
@@ -354,10 +362,12 @@
 		AFD4854E1538823B00B00D76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -365,10 +375,12 @@
 		AFD4854F1538823B00B00D76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

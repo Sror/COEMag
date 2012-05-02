@@ -12,7 +12,10 @@
 #import "TiledPDFView.h"
 
 #define kthumbnailScrollViewHeight 150
+#define kthumbnailOffset 10
 //#define kthumbnailViewHeight 100
+#define ktimerDuration 3.0
+#define kanimateDuration 0.5
 
 @interface RootViewController ()
 @property (readonly, strong, nonatomic) ModelController *modelController;
@@ -24,6 +27,7 @@
 -(void)hideToolbar;
 -(void)showToolbar;
 -(void)addThumbnails;
+-(void)scheduleTimer;
 
 @end
 
@@ -106,8 +110,8 @@
     tapGesture.delegate = self;
     [self.view addGestureRecognizer:tapGesture];
     
-    //[self hideToolbar];
-    //self.toolbarHidden = YES;
+    [self hideToolbar];
+    self.toolbarHidden = YES;
     [self.view bringSubviewToFront:self.toolbar];
 }
 
@@ -140,6 +144,9 @@
     CGFloat height = self.view.bounds.size.height + (self.toolbarHidden ? 0.0 : - kthumbnailScrollViewHeight);
     frame = CGRectMake(0.0, height, frame.size.width, frame.size.height);
     self.thumbnailScrollView.frame = frame;
+    
+    // redo thumbnails
+    [self addThumbnails];
 }
 
 
@@ -153,6 +160,14 @@
     return _modelController;
 }
 
+-(CGRect)frameForThumbnailAtIndex:(NSInteger)index isPortrait:(BOOL)portrait {
+    CGFloat width = (portrait? kthumbnailViewWidth : 2*kthumbnailViewWidth);
+    CGFloat height = kthumbnailViewHeight;
+    CGFloat factor = (portrait ? 2 : 1.5);  //spacing for thumbnails
+    CGRect frame = CGRectMake((factor*index+1)*width, kthumbnailOffset, width, height);
+    return frame;
+}
+
 // add thumbnail images to thumbnail scrollview
 -(void)addThumbnails {
     // remove any buttons on scrollView
@@ -160,30 +175,131 @@
     
     NSArray *thumbnailViews = [self.modelController thumbnailViews];
     UIImageView *imageView = [thumbnailViews objectAtIndex:1];
-    CGFloat width =  imageView.bounds.size.width;
+    CGRect imageBounds = imageView.bounds;
+    CGRect doubleBounds = CGRectMake(0.0, 0.0, imageBounds.size.width*2, imageBounds.size.height);
+    CGRect leftFrame = imageBounds;
+    CGRect rightFrame = CGRectMake(imageBounds.size.width, 0.0, imageBounds.size.width, imageBounds.size.height);
+    CGFloat width =  imageBounds.size.width;
+    //CGFLoat doubleWidth = doubleBounds.size.width;
     NSInteger count = [thumbnailViews count];
-    self.thumbnailScrollView.contentSize = CGSizeMake((count * 2) * width, self.thumbnailScrollView.bounds.size.height);
     
-    for (int i=0; i<count; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImageView *buttonImage = [thumbnailViews objectAtIndex:i];
-        CGRect frame = buttonImage.bounds;
-        frame = CGRectMake((2*i+1)*width, 10.0, frame.size.width, frame.size.height);
-        button.frame = frame;
-        [button setImage:buttonImage.image forState:UIControlStateNormal];
-        button.tag = i+1;
-        [button addTarget:self action:@selector(thumbnailSelected:) forControlEvents:UIControlEventTouchUpInside];
-        [self.thumbnailScrollView addSubview:button];
+    UIImageView *leftImage;
+    
+    BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
+    
+    if (!portrait) {
+        count = (count+1)/2;   // 2 thumbnails per page
+    }
+    self.thumbnailScrollView.contentSize = CGSizeMake((count * (portrait? 2:3)+1) * width, self.thumbnailScrollView.bounds.size.height);
+        
+    CGRect frame;
+        for (int i=0; i<count; i++) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            if (portrait) {
+                UIImageView *buttonImage = [thumbnailViews objectAtIndex:i];
+                frame = imageBounds;
+                frame = [self frameForThumbnailAtIndex:i isPortrait:YES];     //CGRectMake((2*i+1)*width, 10.0, frame.size.width, frame.size.height);
+                button.frame = frame;
+                [button setImage:buttonImage.image forState:UIControlStateNormal];
+            } else { // landscape
+                
+                
+                
+                if (i==0) {
+                    leftImage = nil;
+                } else {
+                    leftImage = [thumbnailViews objectAtIndex:(2*i-1)];
+                }
+                leftImage.frame = leftFrame;
+                UIImageView *rightImage = [thumbnailViews objectAtIndex:(2*i)];
+                rightImage.frame = rightFrame;
+                frame = doubleBounds;
+                frame = [self frameForThumbnailAtIndex:i isPortrait:NO];     //CGRectMake((3*i+1)*width, 10.0, frame.size.width, frame.size.height);
+                button.frame = frame;
+                [button addSubview:leftImage];
+                [button addSubview:rightImage];
+
+            }
+            
+            button.tag = i+1;
+            [button addTarget:self action:@selector(thumbnailSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
+            // add page label
+            frame = CGRectMake(0, frame.size.height-20.0, frame.size.width, 20.0);
+            UILabel *pageLabel = [[UILabel alloc] initWithFrame:frame];
+            pageLabel.backgroundColor = [UIColor clearColor];
+            pageLabel.textAlignment = UITextAlignmentCenter;
+            pageLabel.textColor = [UIColor blackColor];
+            //pageLabel.shadowColor = [UIColor blueColor];
+            if (portrait) {
+                pageLabel.text = [NSString stringWithFormat:@"Page %d", i+1];
+            } else {
+                if (i==0) {
+                    pageLabel.text = @"";
+                } else {
+                    pageLabel.text = [NSString stringWithFormat:@"Pages %d,%d", 2*i,2*i+1];
+                }
+                
+            }
+            
+            [button addSubview:pageLabel];
+            
+            [self.thumbnailScrollView addSubview:button];
+            
+     
+        }
+}
+
+-(void)turnToPage:(NSInteger)newPage direction:(UIPageViewControllerNavigationDirection)direction {
+    NSArray *viewControllers;
+    BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
+    
+    if (portrait) {
+        DataViewController *currentViewController = [self.modelController viewControllerAtIndex:newPage];
+        viewControllers = [NSArray arrayWithObject:currentViewController];
+        
+    } else {
+        DataViewController *currentViewController = [self.modelController viewControllerAtIndex:newPage];
+        UIViewController *nextViewController = [self.modelController pageViewController:self.pageViewController viewControllerAfterViewController:currentViewController];
+        viewControllers = [NSArray arrayWithObjects: currentViewController, nextViewController,nil];
         
     }
+    [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
+
+    
 }
 
 -(void)thumbnailSelected:(id)sender {
     UIButton *button = (UIButton *)sender;
-    NSInteger page = button.tag;
-    DataViewController *currentViewController = [self.modelController viewControllerAtIndex:page];
-    NSArray *viewControllers = [NSArray arrayWithObject:currentViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+    BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
+    
+    NSInteger currentPage = [self.modelController indexOfViewController: (DataViewController*)[self.pageViewController.viewControllers objectAtIndex:0]];
+    NSInteger newPage = (portrait? button.tag : button.tag*2-2);
+    if (newPage == currentPage) {
+        return;   // no page change
+    }
+    
+    UIPageViewControllerNavigationDirection direction;
+    if (newPage<currentPage) {
+        direction = UIPageViewControllerNavigationDirectionReverse;
+    } else {
+        direction = UIPageViewControllerNavigationDirectionForward;
+    }
+    
+    [self turnToPage:newPage direction:direction];
+//    NSArray *viewControllers;
+//    if (portrait) {
+//        DataViewController *currentViewController = [self.modelController viewControllerAtIndex:newPage];
+//       viewControllers = [NSArray arrayWithObject:currentViewController];
+//
+//    } else {
+//        DataViewController *currentViewController = [self.modelController viewControllerAtIndex:newPage];
+//        UIViewController *nextViewController = [self.modelController pageViewController:self.pageViewController viewControllerAfterViewController:currentViewController];
+//        viewControllers = [NSArray arrayWithObjects: currentViewController, nextViewController,nil];
+//
+//    }
+//        [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
 }
 
 #pragma mark - UIPageViewController delegate methods
@@ -243,6 +359,27 @@
     return self.pageViewController.view;
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {
+    if (aScrollView == self.thumbnailScrollView) {
+        //NSLog(@"Scrolling Ended");
+        [self scheduleTimer];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)aScrollView willDecelerate:(BOOL)decelerate {
+    if (aScrollView == self.thumbnailScrollView && !decelerate) {
+        //NSLog(@"Scrolling Ended");
+        [self scheduleTimer];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    if (aScrollView == self.thumbnailScrollView && [timer isValid]) {
+         [timer invalidate];
+    }
+   
+}
+
 /*
  // A UIScrollView delegate callback, called when the user stops zooming.  When the user stops zooming
  // we create a new TiledPDFView based on the new zoom level and draw it on top of the old TiledPDFView.
@@ -297,16 +434,47 @@
     return YES;
 }
 
+// taps either show/hide toolbar or change pages, depending upon the x-coord of the touch
 -(void)handleTap:(id)sender {
-    //UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
-    //NSLog(@"Tapped");
+    UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
+    NSLog(@"Tapped");
+    
+    CGPoint touchPoint = [tapGesture locationInView:self.view];
+    CGFloat xCoord = touchPoint.x;
+    CGFloat width = self.view.bounds.size.width;
+    
+    
+    if (xCoord <= 0.2*width || xCoord>=0.8*width) {
+
+        BOOL previous = (xCoord <= 0.2*width);
+        BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
+        DataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        NSInteger page = [self.modelController indexOfViewController:currentViewController];
+        NSInteger pageDelta = (portrait ? 1 : 2);
+        NSInteger newPage = (previous ? page - pageDelta : page + pageDelta);
+        
+         UIPageViewControllerNavigationDirection direction;
+        if (previous) {
+            direction = UIPageViewControllerNavigationDirectionReverse;
+        } else {
+            direction = UIPageViewControllerNavigationDirectionForward;
+        }
+
+        [self turnToPage:newPage direction:direction];
+        
+    } else {  // show/hide toolbar
+    
     if (self.toolbarHidden) {
         [self showToolbar];
     } else {
         [self hideToolbar];
     }
+    }
 }
 
+-(void)scheduleTimer {
+    timer = [NSTimer scheduledTimerWithTimeInterval:ktimerDuration target:self selector:@selector(hideToolbar) userInfo:nil repeats:NO];
+}
 
 -(void)hideToolbar {
     [timer invalidate];
@@ -314,7 +482,13 @@
     CGRect newtoolbarFrame = CGRectOffset(toolbarFrame, 0.0, -toolbarFrame.size.height);
     CGRect scrollbarFrame = self.thumbnailScrollView.frame;
     CGRect newscrollbarFrame = CGRectOffset(scrollbarFrame, 0.0, scrollbarFrame.size.height);
-    [UIView animateWithDuration:1.0 animations:^{
+
+    // want to scroll thumbnails to show current page's thumbnail
+    //NSInteger index =[self.modelController indexOfViewController:[self.pageViewController.viewControllers objectAtIndex:0]];
+    
+    
+      
+    [UIView animateWithDuration:kanimateDuration animations:^{
         self.toolbar.frame = newtoolbarFrame;
         self.thumbnailScrollView.frame = newscrollbarFrame;}];
     self.toolbarHidden = YES;
@@ -325,10 +499,10 @@
     CGRect newtoolbarFrame = CGRectOffset(toolbarFrame, 0.0, +toolbarFrame.size.height);
     CGRect scrollbarFrame = self.thumbnailScrollView.frame;
     CGRect newscrollbarFrame = CGRectOffset(scrollbarFrame, 0.0, -scrollbarFrame.size.height);
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:kanimateDuration animations:^{
         self.toolbar.frame = newtoolbarFrame;
         self.thumbnailScrollView.frame = newscrollbarFrame;}];
-    timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(hideToolbar) userInfo:nil repeats:NO];
+    timer = [NSTimer scheduledTimerWithTimeInterval:ktimerDuration target:self selector:@selector(hideToolbar) userInfo:nil repeats:NO];
     self.toolbarHidden = NO;
 }
 

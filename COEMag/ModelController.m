@@ -11,7 +11,7 @@
 #import "DataViewController.h"
 #import "UIImageView+PDFPage.h"
 
-#define kthumbnailViewHeight 100
+
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -53,8 +53,8 @@
         count = CGPDFDocumentGetNumberOfPages(self.pdf);
         
         // Create the Model
-        pageData = [[NSMutableArray alloc] initWithCapacity:count];
-        for (int i=0; i<count; i++) {
+        pageData = [[NSMutableArray alloc] initWithCapacity:(count+1)];  // page numbering starts at 1
+        for (int i=0; i<=count; i++) {
             [pageData addObject:[NSNull null]];
         }
         
@@ -73,7 +73,7 @@
     NSMutableArray *thumbs = [[NSMutableArray alloc] initWithCapacity:count];
     for (int i=1; i<=count; i++) {
         CGPDFPageRef thepage = CGPDFDocumentGetPage(pdf,i);
-        UIImageView *thumbView = [UIImageView imageViewFromPage:thepage withWidth:kthumbnailViewHeight];
+        UIImageView *thumbView = [UIImageView imageViewFromPage:thepage withWidth:kthumbnailViewWidth];
         [thumbs addObject:thumbView];
     }
     thumbnails = [[NSArray alloc] initWithArray:thumbs];
@@ -83,7 +83,8 @@
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index
 {   
     // Return the data view controller for the given index.
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+    if (([self.pageData count] == 0) || (index > [self.pageData count])) {
+        NSLog(@"Page Number out of range");
         return nil;
     }
     
@@ -107,21 +108,21 @@
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {   
     // Return the data view controller for the given index.
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+    if ([self.pageData count] == 0 ) {  //|| (index >= [self.pageData count])
         return nil;
     }
     
     DataViewController *dataViewController;
-    if ([pageData objectAtIndex:index] == [NSNull null]) {
-        if (index==0) {
-            dataViewController = [[DataViewController alloc] init];  //blank
-        } else {
+    
+    if (index==0 || index >= [self.pageData count]) {
+        dataViewController = [[DataViewController alloc] init];  //blank
+    } else if ([pageData objectAtIndex:index] == [NSNull null]) {
             // Create a new view controller and pass suitable data.
             CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
             dataViewController = [[DataViewController alloc] initWithPage:p];   //[storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
-        }
-        [pageData replaceObjectAtIndex:index withObject:dataViewController];
-    } else {
+         [pageData replaceObjectAtIndex:index withObject:dataViewController];
+    }
+     else {
         dataViewController = [pageData objectAtIndex:index];
     }
     return dataViewController;
@@ -133,6 +134,10 @@
     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
     return [self.pageData indexOfObject:viewController];
 }
+
+
+
+
 
 #pragma mark - Page View Controller Data Source
 
@@ -155,9 +160,9 @@
     }
     
     index++;
-    if (index == [self.pageData count]) {
-        return nil;
-    }
+//    if (index == [self.pageData count]) {
+//        return nil;
+//    }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 

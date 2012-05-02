@@ -13,7 +13,8 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#define kthumbnailViewHeight 100
+#define kthumbnailViewWidth 100
+#define kthumbnailViewHeight 130
 static NSString * const LibraryDidUpdateNotification = @"LibraryDidUpdate";
 static NSString * const LibraryAssetUpdateNotification = @"LibraryAssetUpdate";
 static NSString * const LibraryProgressUpdateNotification = @"LibraryProgressUpdate";

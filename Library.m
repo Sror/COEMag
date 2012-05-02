@@ -65,6 +65,7 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
+    //NSLog(@"Library init");
     return self;
 }
 
@@ -88,7 +89,7 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 // We've just downloaded the list of issues;  add any that aren't in our library already.
 -(void)addIssues {
    // coverImages = [[NSMutableDictionary alloc] initWithCapacity:[issuesList count]];
-   // NSLog(@"IssuesList: %@", issuesList);
+    
     NKLibrary *nkLib = [NKLibrary sharedLibrary];
     
     for (NSMutableDictionary *dict in issues) {
@@ -133,6 +134,7 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
         }
     //NSLog(@"Number of Issues: %d,%d", [self numberOfIssues],[[nkLib issues] count]);
     [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidUpdateNotification object:self];
+    
 }
 
 -(NSInteger)numberOfIssues {
@@ -163,17 +165,33 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
     return -1;
 }
    
-//-(NSInteger)indexOfIssue:(NKIssue*)nkIssue {
-//    NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
-//    NSArray *issues2 = [nkLibrary issues];
-//    NSInteger index = [issues2 indexOfObject:nkIssue];
-//    return index;
-//}
+
+// e.g. Springsummer --> Spring/Summer
+-(NSString *)modifySeason:(NSString *)season {
+    NSString *newSeason;
+    if ([season isEqualToString:@"Springsummer"]) {
+        newSeason = @"Spring/Summer";
+    } else {
+        newSeason = season;
+    }
+    return newSeason;
+}
+
+// example name: 2007fall  
+// example Title: Fall 2007
+-(NSString*)titleForName:(NSString*)name {
+    NSString *year = [name substringToIndex:4];
+    NSString *season = [[name substringFromIndex:4] capitalizedString];
+    NSString *newSeason = [self modifySeason:season];
+    NSString *title = [NSString stringWithFormat:@"%@ %@", newSeason, year];
+    return title;
+}
 
 
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index {
     NKIssue *issue = [self issueAtIndex:index];
-    return [issue name];    
+    NSString *title = [self titleForName:[issue name]];
+    return title;    
 }
 
 

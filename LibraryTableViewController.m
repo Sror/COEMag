@@ -11,6 +11,7 @@
 #import "IssueTableCell.h"
 #import "IssueView.h"
 
+#import <QuartzCore/QuartzCore.h>
 #define kColumns 3
 
 
@@ -57,6 +58,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressUpdate:) name:LibraryProgressUpdateNotification object:library];
     library = [[Library alloc] init];
     
+    
 //    if([library isReady]) {
 //        [self showIssues];
 //    } else {
@@ -95,6 +97,7 @@
 
 
 -(void)assetUpdate:(NSNotification *)notification {
+    
     NSDictionary *dictionary = [notification userInfo];
     NSNumber *number = [dictionary objectForKey:@"Index"];
     NSInteger index = [number intValue];
@@ -148,7 +151,6 @@
 -(void)publisherFailed:(NSNotification *)not {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryDidUpdateNotification object:library];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LibraryFailedUpdateNotification object:library];
-    //NSLog(@"%@",not);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Cannot get issues from Server."
                                                    delegate:nil
@@ -169,8 +171,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    //NSLog(@"Rows: %d", [library numberOfIssues]);
     NSInteger count = [library numberOfIssues];
     NSInteger rowCount = (count + (kColumns -1)) / kColumns;
     //NSLog(@"Row Count: %d", rowCount);
@@ -179,6 +179,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   
     static NSString *CellIdentifier = @"IssueCell";
     IssueTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -195,6 +196,13 @@
         IssueView *issueView = [self issueView:i inCell:cell];
         [issueView setIssue:i withImage:image title:title andTap:tap];
         [issueView.coverButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
+        
+        // customize download/view label
+        CALayer *tapLayer = issueView.tap.layer;
+        tapLayer.cornerRadius = 8.0;
+        tapLayer.borderColor = [[UIColor whiteColor] CGColor];
+        tapLayer.borderWidth = 1.0;
+        
         //issueView.center = CGPointMake(cell.contentView.bounds.size.width * (i*2+1)/6.0, 
          //                              cell.contentView.bounds.size.height/2.0);
         //[cell.contentView addSubview:issueView];
@@ -307,7 +315,7 @@
         // show cell's progresss bar
         NSIndexPath *indexPath = [self indexPathForIssue:issueNumber];
         IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-        IssueView *issueView = [self issueView:(issueNumber/kColumns) inCell:cell];
+        IssueView *issueView = [self issueView:issueNumber inCell:cell];
         issueView.progressView.alpha = 1.0;
         issueView.tap.alpha = 0.0;
         [library downloadIssueAtIndex:issueNumber];
