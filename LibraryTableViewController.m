@@ -16,7 +16,9 @@
 
 
 @interface LibraryTableViewController ()
-@property (nonatomic,retain) Library *library;
+@property (nonatomic,strong) Library *library;
+@property (nonatomic,strong) UILongPressGestureRecognizer  *longPressGestureRecognizer;
+@property BOOL deleting;
 
 -(void)showIssues;
 -(void)loadIssues;
@@ -25,6 +27,7 @@
 
 @implementation LibraryTableViewController
 @synthesize library;
+@synthesize longPressGestureRecognizer, deleting;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -59,11 +62,8 @@
     library = [[Library alloc] init];
     
     
-//    if([library isReady]) {
-//        [self showIssues];
-//    } else {
-//        [self loadIssues];
-//    }
+    longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    self.deleting = NO;
 
 }
 
@@ -71,7 +71,7 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    longPressGestureRecognizer = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -159,6 +159,27 @@
     [alert show];
 }
 
+#pragma mark - Long Press Gesture
+
+// toggle the giggling of issues, show/hide delete button
+-(void)toggleGiggle {
+    NSArray *cells = [self.tableView visibleCells];
+    CGFloat theAlpha = self.deleting ? 1.0 : 0.0;
+
+    for (IssueTableCell *cell in cells) {
+        cell.issueView1.deleteImage.alpha = theAlpha;
+        cell.issueView2.deleteImage.alpha = theAlpha;
+        cell.issueView3.deleteImage.alpha = theAlpha;
+        
+    }
+    
+}
+
+-(void)longPress:(id)sender {
+    self.deleting = !self.deleting;
+    [self toggleGiggle];
+}
+
 
 #pragma mark - Table view data source
 
@@ -196,6 +217,10 @@
         IssueView *issueView = [self issueView:i inCell:cell];
         [issueView setIssue:i withImage:image title:title andTap:tap];
         [issueView.coverButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [issueView addGestureRecognizer:longPressGestureRecognizer];
+        [issueView.coverButton addSubview:issueView.deleteImage];
+        issueView.deleteImage.alpha = self.deleting ? 1.0 : 0.0;
         
         // customize download/view label
         CALayer *tapLayer = issueView.tap.layer;

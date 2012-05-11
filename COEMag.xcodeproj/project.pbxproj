@@ -21,6 +21,7 @@
 		AF9BC822154D9CCA00A623C1 /* IssueView.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC821154D9CCA00A623C1 /* IssueView.m */; };
 		AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA188B8153F136E007C9939 /* TiledPDFView.m */; };
 		AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA188BB153F1513007C9939 /* QuartzCore.framework */; };
+		AFA196FA155D700600EEABEE /* XButtonSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = AFA196F9155D700600EEABEE /* XButtonSmall.png */; };
 		AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFD2A7AC153E071D001A7ADD /* DataViewController.xib */; };
 		AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD4852D1538823B00B00D76 /* UIKit.framework */; };
 		AFD485301538823B00B00D76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD4852F1538823B00B00D76 /* Foundation.framework */; };
@@ -32,7 +33,6 @@
 		AFD485441538823B00B00D76 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD485431538823B00B00D76 /* DataViewController.m */; };
 		AFD485471538823B00B00D76 /* ModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFD485461538823B00B00D76 /* ModelController.m */; };
 		AFD4854A1538823B00B00D76 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFD485481538823B00B00D76 /* MainStoryboard.storyboard */; };
-		AFD4858D1538ADE700B00D76 /* 2012winter.pdf in Resources */ = {isa = PBXBuildFile; fileRef = AFD4858C1538ADE700B00D76 /* 2012winter.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +56,7 @@
 		AFA188B7153F136D007C9939 /* TiledPDFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledPDFView.h; sourceTree = "<group>"; };
 		AFA188B8153F136E007C9939 /* TiledPDFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TiledPDFView.m; sourceTree = "<group>"; };
 		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AFA196F9155D700600EEABEE /* XButtonSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XButtonSmall.png; sourceTree = "<group>"; };
 		AFD2A7AC153E071D001A7ADD /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataViewController.xib; path = COEMag/DataViewController.xib; sourceTree = "<group>"; };
 		AFD485291538823B00B00D76 /* COEMag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COEMag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD4852D1538823B00B00D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -74,7 +75,6 @@
 		AFD485451538823B00B00D76 /* ModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelController.h; path = COEMag/ModelController.h; sourceTree = "<group>"; };
 		AFD485461538823B00B00D76 /* ModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ModelController.m; path = COEMag/ModelController.m; sourceTree = "<group>"; };
 		AFD485491538823B00B00D76 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		AFD4858C1538ADE700B00D76 /* 2012winter.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 2012winter.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,8 +197,8 @@
 		AFD4858A1538ADC300B00D76 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AFA196F9155D700600EEABEE /* XButtonSmall.png */,
 				AF9BC81E154C3F7300A623C1 /* defaultCover.png */,
-				AFD4858C1538ADE700B00D76 /* 2012winter.pdf */,
 				AF5D61981545F2580014B8FD /* Issues.plist */,
 			);
 			name = Resources;
@@ -258,7 +258,6 @@
 			files = (
 				AFD485381538823B00B00D76 /* InfoPlist.strings in Resources */,
 				AFD4854A1538823B00B00D76 /* MainStoryboard.storyboard in Resources */,
-				AFD4858D1538ADE700B00D76 /* 2012winter.pdf in Resources */,
 				AFD2A7AD153E071D001A7ADD /* DataViewController.xib in Resources */,
 				AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */,
 				AF5D61911545CED80014B8FD /* Icon.png in Resources */,
@@ -266,6 +265,7 @@
 				AF5D61AD1547245F0014B8FD /* IssueTableCell.xib in Resources */,
 				AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */,
 				AF9BC81F154C3F7300A623C1 /* defaultCover.png in Resources */,
+				AFA196FA155D700600EEABEE /* XButtonSmall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +318,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -332,7 +333,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "07E033DD-2341-4206-A791-CAB3C177FBA6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -344,6 +346,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -351,8 +354,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "07E033DD-2341-4206-A791-CAB3C177FBA6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -366,6 +370,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -379,6 +384,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

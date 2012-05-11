@@ -9,9 +9,12 @@
 #import "Library.h"
 
 
-static NSString *const IssuesURL = @"http://www.cse.psu.edu/~hannan/Issues.plist";
-static NSString *const CoverURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/CoverImages/";
-static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/";
+static NSString *const IssuesURL = @"http://www.cse.psu.edu/~hannan/COE/Issues.plist";
+static NSString *const CoverURLBase = @"http://www.cse.psu.edu/~hannan/COE/Covers/";
+static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issues/";
+//static NSString *const CoverURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/CoverImages/";
+//static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/";
+
 
 @interface Library ()
 @property (nonatomic,strong) NSArray* issues;
