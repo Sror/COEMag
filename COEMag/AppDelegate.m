@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <NewsstandKit/NewsstandKit.h>
+#import "Library.h"
+
 
 @implementation AppDelegate
 
@@ -15,6 +18,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // when the app is relaunched, it is better to restore pending downloading assets as abandoned downloadings will be cancelled
+    NKLibrary *nkLib = [NKLibrary sharedLibrary];
+    NSArray *assets = [nkLib downloadingAssets];
+    if ([assets count] > 0) {
+        Library *library = [Library sharedInstance];
+        
+        for(NKAssetDownload *asset in assets) {
+            NSLog(@"Asset to download: %@",asset);
+            [asset downloadWithDelegate:library];            
+        }
+    }
+    
+    
+    
     return YES;
 }
 

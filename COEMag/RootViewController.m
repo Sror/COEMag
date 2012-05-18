@@ -380,6 +380,12 @@
    
 }
 
+
+-(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale{
+    //do any other stuff you may need to do.
+    [self.view setNeedsLayout];
+}
+
 /*
  // A UIScrollView delegate callback, called when the user stops zooming.  When the user stops zooming
  // we create a new TiledPDFView based on the new zoom level and draw it on top of the old TiledPDFView.
@@ -437,8 +443,7 @@
 // taps either show/hide toolbar or change pages, depending upon the x-coord of the touch
 -(void)handleTap:(id)sender {
     UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
-    NSLog(@"Tapped");
-    
+        
     CGPoint touchPoint = [tapGesture locationInView:self.view];
     CGFloat xCoord = touchPoint.x;
     CGFloat width = self.view.bounds.size.width;

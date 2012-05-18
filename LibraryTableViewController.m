@@ -35,7 +35,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        library = [[Library alloc] init];
+        library = [Library sharedInstance];
     }
     return self;
 }
@@ -62,7 +62,8 @@
     library = [[Library alloc] init];
     
     
-    longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    self.longPressGestureRecognizer.delegate = self;
     self.deleting = NO;
 
 }
@@ -107,7 +108,7 @@
     IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
     IssueView *issueView = [self issueView:index inCell:cell];
     issueView.progressView.alpha = 0.0;
-    issueView.tap.alpha = 1.0;
+    issueView.tapButton.alpha = 1.0;
 
     NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
     [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -159,25 +160,57 @@
     [alert show];
 }
 
-#pragma mark - Long Press Gesture
+#pragma mark - Gestures
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+  //  NSLog(@"Simultaneous");
+    return NO;
+}
 
 // toggle the giggling of issues, show/hide delete button
 -(void)toggleGiggle {
-    NSArray *cells = [self.tableView visibleCells];
+        NSArray *cells = [self.tableView visibleCells];
     CGFloat theAlpha = self.deleting ? 1.0 : 0.0;
+    //BOOL interact = self.deleting ? NO : YES;
 
     for (IssueTableCell *cell in cells) {
         cell.issueView1.deleteImage.alpha = theAlpha;
+        //cell.issueView1.coverButton.enabled = interact;
         cell.issueView2.deleteImage.alpha = theAlpha;
+        //cell.issueView2.coverButton.enabled = interact;
         cell.issueView3.deleteImage.alpha = theAlpha;
+        //cell.issueView3.coverButton.enabled = interact;
         
     }
     
 }
 
 -(void)longPress:(id)sender {
-    self.deleting = !self.deleting;
-    [self toggleGiggle];
+    UIGestureRecognizer *gesture = (UILongPressGestureRecognizer*)sender;
+        if (gesture.state == UIGestureRecognizerStateBegan) {
+        self.deleting = !self.deleting;
+        //[self toggleGiggle];
+        [self.tableView reloadData];
+    }
+    
+}
+
+-(void)tapToDelete:(id)sender {
+   
+    UIGestureRecognizer *gesture = (UITapGestureRecognizer*)sender;
+    UIView *buttonView = [gesture.view superview];  // the Button View contains the tag we want
+    NSInteger issue = buttonView.tag;
+    
+    
+    if ([library issueDownloadedAtIndex:issue]) {
+        [library deleteIssueAtIndex:issue];
+    }
+    
 }
 
 
@@ -217,33 +250,43 @@
         IssueView *issueView = [self issueView:i inCell:cell];
         [issueView setIssue:i withImage:image title:title andTap:tap];
         [issueView.coverButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
+        [issueView.tapButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
         
-        [issueView addGestureRecognizer:longPressGestureRecognizer];
-        [issueView.coverButton addSubview:issueView.deleteImage];
-        issueView.deleteImage.alpha = self.deleting ? 1.0 : 0.0;
+        if ([[issueView gestureRecognizers] count] == 0) {  // new cell
+            UILongPressGestureRecognizer *lp = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+            lp.delegate = self;
+            [issueView addGestureRecognizer:lp];
+            
+            [issueView.coverButton addSubview:issueView.deleteImage];
+            
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToDelete:)];
+            [issueView.deleteImage addGestureRecognizer:tapGesture];
+            
+            issueView.tapButton.showsTouchWhenHighlighted = YES;
+            CALayer *tapLayer = issueView.tapButton.layer;
+            tapLayer.cornerRadius = 7.0;
+            tapLayer.borderColor = [[UIColor whiteColor] CGColor];
+            tapLayer.borderWidth = 1.0;
+
+        }
         
-        // customize download/view label
-        CALayer *tapLayer = issueView.tap.layer;
-        tapLayer.cornerRadius = 8.0;
-        tapLayer.borderColor = [[UIColor whiteColor] CGColor];
-        tapLayer.borderWidth = 1.0;
-        
-        //issueView.center = CGPointMake(cell.contentView.bounds.size.width * (i*2+1)/6.0, 
-         //                              cell.contentView.bounds.size.height/2.0);
-        //[cell.contentView addSubview:issueView];
+        if (self.deleting) {
+            issueView.deleteImage.alpha = 1.0;
+            [UIView animateWithDuration:0.1 delay:0.0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse |UIViewAnimationOptionAllowUserInteraction)
+                             animations:^{issueView.coverButton.transform = CGAffineTransformMakeRotation(0.1);} 
+                             completion:nil];
+            //issueView.coverButton.enabled = NO;
+            //issueView.coverButton.adjustsImageWhenHighlighted = NO;
+            //issueView.deleteImage.userInteractionEnabled = YES;
+        } else {
+            issueView.deleteImage.alpha = 0.0;
+            issueView.coverButton.transform = CGAffineTransformIdentity;
+            
+            //issueView.coverButton.enabled = YES;
+            //issueView.coverButton.adjustsImageWhenHighlighted = YES;
+        }
     }
-    
-    /*
-    cell.title.text = [library titleOfIssueAtIndex:index];
-    if ([library issueDownloadedAtIndex:index]) {
-        cell.tap.text = @"View";
-    } else {
-        cell.tap.text = @"Download";
-    }
-    
-    cell.coverImageView.image = [library coverImageOfIssueAtIndex:index];
-    */
-    
+        
     return cell;
 }
 
@@ -318,6 +361,13 @@
 
 //user selects an issue (button) from the table View
 -(void)issueSelected:(id)sender {
+    
+    // ignore if we're in delete mode
+    if (self.deleting) {
+        return;
+    }
+    
+    
     UIButton *button = (UIButton*)sender;
     NSInteger issueNumber = button.tag;
     
@@ -336,13 +386,16 @@
         rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentModalViewController:rootViewController animated:YES];
-    } else {
+    } else if ([library currentlyDownloadingIssue:issueNumber])  {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"Currently downloading" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alertView show];
+        } else {
         // show cell's progresss bar
         NSIndexPath *indexPath = [self indexPathForIssue:issueNumber];
         IssueTableCell *cell = (IssueTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         IssueView *issueView = [self issueView:issueNumber inCell:cell];
         issueView.progressView.alpha = 1.0;
-        issueView.tap.alpha = 0.0;
+        issueView.tapButton.alpha = 0.0;
         [library downloadIssueAtIndex:issueNumber];
     }
 

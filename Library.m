@@ -9,6 +9,7 @@
 #import "Library.h"
 
 
+static NSString *const IssuesPlist = @"Issues.plist";
 static NSString *const IssuesURL = @"http://www.cse.psu.edu/~hannan/COE/Issues.plist";
 static NSString *const CoverURLBase = @"http://www.cse.psu.edu/~hannan/COE/Covers/";
 static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issues/";
@@ -26,20 +27,47 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 
 @implementation Library
 @synthesize  issues;
-@synthesize ready;
+//@synthesize ready;
 @synthesize coverImages;
+
+
+
++ (id)sharedInstance
+{
+	static id singleton = nil;
+	
+	if (singleton == nil) {
+		singleton = [[self alloc] init];
+    }
+	
+    return singleton;
+}
+
+
+- (NSString *)applicationDocumentsDirectory {
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+
 
 -(id)init {
     self = [super init];
     if(self) {
-        ready = NO;
+        
         issues = nil;
         
         issues = [[NSMutableArray alloc] initWithCapacity:75];
         
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(listReady:) name:LibraryDidUpdateNotification object:self];
+        NSString *path = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:IssuesPlist];
+        BOOL plistExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
         
+        // load existing plist if it exists
+        if (plistExists) {
+            issues = [NSMutableArray arrayWithContentsOfFile:path];
+            [self addIssues];
+        } 
+                
         
+        // download latest plist just to catch any updates
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:IssuesURL]];
         
         NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
@@ -51,24 +79,23 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
                                        NSError *error2;
                                        
                                        NSMutableDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListMutableContainers                                                                                                       format:NULL error:&error2];
-                                       //NSLog(@"dict: %@", dict);
+                                       
                                        issues = [dict objectForKey:@"Issues"];
-                                       //NSLog(@"Issues: %d", [issues count]);
+                                       if (![issues writeToFile:path atomically:NO]) {
+                                           NSLog(@"Issues plist not saved");
+                                       }
                                        [self addIssues];
-                                       
-                                       
-                                       
+                     
                                    } else {  
                                        NSLog(@"Failure"); 
-                                       // failure
-                                       //[[NSNotificationCenter defaultCenter] postNotificationName:LibraryFailedUpdateNotification object:issues];
                                    }
-                                   ready = YES;
+                                  
                                }];
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
     }
-    //NSLog(@"Library init");
+    
     return self;
 }
 
@@ -97,6 +124,8 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     
     for (NSMutableDictionary *dict in issues) {
         NSInteger index = [issues indexOfObject:dict];
+        [dict setObject:[NSNumber numberWithInt:index] forKey:@"Index"];  // might be useful
+        
         NSString *name = [dict objectForKey:@"Name"];
         NKIssue *nkIssue = [nkLib issueWithName:name];
         if(!nkIssue) {
@@ -214,6 +243,33 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     return downloaded;
 }
 
+-(void)deleteIssueAtIndex:(NSInteger)index {
+    NSMutableDictionary* issueDictionary = [issues objectAtIndex:index];
+    NSString *name = [issueDictionary objectForKey:@"Name"];
+    NSString *pdfName = [name stringByAppendingFormat:@".pdf"];
+    NKLibrary *nkLib = [NKLibrary sharedLibrary];
+    NKIssue *nkIssue = [nkLib issueWithName:name];
+    NSString *contentPath = [[nkIssue.contentURL path] stringByAppendingPathComponent:pdfName];
+    NSError *removeError=nil;
+    BOOL result = [[NSFileManager defaultManager] removeItemAtPath:contentPath error:&removeError];
+    if (result) {
+        [issueDictionary setObject:[NSNumber numberWithBool:NO] forKey:@"Downloaded"];  // no longer downloaded
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:LibraryAssetUpdateNotification object:self userInfo:issueDictionary];
+    } else {
+         NSLog(@"Error removing file %@",contentPath);
+    }
+    
+}
+
+-(BOOL)currentlyDownloadingIssue:(NSInteger)index {
+    NSMutableDictionary* issueDictionary = [issues objectAtIndex:index];
+    NSString *name = [issueDictionary objectForKey:@"Name"];
+    
+    NKLibrary *nkLib = [NKLibrary sharedLibrary];
+    NKIssue *nkIssue = [nkLib issueWithName:name];
+    return  ([nkIssue status] == NKIssueContentStatusDownloading);
+}
 
 -(void)downloadIssueAtIndex:(NSInteger)index {
     //NKIssue *nkIssue = [self issueAtIndex:index];
@@ -291,6 +347,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 }
 
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
+    [self connection:connection didWriteData:0 totalBytesWritten:totalBytesWritten expectedTotalBytes:expectedTotalBytes];
     
 }
 

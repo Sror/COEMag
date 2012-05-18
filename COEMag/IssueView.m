@@ -12,7 +12,7 @@
 #define kFrameHeight 180
 
 @implementation IssueView
-@synthesize coverButton,title,tap,progressView, deleteImage;
+@synthesize coverButton,title, tapButton, progressView, deleteImage;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -68,13 +68,18 @@
 -(void)setIssue:(NSInteger)issue withImage:(UIImage*)anImage title:(NSString*)aTitle andTap:(NSString*)aTap {
     [self.coverButton setImage:anImage forState:UIControlStateNormal];
     self.coverButton.tag = issue;  // tagged so action knows which issue to selected
+    self.tapButton.tag = issue;    //  ""
     self.title.text = aTitle;
-    self.tap.text = aTap;
+    [self.tapButton setTitle:aTap forState:UIControlStateNormal];
     
-    // add a delete button
-    UIImage *image = [UIImage imageNamed:@"XButtonSmall.png"];
-    self.deleteImage = [[UIImageView alloc] initWithImage:image];
-    self.deleteImage.center = CGPointMake(10.0, 10.0);
+    // add a delete button if not one already
+    if (!self.deleteImage) {
+        UIImage *image = [UIImage imageNamed:@"XButtonSmall.png"];
+        self.deleteImage = [[UIImageView alloc] initWithImage:image];
+        self.deleteImage.userInteractionEnabled = YES;
+        self.deleteImage.center = CGPointMake(10.0, 10.0);
+    }
+    
     
 }
 

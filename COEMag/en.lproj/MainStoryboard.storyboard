@@ -77,24 +77,29 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zeB-es-mBW">
-                                                    <rect key="frame" x="35" y="183" width="100" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" id="E7c-xR-sKJ">
                                                     <rect key="frame" x="10" y="189" width="150" height="9"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </progressView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DH0-qx-AFj">
+                                                    <rect key="frame" x="35" y="184" width="100" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Title">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <connections>
                                                 <outlet property="coverButton" destination="GY2-Y9-cQD" id="bAY-Lo-lB5"/>
                                                 <outlet property="progressView" destination="E7c-xR-sKJ" id="TEZ-Hj-I74"/>
-                                                <outlet property="tap" destination="zeB-es-mBW" id="vrM-oC-cqe"/>
+                                                <outlet property="tapButton" destination="DH0-qx-AFj" id="67x-ed-LeC"/>
                                                 <outlet property="title" destination="uHe-a7-nLA" id="2Ti-Uf-jEo"/>
                                             </connections>
                                         </view>
@@ -121,24 +126,29 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="rzb-u7-s6U">
-                                                    <rect key="frame" x="35" y="183" width="100" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" id="f6r-Ru-A1n">
                                                     <rect key="frame" x="10" y="189" width="150" height="9"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </progressView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2Op-jx-YYR">
+                                                    <rect key="frame" x="35" y="184" width="100" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Title">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <connections>
                                                 <outlet property="coverButton" destination="uo0-t6-1ZS" id="ic0-jE-IoO"/>
                                                 <outlet property="progressView" destination="f6r-Ru-A1n" id="Eca-TV-xBG"/>
-                                                <outlet property="tap" destination="rzb-u7-s6U" id="gCc-sd-DXH"/>
+                                                <outlet property="tapButton" destination="2Op-jx-YYR" id="cKd-qp-0u9"/>
                                                 <outlet property="title" destination="cwW-q8-4bv" id="cHy-85-0Ko"/>
                                             </connections>
                                         </view>
@@ -165,24 +175,29 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xdn-Tw-02m">
-                                                    <rect key="frame" x="35" y="183" width="100" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" id="5QO-0c-MSf">
                                                     <rect key="frame" x="10" y="189" width="150" height="9"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </progressView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="QW7-SN-gGz">
+                                                    <rect key="frame" x="35" y="184" width="100" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Title">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <connections>
                                                 <outlet property="coverButton" destination="I3Y-1M-V1B" id="BOZ-mq-NZ6"/>
                                                 <outlet property="progressView" destination="5QO-0c-MSf" id="BjN-gm-AEu"/>
-                                                <outlet property="tap" destination="xdn-Tw-02m" id="42u-pe-mza"/>
+                                                <outlet property="tapButton" destination="QW7-SN-gGz" id="HyT-Ug-zb3"/>
                                                 <outlet property="title" destination="BMz-uN-EJO" id="vzM-85-ttf"/>
                                             </connections>
                                         </view>

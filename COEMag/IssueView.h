@@ -12,7 +12,8 @@
 
 @property (strong,nonatomic) IBOutlet UIButton *coverButton;
 @property (strong,nonatomic) IBOutlet UILabel *title;
-@property (strong,nonatomic) IBOutlet UILabel *tap;
+//@property (strong,nonatomic) IBOutlet UILabel *tap;
+@property (strong,nonatomic) IBOutlet UIButton *tapButton;
 @property (strong,nonatomic) IBOutlet UIProgressView *progressView;
 @property (strong,nonatomic) IBOutlet UIImageView *deleteImage;
 

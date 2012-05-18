@@ -36,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF2FF630156689A90092407B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		AF2FF631156689A90092407B /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		AF5D61921545D43A0014B8FD /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
@@ -129,6 +131,8 @@
 		AF5D61A71546FD960014B8FD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AF2FF630156689A90092407B /* Reachability.h */,
+				AF2FF631156689A90092407B /* Reachability.m */,
 				AF5D61A81546FDD50014B8FD /* Library.h */,
 				AF5D61A91546FDD50014B8FD /* Library.m */,
 				AFD485451538823B00B00D76 /* ModelController.h */,

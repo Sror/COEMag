@@ -122,6 +122,27 @@
 	
 }
 
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    /* 
+     EDIT: After some additional experimentation, 
+     I Have found that you can modify this number to .5 but you need
+     to check to make sure you are working on a 3rd gen iPad. This
+     seems to improve performance even further.
+     */
+    
+    // Check if app is running on iPad 3rd Gen otherwise set contentScaleFactor to 1
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0)) {
+        // Retina display
+        self.contentScaleFactor = 0.5;
+    } else {
+        // non-Retina display
+        self.contentScaleFactor = 1.0;
+    }
+    
+}
+
 // Clean up.
 - (void)dealloc {
 	CGPDFPageRelease(pdfPage);
