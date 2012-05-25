@@ -21,6 +21,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 @property (nonatomic,strong) NSArray* issues;
 @property (nonatomic,strong) NSMutableDictionary* coverImages;
 -(void)addIssues;
+
 -(NSURL*)urlForIssue:(NKIssue*)nkIssue;
 -(NSString *)downloadPathForAsset:(NKAssetDownload *)nkAsset;
 @end
@@ -68,32 +69,9 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
                 
         
         // download latest plist just to catch any updates
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:IssuesURL]];
+        [self checkForIssues];
         
-        NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-        
-        [NSURLConnection sendAsynchronousRequest:urlRequest queue:operationQueue 
-                               completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){
-                                   [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                                   if (data) { // success
-                                       NSError *error2;
-                                       
-                                       NSMutableDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListMutableContainers                                                                                                       format:NULL error:&error2];
-                                       
-                                       issues = [dict objectForKey:@"Issues"];
-                                       if (![issues writeToFile:path atomically:NO]) {
-                                           NSLog(@"Issues plist not saved");
-                                       }
-                                       [self addIssues];
-                     
-                                   } else {  
-                                       NSLog(@"Failure"); 
-                                   }
-                                  
-                               }];
-        
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
+                
     }
     
     return self;
@@ -114,6 +92,38 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
                           [NSNumber numberWithInt:index],@"Index", 
                           name, @"Name", nil]];
     return nkAsset;
+}
+
+
+// download latest issues plist and update library
+-(void)checkForIssues {
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:IssuesURL]];
+    
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+    
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:operationQueue 
+                           completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){
+                               [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                               if (data) { // success
+                                   NSError *error2;
+                                   
+                                   NSMutableDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListMutableContainers                                                                                                       format:NULL error:&error2];
+                                   
+                                   issues = [dict objectForKey:@"Issues"];
+                                   NSString *path = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:IssuesPlist];
+                                   if (![issues writeToFile:path atomically:NO]) {
+                                       NSLog(@"Issues plist not saved");
+                                   }
+                                   [self addIssues];
+                                   
+                               } else {  
+                                   NSLog(@"Failure"); 
+                               }
+                               
+                           }];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
 }
 
 // We've just downloaded the list of issues;  add any that aren't in our library already.

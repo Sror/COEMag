@@ -80,6 +80,39 @@
         self.deleteImage.center = CGPointMake(10.0, 10.0);
     }
     
+    [self adjustFrame];
+}
+
+//adjust its horizontal position according to its tag (0,1,2) and superview's width - to support rotation
+-(void)adjustFrame {
+    //position issueViews according to width of cell
+    CGRect frame;
+    CGPoint origin;
+    CGFloat width = self.superview.bounds.size.width;
+    UIDeviceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIDeviceOrientationIsPortrait(orientation)) {
+        width = 768;
+    } else {
+        width = 1024;
+    }
+    //CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGFloat issueWidth = self.bounds.size.width;
+    frame = self.frame;
+    origin = frame.origin;
+    
+    origin.x = (self.tag+1)*width/4.0 - issueWidth/2.0;
+   
+    frame.origin = origin;
+    self.frame = frame;
+    
+}
+
+-(void)prepareForReuse {
+    [self.coverButton setImage:nil forState:UIControlStateNormal];
+    self.title.text = @"";
+    [self.tapButton setTitle:@"" forState:UIControlStateNormal];
+    [self.coverButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [self.tapButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     
 }
 

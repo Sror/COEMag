@@ -17,8 +17,17 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth; // | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin; 
+        self.autoresizesSubviews=YES;
     }
     return self;
+}
+
+
+-(void)prepareForReuse {
+    [self.issueView1 prepareForReuse];
+    [self.issueView2 prepareForReuse];
+    [self.issueView3 prepareForReuse];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

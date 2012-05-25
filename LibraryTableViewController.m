@@ -19,6 +19,7 @@
 @property (nonatomic,strong) Library *library;
 @property (nonatomic,strong) UILongPressGestureRecognizer  *longPressGestureRecognizer;
 @property BOOL deleting;
+@property NSInteger issueToDelete;
 
 -(void)showIssues;
 -(void)loadIssues;
@@ -27,7 +28,7 @@
 
 @implementation LibraryTableViewController
 @synthesize library;
-@synthesize longPressGestureRecognizer, deleting;
+@synthesize longPressGestureRecognizer, deleting, issueToDelete;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -77,7 +78,9 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [self.tableView reloadData];
+    return YES;
+//	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
@@ -112,6 +115,7 @@
 
     NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
     [self.tableView reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    //[self.tableView reloadData];
 }
 
 -(void)progressUpdate:(NSNotification *)notification {
@@ -208,9 +212,17 @@
     
     
     if ([library issueDownloadedAtIndex:issue]) {
-        [library deleteIssueAtIndex:issue];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"OK to delete issue?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        [alertView show];
+        self.issueToDelete = issue;
+        
     }
     
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"Button Index: %d", buttonIndex);
+    [library deleteIssueAtIndex:self.issueToDelete];
 }
 
 
@@ -236,6 +248,11 @@
    
     static NSString *CellIdentifier = @"IssueCell";
     IssueTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+   
+    cell.contentView.autoresizingMask=UIViewAutoresizingFlexibleWidth; //| UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin; 
+    cell.contentView.autoresizesSubviews=YES;
+    
+    
     
     // Configure the cell...
     NSInteger index = indexPath.row;

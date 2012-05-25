@@ -27,4 +27,6 @@
 
 -(CGPDFDocumentRef)PDFForIssueAtIndex:(NSInteger)index;
 
+-(void)checkForIssues;
+
 @end

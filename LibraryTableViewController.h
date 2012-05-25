@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "RootViewController.h"
 
-@interface LibraryTableViewController : UITableViewController <RootModal, UIGestureRecognizerDelegate>   
+@interface LibraryTableViewController : UITableViewController <RootModal, UIGestureRecognizerDelegate, UIAlertViewDelegate>   
 
 @end

@@ -19,4 +19,7 @@
 
 //-(id)initWithImage:(UIImage*)anImage title:(NSString*)aTitle andTap:(NSString*)aTap;
 -(void)setIssue:(NSInteger)issue withImage:(UIImage*)anImage title:(NSString*)aTitle andTap:(NSString*)aTap;
+
+-(void)prepareForReuse;
+
 @end
