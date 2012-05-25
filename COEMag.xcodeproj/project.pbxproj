@@ -60,14 +60,14 @@
 		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AFA196F9155D700600EEABEE /* XButtonSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XButtonSmall.png; sourceTree = "<group>"; };
 		AFD2A7AC153E071D001A7ADD /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataViewController.xib; path = COEMag/DataViewController.xib; sourceTree = "<group>"; };
-		AFD485291538823B00B00D76 /* COEMag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COEMag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD485291538823B00B00D76 /* TopPaidApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopPaidApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD4852D1538823B00B00D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AFD4852F1538823B00B00D76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AFD485311538823B00B00D76 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		AFD485351538823B00B00D76 /* COEMag-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "COEMag-Info.plist"; sourceTree = "<group>"; };
+		AFD485351538823B00B00D76 /* TopPaidApps-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TopPaidApps-Info.plist"; sourceTree = "<group>"; };
 		AFD485371538823B00B00D76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AFD485391538823B00B00D76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "COEMag-Prefix.pch"; sourceTree = "<group>"; };
+		AFD4853B1538823B00B00D76 /* TopPaidApps-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TopPaidApps-Prefix.pch"; sourceTree = "<group>"; };
 		AFD4853C1538823B00B00D76 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AFD4853D1538823B00B00D76 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AFD4853F1538823B00B00D76 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = COEMag/RootViewController.h; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 		AFD4852A1538823B00B00D76 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AFD485291538823B00B00D76 /* COEMag.app */,
+				AFD485291538823B00B00D76 /* TopPaidApps.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,10 +190,10 @@
 			children = (
 				AF5D61901545CED80014B8FD /* Icon.png */,
 				AF5D618D1545CED30014B8FD /* Icon@2x.png */,
-				AFD485351538823B00B00D76 /* COEMag-Info.plist */,
+				AFD485351538823B00B00D76 /* TopPaidApps-Info.plist */,
 				AFD485361538823B00B00D76 /* InfoPlist.strings */,
 				AFD485391538823B00B00D76 /* main.m */,
-				AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */,
+				AFD4853B1538823B00B00D76 /* TopPaidApps-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -212,9 +212,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AFD485281538823B00B00D76 /* COEMag */ = {
+		AFD485281538823B00B00D76 /* TopPaidApps */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "COEMag" */;
+			buildConfigurationList = AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "TopPaidApps" */;
 			buildPhases = (
 				AFD485251538823B00B00D76 /* Sources */,
 				AFD485261538823B00B00D76 /* Frameworks */,
@@ -224,9 +224,9 @@
 			);
 			dependencies = (
 			);
-			name = COEMag;
+			name = TopPaidApps;
 			productName = COEMag;
-			productReference = AFD485291538823B00B00D76 /* COEMag.app */;
+			productReference = AFD485291538823B00B00D76 /* TopPaidApps.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -238,7 +238,7 @@
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Penn State University";
 			};
-			buildConfigurationList = AFD485231538823B00B00D76 /* Build configuration list for PBXProject "COEMag" */;
+			buildConfigurationList = AFD485231538823B00B00D76 /* Build configuration list for PBXProject "TopPaidApps" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -250,7 +250,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AFD485281538823B00B00D76 /* COEMag */,
+				AFD485281538823B00B00D76 /* TopPaidApps */,
 			);
 		};
 /* End PBXProject section */
@@ -322,7 +322,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -338,7 +338,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "07E033DD-2341-4206-A791-CAB3C177FBA6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -350,7 +349,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -360,7 +359,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "07E033DD-2341-4206-A791-CAB3C177FBA6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -371,12 +369,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
-				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
+				GCC_PREFIX_HEADER = "COEMag/TopPaidApps-Prefix.pch";
+				INFOPLIST_FILE = "COEMag/TopPaidApps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TopPaidApps;
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -385,12 +385,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
-				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
+				GCC_PREFIX_HEADER = "COEMag/TopPaidApps-Prefix.pch";
+				INFOPLIST_FILE = "COEMag/TopPaidApps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TopPaidApps;
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -398,7 +400,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AFD485231538823B00B00D76 /* Build configuration list for PBXProject "COEMag" */ = {
+		AFD485231538823B00B00D76 /* Build configuration list for PBXProject "TopPaidApps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AFD4854B1538823B00B00D76 /* Debug */,
@@ -407,7 +409,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "COEMag" */ = {
+		AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "TopPaidApps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AFD4854E1538823B00B00D76 /* Debug */,
