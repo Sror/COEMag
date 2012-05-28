@@ -28,5 +28,6 @@
 -(CGPDFDocumentRef)PDFForIssueAtIndex:(NSInteger)index;
 
 -(void)checkForIssues;
+-(void)toggleIssuesToShow;
 
 @end

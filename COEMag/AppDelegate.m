@@ -27,13 +27,34 @@ static NSString *const host = @"http://www.cse.psu.edu/";
 {
     // Override point for customization after application launch.
     
+    // don't throttle - for testing purposes
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
+    
     // Add registration for remote notifications
 	[[UIApplication sharedApplication] 
-     registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+     registerForRemoteNotificationTypes: UIRemoteNotificationTypeNewsstandContentAvailability];
+     //(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 	
 	// Clear application badge when app launches
 	application.applicationIconBadgeNumber = 0;
 
+    // see if app was launched due to a remote notification - new issue ready!
+    NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(payload) {
+        // we'll simply add the issue to our table view
+        Library *library = [Library sharedInstance];
+        [library checkForIssues];
+        
+//        NSString *issueName = [payload objectForKey:@"issueName"];
+//        // schedule for issue downloading in background
+//        NKIssue *nkIssue = [[NKLibrary sharedLibrary] issueWithName:issueName];
+//        if(nkIssue) {
+//            NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-4.pdf"];
+//            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+//            NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
+//            [assetDownload downloadWithDelegate:store];
+//        }
+    }
     
     // when the app is relaunched, it is better to restore pending downloading assets as abandoned downloadings will be cancelled
     NKLibrary *nkLib = [NKLibrary sharedLibrary];
@@ -195,6 +216,8 @@ static NSString *const host = @"http://www.cse.psu.edu/";
     
     Library *library = [Library sharedInstance];
     [library checkForIssues];
+    
+    
 	
 #endif
 }

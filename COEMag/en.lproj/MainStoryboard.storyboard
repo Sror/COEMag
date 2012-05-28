@@ -218,7 +218,7 @@
                     </tableView>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-1167" y="-419"/>
+            <point key="canvasLocation" x="-1221" y="-417"/>
         </scene>
         <!--Data View Controller-->
         <scene sceneID="7">
@@ -236,39 +236,6 @@
             <point key="canvasLocation" x="1248" y="-251"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="DataViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DataViewController.h"/>
-        </class>
-        <class className="IssueTableCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IssueTableCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="issueView1" candidateClass="IssueView"/>
-                <relationship kind="outlet" name="issueView2" candidateClass="IssueView"/>
-                <relationship kind="outlet" name="issueView3" candidateClass="IssueView"/>
-            </relationships>
-        </class>
-        <class className="IssueView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IssueView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="coverButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="deleteImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="progressView" candidateClass="UIProgressView"/>
-                <relationship kind="outlet" name="tapButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LibraryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LibraryTableViewController.h"/>
-        </class>
-        <class className="RootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RootViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissMe:"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

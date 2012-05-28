@@ -16,6 +16,7 @@
 
 
 @interface LibraryTableViewController ()
+@property (nonatomic,strong) UIToolbar *toolbar;
 @property (nonatomic,strong) Library *library;
 @property (nonatomic,strong) UILongPressGestureRecognizer  *longPressGestureRecognizer;
 @property BOOL deleting;
@@ -27,6 +28,7 @@
 @end
 
 @implementation LibraryTableViewController
+@synthesize toolbar;
 @synthesize library;
 @synthesize longPressGestureRecognizer, deleting, issueToDelete;
 
@@ -52,7 +54,17 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    
+    // add a toolbar
+    CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 66.0);
+    self.toolbar = [[UIToolbar alloc] initWithFrame:frame];
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshTable)];
+    UIBarButtonItem *showingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(showingTable)];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedSpace.width = 200.0;
+    self.toolbar.items = [NSArray arrayWithObjects:fixedSpace, refreshButton, flexSpace, showingButton, fixedSpace, nil];
+    self.toolbar.barStyle = UIBarStyleBlackTranslucent;
+    self.tableView.tableHeaderView = toolbar;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
@@ -73,8 +85,23 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    longPressGestureRecognizer = nil;
+    self.toolbar = nil;
+    self.longPressGestureRecognizer = nil;
 }
+
+#pragma mark - Toolbar Actions
+
+-(void)refreshTable {
+    [library checkForIssues];
+}
+
+// toggle datasource - show all issues or just downloaded ones
+-(void)showingTable {
+    [library toggleIssuesToShow];
+    [self.tableView reloadData];
+}
+
+#pragma  mark - Autorotation
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -239,7 +266,6 @@
 {
     NSInteger count = [library numberOfIssues];
     NSInteger rowCount = (count + (kColumns -1)) / kColumns;
-    //NSLog(@"Row Count: %d", rowCount);
     return rowCount;
 }
 
@@ -348,6 +374,7 @@
 
 #pragma mark - Table view delegate
 
+
 /*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -404,7 +431,7 @@
         rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentModalViewController:rootViewController animated:YES];
     } else if ([library currentlyDownloadingIssue:issueNumber])  {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"Currently downloading" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Currently downloading" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
         } else {
         // show cell's progresss bar

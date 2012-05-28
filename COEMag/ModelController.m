@@ -34,7 +34,7 @@
 @end
 
 @implementation ModelController
-
+@synthesize orientation;
 @synthesize pageData;
 @synthesize page, pdf, pdfScale;
 @synthesize count;
@@ -45,12 +45,14 @@
     self = [super init];
     if (self) {
         
+        //set the orientation
+        self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
         
         // Open the PDF document
 		//NSURL *pdfURL = [[NSBundle mainBundle] URLForResource:@"2012winter.pdf" withExtension:nil];
 		//pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)pdfURL);
         self.pdf = thePDF;
-        count = CGPDFDocumentGetNumberOfPages(self.pdf);
+        self.count = CGPDFDocumentGetNumberOfPages(self.pdf);
         
         // Create the Model
         pageData = [[NSMutableArray alloc] initWithCapacity:(count+1)];  // page numbering starts at 1
@@ -67,6 +69,10 @@
         
     }
     return self;
+}
+
+-(NSInteger)pageCount {
+    return self.count;
 }
 
 -(NSArray *) thumbnailViews {
@@ -115,7 +121,16 @@
     DataViewController *dataViewController;
     
     if (index==0 || index >= [self.pageData count]) {
-        dataViewController = [[DataViewController alloc] init];  //blank
+        //dataViewController = [[DataViewController alloc] init];  //blank
+        
+        
+        if (UIDeviceOrientationIsLandscape(orientation)) {
+            dataViewController = [[DataViewController alloc] init];  //blank
+        } else {
+            dataViewController = nil;  // no extra pages in portrait mode
+        }
+        
+        
     } else if ([pageData objectAtIndex:index] == [NSNull null]) {
             // Create a new view controller and pass suitable data.
             CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
@@ -143,12 +158,13 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
+    
     NSUInteger index = [self indexOfViewController:(DataViewController *)viewController];
     if (index == NSNotFound) {
         return nil;
     }
-    
     index--;
+    
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 

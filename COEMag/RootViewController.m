@@ -48,6 +48,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.
     
+    self.view.backgroundColor = [UIColor greenColor];
+    
     // set up the top-level scroll view for zooming
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     // Set up the UIScrollView
@@ -62,19 +64,43 @@
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.scrollView];
     
+    //NSLog(@"Scrollview bounds: %f,%f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    
+    // determine spine position for pageViewController
+    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    NSNumber *spine = [NSNumber numberWithInt:(UIDeviceOrientationIsLandscape(orientation)? UIPageViewControllerSpineLocationMid : UIPageViewControllerSpineLocationMin)];
+    
+    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: spine, UIPageViewControllerOptionSpineLocationKey, nil];
+       
+    
     // set up the PageViewController
-    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:options];
     self.pageViewController.delegate = self;
     //NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
     
+    // start on page 1
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:1 storyboard:self.storyboard];
-    NSArray *viewControllers = [NSArray arrayWithObject:startingViewController];
+    
+    // Portrait or Landscape
+    NSArray *viewControllers;
+    
+    if (UIDeviceOrientationIsLandscape(orientation)) {
+        DataViewController *blankViewController = [[DataViewController alloc] init];
+        viewControllers = [NSArray arrayWithObjects:blankViewController,startingViewController,nil];
+    } else {
+        viewControllers = [NSArray arrayWithObject:startingViewController];
+    }
+    
+    
+    
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
     
     self.pageViewController.dataSource = self.modelController;
     
     [self addChildViewController:self.pageViewController];
     [self.scrollView addSubview:self.pageViewController.view];
+    
+    //NSLog(@"PageView: %f,%f", self.pageViewController.view.bounds.size.width, self.pageViewController.view.bounds.size.height);
     
     // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
 //    CGRect pageViewRect = self.view.bounds;
@@ -85,7 +111,12 @@
     
     // Add the thumbnail scroll view
     CGRect bounds = self.view.bounds;
-    CGRect frame = CGRectMake(0.0, bounds.size.height-kthumbnailScrollViewHeight, bounds.size.width, kthumbnailScrollViewHeight);
+    CGFloat yCoord = bounds.size.height-kthumbnailScrollViewHeight;
+    CGFloat xCoord = bounds.size.width-kthumbnailScrollViewHeight;
+    if (UIDeviceOrientationIsLandscape(orientation) && xCoord < yCoord)
+        yCoord = xCoord;  // seems like a hack
+    CGRect frame = CGRectMake(0.0, yCoord, bounds.size.width, kthumbnailScrollViewHeight);
+       
     self.thumbnailScrollView = [[UIScrollView alloc] initWithFrame:frame];
     self.thumbnailScrollView.backgroundColor = [UIColor lightGrayColor];
     self.thumbnailScrollView.alpha = 0.6;
@@ -125,9 +156,23 @@
     self.pageViewController = nil;
 }
 
+
+
+//-(void)viewDidAppear:(BOOL)animated {
+//    // see if we're in landscape mode & need to move spine
+//    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation; //[UIDevice currentDevice].orientation;
+//    if (UIDeviceOrientationIsLandscape(orientation)) {
+//        [self pageViewController:self.pageViewController spineLocationForInterfaceOrientation:orientation];
+//    }
+//}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    self.modelController.orientation = toInterfaceOrientation;
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -184,11 +229,12 @@
     NSInteger count = [thumbnailViews count];
     
     UIImageView *leftImage;
+    UIImageView *rightImage;
     
     BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
     
     if (!portrait) {
-        count = (count+1)/2;   // 2 thumbnails per page
+        count = (count)/2 +1;   // 2 thumbnails per page
     }
     self.thumbnailScrollView.contentSize = CGSizeMake((count * (portrait? 2:3)+1) * width, self.thumbnailScrollView.bounds.size.height);
         
@@ -205,14 +251,19 @@
             } else { // landscape
                 
                 
-                
+                // special case for cover page
                 if (i==0) {
                     leftImage = nil;
                 } else {
                     leftImage = [thumbnailViews objectAtIndex:(2*i-1)];
                 }
                 leftImage.frame = leftFrame;
-                UIImageView *rightImage = [thumbnailViews objectAtIndex:(2*i)];
+                if (i<count-1) {
+                    rightImage = [thumbnailViews objectAtIndex:(2*i)];
+                } else {
+                    rightImage = nil;
+                }
+                
                 rightImage.frame = rightFrame;
                 frame = doubleBounds;
                 frame = [self frameForThumbnailAtIndex:i isPortrait:NO];     //CGRectMake((3*i+1)*width, 10.0, frame.size.width, frame.size.height);
@@ -235,7 +286,7 @@
             if (portrait) {
                 pageLabel.text = [NSString stringWithFormat:@"Page %d", i+1];
             } else {
-                if (i==0) {
+                if (i==0 || i==count-1) {
                     pageLabel.text = @"";
                 } else {
                     pageLabel.text = [NSString stringWithFormat:@"Pages %d,%d", 2*i,2*i+1];
@@ -315,7 +366,11 @@
 {
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         // In portrait orientation: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to YES, so set it to NO here.
-        UIViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        DataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        if ([currentViewController isBlank]) {  // we're currently showing blank/cover pages
+            currentViewController = [self.pageViewController.viewControllers objectAtIndex:1];
+        }
+        
         NSArray *viewControllers = [NSArray arrayWithObject:currentViewController];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
         
@@ -453,10 +508,29 @@
 
         BOOL previous = (xCoord <= 0.2*width);
         BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
-        DataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        //NSArray *viewControllers = self.pageViewController.viewControllers;
+        
+        DataViewController *currentViewController;
+        if (portrait || previous) {
+            currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        } else {
+            currentViewController = [self.pageViewController.viewControllers objectAtIndex:1];
+        }
         NSInteger page = [self.modelController indexOfViewController:currentViewController];
+        
+        
+        
+        // No previous page to page 1
+        if (previous && page==1) {
+            return;
+        }
+        // No next page to last page
+        if (!previous && page == [self.modelController pageCount]) {
+            return;
+        }
+        
         NSInteger pageDelta = (portrait ? 1 : 2);
-        NSInteger newPage = (previous ? page - pageDelta : page + pageDelta);
+        NSInteger newPage = (previous ? page - pageDelta : page + 1);
         
          UIPageViewControllerNavigationDirection direction;
         if (previous) {

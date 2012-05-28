@@ -15,4 +15,5 @@
 //@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 -(id)initWithPage:(CGPDFPageRef)p;
 -(void)loadPage;
+-(BOOL)isBlank;
 @end

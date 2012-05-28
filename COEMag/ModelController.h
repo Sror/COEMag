@@ -12,10 +12,13 @@
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
+@property UIDeviceOrientation orientation;
+
 -(id)initWithPDF:(CGPDFDocumentRef)pdf;
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index;
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
 - (NSArray *)thumbnailViews;
+-(NSInteger)pageCount;
 
 @end

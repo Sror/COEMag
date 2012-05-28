@@ -43,11 +43,12 @@
     if (self) {
         self.page = p;
         self.nonempty = YES;
-        
-        
-        
     }
     return self;
+}
+
+-(BOOL)isBlank {
+    return !nonempty;
 }
 
 - (void)viewDidLoad
@@ -55,7 +56,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     //hide the toolbar
-    
+    self.view.backgroundColor = [UIColor redColor];
     
 }
 
@@ -121,6 +122,7 @@
         // Create the TiledPDFView based on the size of the PDF page and scale it to fit the view.
 		//pdfView = [[TiledPDFView alloc] initWithFrame:pageRect andScale:pdfScale];
         pdfView = [[TiledPDFView alloc] initWithPage:page withWidth:self.view.frame.size.width];
+        
 		[pdfView setPage:page];
 		
 		[self.view addSubview:pdfView];

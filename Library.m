@@ -19,6 +19,8 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 
 @interface Library ()
 @property (nonatomic,strong) NSArray* issues;
+@property (nonatomic,strong) NSMutableArray *downloadedIssuesIndices;
+@property BOOL showAllIssues;
 @property (nonatomic,strong) NSMutableDictionary* coverImages;
 -(void)addIssues;
 
@@ -27,7 +29,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 @end
 
 @implementation Library
-@synthesize  issues;
+@synthesize  issues, downloadedIssuesIndices, showAllIssues;
 //@synthesize ready;
 @synthesize coverImages;
 
@@ -54,22 +56,26 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     self = [super init];
     if(self) {
         
-        issues = nil;
+        self.issues = nil;
         
-        issues = [[NSMutableArray alloc] initWithCapacity:75];
+        self.issues = [[NSMutableArray alloc] initWithCapacity:75];
+        self.downloadedIssuesIndices = [[NSMutableArray alloc] initWithCapacity:75];
         
+        self.showAllIssues = YES;
         NSString *path = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:IssuesPlist];
         BOOL plistExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
         
         // load existing plist if it exists
         if (plistExists) {
-            issues = [NSMutableArray arrayWithContentsOfFile:path];
+            self.issues = [NSMutableArray arrayWithContentsOfFile:path];
+            
+            
             [self addIssues];
         } 
                 
         
         // download latest plist just to catch any updates
-        [self checkForIssues];
+        //[self checkForIssues];
         
                 
     }
@@ -132,8 +138,10 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     
     NKLibrary *nkLib = [NKLibrary sharedLibrary];
     
-    for (NSMutableDictionary *dict in issues) {
+    for (NSMutableDictionary *dict in self.issues) {
         NSInteger index = [issues indexOfObject:dict];
+        
+        
         [dict setObject:[NSNumber numberWithInt:index] forKey:@"Index"];  // might be useful
         
         NSString *name = [dict objectForKey:@"Name"];
@@ -169,26 +177,49 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
             
             BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[issueURL path]];
             [dict setObject:[NSNumber numberWithBool:fileExists] forKey:@"Downloaded"];
-            
+            if (fileExists) {
+               
+                [self.downloadedIssuesIndices addObject:[NSNumber numberWithInt:index]];
+            }
         }
         
        // NSLog(@"Issue: %@",[nkIssue description]);
         }
-    //NSLog(@"Number of Issues: %d,%d", [self numberOfIssues],[[nkLib issues] count]);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidUpdateNotification object:self];
     
 }
 
--(NSInteger)numberOfIssues {
-    return [issues count];
+-(void)addDownloadedIssuesIndex:(NSInteger)index {
+    int i;
+    for (i=0; i<[downloadedIssuesIndices count] && [[downloadedIssuesIndices objectAtIndex:i] intValue]<index; i++) {
+        ;
+    }
+    [downloadedIssuesIndices insertObject:[NSNumber numberWithInt:index] atIndex:i];
 }
-//-(NSInteger)numberOfIssues {
-//    NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
-//    return [[nkLibrary issues] count];
-//}
 
+-(void)removeDownloadedIssuesIndex:(NSInteger)index {
+    [downloadedIssuesIndices removeObject:[NSNumber numberWithInt:index]];
+}
+
+-(NSInteger)numberOfIssues {
+    if (self.showAllIssues) {
+        return [self.issues count];
+    } else {
+        return [self.downloadedIssuesIndices count];
+    }
+    
+}
+
+-(NSInteger)convertIndex:(NSInteger)index {
+    if (!showAllIssues) {
+        index = [[downloadedIssuesIndices objectAtIndex:index] intValue];
+    }
+    return index;
+}
 
 -(NKIssue *)issueAtIndex:(NSInteger)index {
+    index = [self convertIndex:index];
     NSDictionary *issueDictionary = [issues objectAtIndex:index];
     NSString *name = [issueDictionary objectForKey:@"Name"];
     NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
@@ -248,12 +279,15 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 }
 
 -(BOOL)issueDownloadedAtIndex:(NSInteger)index {
+    index = [self convertIndex:index];
+    
     NSDictionary* issueDictionary = [issues objectAtIndex:index];
     BOOL downloaded = [[issueDictionary objectForKey:@"Downloaded"] boolValue];
     return downloaded;
 }
 
 -(void)deleteIssueAtIndex:(NSInteger)index {
+    index = [self convertIndex:index];
     NSMutableDictionary* issueDictionary = [issues objectAtIndex:index];
     NSString *name = [issueDictionary objectForKey:@"Name"];
     NSString *pdfName = [name stringByAppendingFormat:@".pdf"];
@@ -273,6 +307,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 }
 
 -(BOOL)currentlyDownloadingIssue:(NSInteger)index {
+    index = [self convertIndex:index];
     NSMutableDictionary* issueDictionary = [issues objectAtIndex:index];
     NSString *name = [issueDictionary objectForKey:@"Name"];
     
@@ -282,6 +317,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 }
 
 -(void)downloadIssueAtIndex:(NSInteger)index {
+    index = [self convertIndex:index];
     //NKIssue *nkIssue = [self issueAtIndex:index];
     NSMutableDictionary* issueDictionary = [issues objectAtIndex:index];
     NSString *name = [issueDictionary objectForKey:@"Name"];
@@ -310,6 +346,9 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     
 }
 
+-(void)updateIcon:(NSString *)iconPath {
+    
+}
 
 #pragma mark - NSURLConnectionDownloadDelegate Protocol
 -(void)updateProgressOfConnection:(NSURLConnection *)connection withTotalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
@@ -349,11 +388,16 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     if([[NSFileManager defaultManager] moveItemAtPath:[destinationURL path] toPath:contentPath error:&moveError]==NO) {
         NSLog(@"Error copying file from %@ to %@",destinationURL,contentPath);
     } else {
-        //NSLog(@"Copied file from %@ to %@",destinationURL,contentPath);
+        NSLog(@"Copied file from %@ to %@",destinationURL,contentPath);
         [[NSNotificationCenter defaultCenter] postNotificationName:LibraryAssetUpdateNotification object:self userInfo:dictionary];
     }
-    //[table_ reloadData];
-
+    
+    NSNumber *number = [dictionary objectForKey:@"Index"];
+    NSInteger index = [number intValue];
+    if (index == 0) {
+        [self updateIcon:contentPath];
+    }
+    
 }
 
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes {
@@ -380,8 +424,13 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 -(CGPDFDocumentRef)PDFForIssueAtIndex:(NSInteger)index {
     NKIssue *nkIssue = [self issueAtIndex:index];
     NSURL *issueURL = [self urlForIssue:nkIssue];
+    NSLog(@"Getting pdf from %@", issueURL);
     CGPDFDocumentRef pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)issueURL);
     return pdf;
+}
+
+-(void)toggleIssuesToShow {
+    self.showAllIssues = !self.showAllIssues;
 }
 
 @end
