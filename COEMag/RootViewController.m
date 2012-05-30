@@ -48,8 +48,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.
     
-    self.view.backgroundColor = [UIColor greenColor];
-    
+        
     // set up the top-level scroll view for zooming
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     // Set up the UIScrollView

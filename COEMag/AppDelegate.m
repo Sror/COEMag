@@ -41,9 +41,13 @@ static NSString *const host = @"http://www.cse.psu.edu/";
     // see if app was launched due to a remote notification - new issue ready!
     NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if(payload) {
-        // we'll simply add the issue to our table view
+        //get new issue name from payload
+        NSDictionary *aps = [payload objectForKey:@"aps"];
+        
+        NSString *issueName = [aps objectForKey:@"Name"];
+        NSLog(@"Name: %@", issueName);
         Library *library = [Library sharedInstance];
-        [library checkForIssues];
+        [library addAndDownloadIssueNamed:issueName];
         
 //        NSString *issueName = [payload objectForKey:@"issueName"];
 //        // schedule for issue downloading in background
@@ -213,6 +217,11 @@ static NSString *const host = @"http://www.cse.psu.edu/";
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Issue Available" message:@"Download from Library" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alertView show];
+    
+    NSLog(@"User Info: %@", userInfo);
+    NSDictionary *aps = [userInfo objectForKey:@"aps"];
+    NSString *name = [aps objectForKey:@"Name"];
+    NSLog(@"New Issue: %@", name);
     
     Library *library = [Library sharedInstance];
     [library checkForIssues];

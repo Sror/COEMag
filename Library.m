@@ -18,7 +18,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
 
 
 @interface Library ()
-@property (nonatomic,strong) NSArray* issues;
+@property (nonatomic,strong) NSMutableArray* issues;
 @property (nonatomic,strong) NSMutableArray *downloadedIssuesIndices;
 @property BOOL showAllIssues;
 @property (nonatomic,strong) NSMutableDictionary* coverImages;
@@ -77,6 +77,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
         // download latest plist just to catch any updates
         //[self checkForIssues];
         
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompleted:) name:NKIssueDownloadCompletedNotification object:nil];
                 
     }
     
@@ -137,12 +138,13 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
    // coverImages = [[NSMutableDictionary alloc] initWithCapacity:[issuesList count]];
     
     NKLibrary *nkLib = [NKLibrary sharedLibrary];
+    NSLog(@"Count: %d", [[nkLib issues] count]);
     
     for (NSMutableDictionary *dict in self.issues) {
         NSInteger index = [issues indexOfObject:dict];
         
         
-        [dict setObject:[NSNumber numberWithInt:index] forKey:@"Index"];  // might be useful
+        //[dict setObject:[NSNumber numberWithInt:index] forKey:@"Index"];  // might be useful;  maybe not?  5/28/12
         
         NSString *name = [dict objectForKey:@"Name"];
         NKIssue *nkIssue = [nkLib issueWithName:name];
@@ -153,7 +155,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
             NKAssetDownload *nkAssetCover = [self nkAssetForIssue:nkIssue withName:imageName urlBase:CoverURLBase atIndex:index];
             
             
-            [dict setObject:nkAssetCover forKey:@"CoverAsset"];
+            //[dict setObject:nkAssetCover forKey:@"CoverAsset"];  // never used
             
             [dict setObject:[NSNumber numberWithBool:NO] forKey:@"Downloaded"];
             
@@ -185,6 +187,9 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
         
        // NSLog(@"Issue: %@",[nkIssue description]);
         }
+    
+    NSArray *myIssues = [nkLib issues];
+    NSLog(@"Issues: %@", myIssues);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidUpdateNotification object:self];
     
@@ -316,6 +321,29 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     return  ([nkIssue status] == NKIssueContentStatusDownloading);
 }
 
+-(void)addAndDownloadIssueNamed:(NSString *)issueName {
+    NSDate *dateNow = [NSDate date];
+    NSInteger index = 0;  // new issue will be at index 0
+    
+    //add to issues array
+    NSDictionary *issueDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:issueName, @"Name", dateNow, @"Date", [NSNumber numberWithBool:NO], @"Downloaded", nil];
+    [issues insertObject:issueDictionary atIndex:index];  // newest entry is first one
+    
+    //create the issue in the library
+    NKLibrary *nkLib = [NKLibrary sharedLibrary];
+    NKIssue *nkIssue = [nkLib addIssueWithName:issueName date:dateNow];
+    
+    //download cover
+    NSString *imageName = [issueName stringByAppendingString:@".jpg"];
+    NKAssetDownload *nkAssetCover = [self nkAssetForIssue:nkIssue withName:imageName urlBase:CoverURLBase atIndex:index];
+    [nkAssetCover downloadWithDelegate:self];
+    
+    //download the pdf
+    [self downloadIssueAtIndex:index];
+    
+    
+}
+
 -(void)downloadIssueAtIndex:(NSInteger)index {
     index = [self convertIndex:index];
     //NKIssue *nkIssue = [self issueAtIndex:index];
@@ -330,7 +358,7 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     [issueDictionary setObject:nkAssetPDF forKey:@"PDFAsset"];
     
     [nkAssetPDF downloadWithDelegate:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompleted:) name:NKIssueDownloadCompletedNotification object:nil];
+   
     
 }
 
@@ -339,6 +367,8 @@ static NSString *const IssueURLBase = @"http://www.cse.psu.edu/~hannan/COE/Issue
     NSInteger index = [self indexOfIssue:nkIssue];
     NSMutableDictionary *issueDictionary = [issues objectAtIndex:index];
     [issueDictionary setObject:[NSNumber numberWithBool:YES] forKey:@"Downloaded"];
+    
+    [self addDownloadedIssuesIndex:index];
     
     // now notify the tableview controller to update this cell
     NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:index ]forKey:@"Index"];

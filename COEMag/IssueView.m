@@ -113,6 +113,7 @@
     [self.tapButton setTitle:@"" forState:UIControlStateNormal];
     [self.coverButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     [self.tapButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    self.tapButton.alpha = 0.0;
     
 }
 

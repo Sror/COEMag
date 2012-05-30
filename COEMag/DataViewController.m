@@ -56,7 +56,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     //hide the toolbar
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor grayColor];
     
 }
 

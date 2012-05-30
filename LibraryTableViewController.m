@@ -294,6 +294,7 @@
         [issueView setIssue:i withImage:image title:title andTap:tap];
         [issueView.coverButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
         [issueView.tapButton addTarget:self action:@selector(issueSelected:) forControlEvents:UIControlEventTouchUpInside];
+        issueView.tapButton.alpha = 1.0;
         
         if ([[issueView gestureRecognizers] count] == 0) {  // new cell
             UILongPressGestureRecognizer *lp = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];

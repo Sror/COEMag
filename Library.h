@@ -20,12 +20,15 @@
 -(NSInteger)numberOfIssues;
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index;
 -(UIImage *)coverImageOfIssueAtIndex:(NSInteger)index;
+
 -(BOOL)issueDownloadedAtIndex:(NSInteger)index;
 -(void)downloadIssueAtIndex:(NSInteger)index;
 -(void)deleteIssueAtIndex:(NSInteger)index;
 -(BOOL)currentlyDownloadingIssue:(NSInteger)index;
 
 -(CGPDFDocumentRef)PDFForIssueAtIndex:(NSInteger)index;
+
+-(void)addAndDownloadIssueNamed:(NSString *)issueName;
 
 -(void)checkForIssues;
 -(void)toggleIssuesToShow;
