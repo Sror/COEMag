@@ -10,16 +10,18 @@
 #import <NewsstandKit/NewsstandKit.h>
 #import "Library.h"
 
-static NSString *const host = @"http://www.cse.psu.edu/";
+static NSString *const host = @"curry.cse.psu.edu/";
 
 @interface AppDelegate ()
 @property (nonatomic,strong) NSOperationQueue        *operationQueue;
+@property (nonatomic,strong) UITextView *textView;
 @end
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize operationQueue;
+@synthesize textView;
 
 #pragma - mark Lifecycle
 
@@ -32,8 +34,7 @@ static NSString *const host = @"http://www.cse.psu.edu/";
     
     // Add registration for remote notifications
 	[[UIApplication sharedApplication] 
-     registerForRemoteNotificationTypes: UIRemoteNotificationTypeNewsstandContentAvailability];
-     //(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+     registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 	
 	// Clear application badge when app launches
 	application.applicationIconBadgeNumber = 0;
@@ -41,6 +42,8 @@ static NSString *const host = @"http://www.cse.psu.edu/";
     // see if app was launched due to a remote notification - new issue ready!
     NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if(payload) {
+        Library *dlibrary = [Library sharedInstance];
+        dlibrary.debugText =  [NSString stringWithFormat:@"RemoteNotificationKey: %d, %@, %@", [[UIApplication  sharedApplication] applicationState], [NSDate date], payload];
         //get new issue name from payload
         NSDictionary *aps = [payload objectForKey:@"aps"];
         
@@ -48,6 +51,7 @@ static NSString *const host = @"http://www.cse.psu.edu/";
         NSLog(@"Name: %@", issueName);
         Library *library = [Library sharedInstance];
         [library addAndDownloadIssueNamed:issueName];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[[aps objectForKey:@"badge"] intValue]];
         
 //        NSString *issueName = [payload objectForKey:@"issueName"];
 //        // schedule for issue downloading in background
@@ -72,6 +76,12 @@ static NSString *const host = @"http://www.cse.psu.edu/";
         }
     }
     
+        
+//    NSArray *downloads = [launchOptions objectForKey:UIApplicationLaunchOptionsNewsstandDownloadsKey];
+//    if (downloads) {
+//        Library *library = [Library sharedInstance];
+//        library.debugText =  [NSString stringWithFormat:@"DownloadKey: %@, %@", [NSDate date], downloads];
+//    }
     
     
     return YES;
@@ -119,11 +129,14 @@ static NSString *const host = @"http://www.cse.psu.edu/";
 	// Check what Notifications the user has turned on.  We registered for all three, but they may have manually disabled some or all of them.
 	NSUInteger rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
 	
+    
 	// Set the defaults to disabled unless we find otherwise...
 	NSString *pushBadge = (rntypes & UIRemoteNotificationTypeBadge) ? @"enabled" : @"disabled";
 	NSString *pushAlert = (rntypes & UIRemoteNotificationTypeAlert) ? @"enabled" : @"disabled";
 	NSString *pushSound = (rntypes & UIRemoteNotificationTypeSound) ? @"enabled" : @"disabled";	
-	
+
+
+    
 	// Get the users Device Model, Display Name, Unique ID, Token & Version Number
 	UIDevice *dev = [UIDevice currentDevice];
 	NSString *deviceUuid;
@@ -163,15 +176,21 @@ static NSString *const host = @"http://www.cse.psu.edu/";
 	// Register the Device Data
 	// !!! CHANGE "http" TO "https" IF YOU ARE USING HTTPS PROTOCOL
 	//NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByExpandingTildeInPath]];
+    NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:urlString]; //[urlString stringByExpandingTildeInPath]];
+    NSLog(@"URL: %@", url);
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
     operationQueue = [[NSOperationQueue alloc] init];
     
     
-//    [NSURLConnection sendAsynchronousRequest:request queue:operationQueue completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){
-//        NSLog(@"Return Data: %@", data);
-//        }];
+    [NSURLConnection sendAsynchronousRequest:request queue:operationQueue completionHandler:^(NSURLResponse* response, NSData* data, NSError* error){
+        if (error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            NSLog(@"Return Data: %@", data);
+        }
+        
+        }];
     
 	//NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     //NSLog(@"Return Data: %@", returnData);
@@ -215,16 +234,29 @@ static NSString *const host = @"http://www.cse.psu.edu/";
 //	NSLog(@"Received Push Badge: %@", badge);
 //	application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Issue Available" message:@"Download from Library" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alertView show];
-    
-    NSLog(@"User Info: %@", userInfo);
+        
+    //NSLog(@"User Info: %@", userInfo);
     NSDictionary *aps = [userInfo objectForKey:@"aps"];
-    NSString *name = [aps objectForKey:@"Name"];
-    NSLog(@"New Issue: %@", name);
+    //
+    // NSLog(@"New Issue: %@", name);
     
-    Library *library = [Library sharedInstance];
-    [library checkForIssues];
+     Library *library = [Library sharedInstance];
+    UIApplicationState applicationState = [[UIApplication  sharedApplication] applicationState];
+    if (applicationState == UIApplicationStateActive) {  //foreground, alert user
+        [library checkForIssues];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Issue Available" message:@"Refresh Library to Download" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alertView show];
+    } else {  // in background so we'll download it
+        NSString *issueName = [aps objectForKey:@"Name"];
+        [library addAndDownloadIssueNamed:issueName];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[[aps objectForKey:@"badge"] intValue]];
+    }
+    
+   
+//    NSLog(@"Text: %@", library.debugText);
+//    library.debugText =  [NSString stringWithFormat:@"UserInfo: %d, %@, %@", [[UIApplication  sharedApplication] applicationState], [NSDate date], userInfo];
+//     NSLog(@"Text: %@", library.debugText);
+    
     
     
 	

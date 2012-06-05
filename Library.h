@@ -33,4 +33,6 @@
 -(void)checkForIssues;
 -(void)toggleIssuesToShow;
 
+@property (nonatomic,copy) NSString *debugText;
+
 @end

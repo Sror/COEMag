@@ -13,6 +13,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #define kColumns 3
+#define kDeleteAlertViewTag 99
 
 
 @interface LibraryTableViewController ()
@@ -21,6 +22,7 @@
 @property (nonatomic,strong) UILongPressGestureRecognizer  *longPressGestureRecognizer;
 @property BOOL deleting;
 @property NSInteger issueToDelete;
+@property (nonatomic,strong) UITextView *textView;
 
 -(void)showIssues;
 -(void)loadIssues;
@@ -31,23 +33,26 @@
 @synthesize toolbar;
 @synthesize library;
 @synthesize longPressGestureRecognizer, deleting, issueToDelete;
+@synthesize textView;
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-        library = [Library sharedInstance];
-    }
-    return self;
-}
+//- (id)initWithStyle:(UITableViewStyle)style
+//{
+//    self = [super initWithStyle:style];
+//    if (self) {
+//        // Custom initialization
+//        library = [Library sharedInstance];
+//    }
+//    return self;
+//}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+     library = [Library sharedInstance];
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -72,19 +77,34 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetUpdate:) name:LibraryAssetUpdateNotification object:library];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressUpdate:) name:LibraryProgressUpdateNotification object:library];
-    library = [[Library alloc] init];
+   
     
     
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     self.longPressGestureRecognizer.delegate = self;
     self.deleting = NO;
+    
+    // debug stuff
+//    CGRect tframe = CGRectMake(200.0, 200.0, 400.0, 400.0);
+//    self.textView = [[UITextView alloc] initWithFrame:tframe];
+//    self.textView.userInteractionEnabled = NO;
+//    self.textView.alpha=0.70;
+//    self.textView.text = @"Initialized";
+//    
+//    [self.view addSubview:self.textView];
+//    [self.library addObserver:self forKeyPath:@"debugText" options:NSKeyValueObservingOptionNew context:NULL];
 
 }
+
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+//    self.textView.text = [change objectForKey:NSKeyValueChangeNewKey];
+//}
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    self.library = nil;
     self.toolbar = nil;
     self.longPressGestureRecognizer = nil;
 }
@@ -240,6 +260,7 @@
     
     if ([library issueDownloadedAtIndex:issue]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"OK to delete issue?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        alertView.tag = kDeleteAlertViewTag;
         [alertView show];
         self.issueToDelete = issue;
         
@@ -249,7 +270,9 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"Button Index: %d", buttonIndex);
-    [library deleteIssueAtIndex:self.issueToDelete];
+    if (alertView.tag == kDeleteAlertViewTag) {
+        [library deleteIssueAtIndex:self.issueToDelete];
+    }
 }
 
 
@@ -431,6 +454,8 @@
         rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self presentModalViewController:rootViewController animated:YES];
+        
+        
     } else if ([library currentlyDownloadingIssue:issueNumber])  {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Currently downloading" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
