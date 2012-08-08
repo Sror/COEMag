@@ -18,6 +18,7 @@
 #define kanimateDuration 0.5
 
 @interface RootViewController ()
+@property (assign,nonatomic) CGPDFDocumentRef pdf;
 @property (readonly, strong, nonatomic) ModelController *modelController;
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIScrollView *thumbnailScrollView;
@@ -42,13 +43,16 @@
 @synthesize delegate;
 @synthesize pdf;
 
-- (void)viewDidLoad
+
+
+-(void)setPdf:(CGPDFDocumentRef)aPdf {
+    CGPDFDocumentRelease(pdf);
+    self.pdf = aPdf;
+    CGPDFDocumentRetain(pdf);
+}
+
+- (void)setupScrollView
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    // Configure the page view controller and add it as a child view controller.
-    
-        
     // set up the top-level scroll view for zooming
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     // Set up the UIScrollView
@@ -62,8 +66,17 @@
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.scrollView];
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    // Configure the page view controller and add it as a child view controller.
     
-    //NSLog(@"Scrollview bounds: %f,%f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+        
+     [self setupScrollView];
     
     // determine spine position for pageViewController
     UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -220,7 +233,7 @@
     NSArray *thumbnailViews = [self.modelController thumbnailViews];
     UIImageView *imageView = [thumbnailViews objectAtIndex:1];
     CGRect imageBounds = imageView.bounds;
-    CGRect doubleBounds = CGRectMake(0.0, 0.0, imageBounds.size.width*2, imageBounds.size.height);
+    //CGRect doubleBounds = CGRectMake(0.0, 0.0, imageBounds.size.width*2, imageBounds.size.height);
     CGRect leftFrame = imageBounds;
     CGRect rightFrame = CGRectMake(imageBounds.size.width, 0.0, imageBounds.size.width, imageBounds.size.height);
     CGFloat width =  imageBounds.size.width;
@@ -243,7 +256,7 @@
             
             if (portrait) {
                 UIImageView *buttonImage = [thumbnailViews objectAtIndex:i];
-                frame = imageBounds;
+                //frame = imageBounds;
                 frame = [self frameForThumbnailAtIndex:i isPortrait:YES];     //CGRectMake((2*i+1)*width, 10.0, frame.size.width, frame.size.height);
                 button.frame = frame;
                 [button setImage:buttonImage.image forState:UIControlStateNormal];
@@ -264,7 +277,7 @@
                 }
                 
                 rightImage.frame = rightFrame;
-                frame = doubleBounds;
+                //frame = doubleBounds;
                 frame = [self frameForThumbnailAtIndex:i isPortrait:NO];     //CGRectMake((3*i+1)*width, 10.0, frame.size.width, frame.size.height);
                 button.frame = frame;
                 [button addSubview:leftImage];
@@ -477,7 +490,7 @@
 
 #pragma mark - Tap Gesture
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    CGPoint location = [touch locationInView:self.view];
+    //CGPoint location = [touch locationInView:self.view];
     //NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
     //NSLog(@"Touched View: %@", touch.view.description);
     if ([touch.view isKindOfClass:[TiledPDFView class]])
@@ -485,6 +498,8 @@
     else {
         return NO;
     }
+    
+    /*
     if ([touch.view isKindOfClass:[UIButton class]] || [touch.view isKindOfClass:[UIBarButtonItem class]]) {      //change it to your condition
         return NO;
     }
@@ -492,6 +507,7 @@
         return NO;
     }
     return YES;
+     */
 }
 
 // taps either show/hide toolbar or change pages, depending upon the x-coord of the touch

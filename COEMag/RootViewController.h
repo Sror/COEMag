@@ -17,10 +17,11 @@
 
 @interface RootViewController : UIViewController <UIPageViewControllerDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
-@property (assign,nonatomic) CGPDFDocumentRef pdf;
+
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (weak,nonatomic) id<RootModal> delegate;
 -(IBAction)dismissMe:(id)sender;
+-(void)setPdf:(CGPDFDocumentRef)pdf;
 
 @end

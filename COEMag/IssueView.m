@@ -88,7 +88,7 @@
     //position issueViews according to width of cell
     CGRect frame;
     CGPoint origin;
-    CGFloat width = self.superview.bounds.size.width;
+    CGFloat width; // = self.superview.bounds.size.width;
     UIDeviceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if (UIDeviceOrientationIsPortrait(orientation)) {
         width = 768;
