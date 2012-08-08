@@ -7,9 +7,11 @@
 //
 
 #import "Library.h"
+#import "Reachability.h"
 
 
 static NSString *const IssuesPlist = @"Issues.plist";
+static NSString *const Host = @"curry.cse.psu.edu";
 static NSString *const IssuesURL = @"http://curry.cse.psu.edu/~hannan/COE/Issues.plist";
 static NSString *const CoverURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Covers/";
 static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Issues/";
@@ -26,6 +28,12 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
 
 -(NSURL*)urlForIssue:(NKIssue*)nkIssue;
 -(NSString *)downloadPathForAsset:(NKAssetDownload *)nkAsset;
+
+@property (nonatomic,strong) Reachability* internetReachable;
+@property (nonatomic,strong) Reachability* hostReachable;
+@property  NetworkStatus internetStatus;
+@property  NetworkStatus hostStatus;
+@property BOOL statusUpdated;
 @end
 
 @implementation Library
@@ -35,7 +43,7 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
 @synthesize coverImages;
 @synthesize debugText;
 
-
+@synthesize internetReachable, hostReachable, internetStatus, hostStatus, statusUpdated;
 
 + (id)sharedInstance
 {
@@ -58,35 +66,52 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
     self = [super init];
     if(self) {
         
-        //self.issues = nil;
-        
-        //self.issues = [[NSMutableArray alloc] initWithCapacity:75];
-        //self.downloadedIssuesIndices = [[NSMutableArray alloc] initWithCapacity:75];
-        
+     
         self.showAllIssues = YES;
         
-        //NSString *path = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:IssuesPlist];
-        //BOOL plistExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
-        // load existing plist if it exists
-//        if (plistExists) {
-//            self.issues = [NSMutableArray arrayWithContentsOfFile:path];
-//            
-//            
-//            [self addIssues];
-//        } 
-                
+      
         
-        // download issues plist if library is empty
-        if ([self numberOfIssues] == 0) {
-            [self checkForIssues];
-        }
+        //Check for Reachability
+        // check for internet connection
+        self.statusUpdated = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
         
+        self.internetReachable = [Reachability reachabilityForInternetConnection];
+        [internetReachable startNotifier];
         
+        // check if a pathway to a random host exists
+        self.hostReachable = [Reachability reachabilityWithHostname: Host];
+        [hostReachable startNotifier];
+        
+
+               
          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompleted:) name:NKIssueDownloadCompletedNotification object:nil];
                 
     }
     
     return self;
+}
+
+- (void) checkNetworkStatus:(NSNotification *)notice {
+    self.internetStatus = [internetReachable currentReachabilityStatus];
+    self.hostStatus = [hostReachable currentReachabilityStatus];
+    self.statusUpdated = YES;
+    
+    if (self.internetStatus == NotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"Check Network Status" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];	
+    } else     if (self.hostStatus == NotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Service Not Available" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];	
+    } else    {  // We're Reachable!
+        // download issues plist if library is empty
+        if ([self numberOfIssues] == 0) {
+            [self checkForIssues];
+        }
+        
+
+    }
+    
 }
 
 -(NKAssetDownload*)nkAssetForIssue:(NKIssue*)nkIssue 
