@@ -11,10 +11,10 @@
 
 static NSString *const IssuesPlist = @"Issues.plist";
 static NSString *const IssuesURL = @"http://curry.cse.psu.edu/~hannan/COE/Issues.plist";
-static NSString *const CoverURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Covers/";
-static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Issues/";
-//static NSString *const CoverURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/CoverImages/";
-//static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/";
+//static NSString *const CoverURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Covers/";
+//static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Issues/";
+static NSString *const CoverURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/CoverImages/";
+static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/";
 
 
 @interface Library ()
@@ -109,6 +109,12 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
 
 // download latest issues plist and update library
 -(void)checkForIssues {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Issues" ofType:@"plist"];
+    NSDictionary *issuesDictionary =  [[NSDictionary alloc] initWithContentsOfFile:path];
+    NSArray *theIssues = [issuesDictionary objectForKey:@"Issues"];
+    [self addIssues:theIssues];
+    return;
+    
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:IssuesURL]];
     
     NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
@@ -122,12 +128,7 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
                                    NSMutableDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListMutableContainers                                                                                                       format:NULL error:&error2];
                                    
                                    NSArray *theIssues = [dict objectForKey:@"Issues"];
-                                   //NSLog(@"Issues: %@", theIssues);
-//                                   NSString *path = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:IssuesPlist];
-//                                   if (![issues writeToFile:path atomically:NO]) {
-//                                       NSLog(@"Issues plist not saved");
-//                                   }
-                                   [self addIssues:theIssues];
+                                                                      [self addIssues:theIssues];
                                    
                                } else {  
                                    NSLog(@"Failure"); 
