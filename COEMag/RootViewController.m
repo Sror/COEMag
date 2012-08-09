@@ -83,9 +83,7 @@
 -(void)setupPageView {
     // determine spine position for pageViewController
     UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    NSLog(@"Orientation: %d", orientation);
-    NSLog(@"Device: %d", [[UIDevice currentDevice] orientation]);
-    
+       
     NSNumber *spine = [NSNumber numberWithInt:(UIDeviceOrientationIsLandscape(orientation)? UIPageViewControllerSpineLocationMid : UIPageViewControllerSpineLocationMin)];
     
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: spine, UIPageViewControllerOptionSpineLocationKey, nil];
@@ -134,9 +132,7 @@
     
     // Add the thumbnail scroll view
     CGRect bounds = self.view.bounds;
-    NSLog(@"Bounds: %f,%f,%f,%f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
-    CGRect founds = self.view.frame;
-    NSLog(@"Frame: %f,%f,%f,%f", founds.origin.x, founds.origin.y,founds.size.width, founds.size.height);
+    
     CGFloat yCoord = bounds.size.height-kthumbnailScrollViewHeight;
     CGFloat xCoord = bounds.size.width-kthumbnailScrollViewHeight;
     if (UIDeviceOrientationIsLandscape(orientation) && xCoord < yCoord)
@@ -167,10 +163,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    NSLog(@"Appear Orientation: %d", orientation);
-    NSLog(@"Appear Device: %d", [[UIDevice currentDevice] orientation]);
-        
+            
     [self setupScrollView];
     [self setupPageView];
     [self setupThumbnailView];
