@@ -59,6 +59,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    /*
     // add a toolbar
     CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 66.0);
     self.toolbar = [[UIToolbar alloc] initWithFrame:frame];
@@ -70,6 +71,8 @@
     self.toolbar.items = [NSArray arrayWithObjects:fixedSpace, refreshButton, flexSpace, showingButton, fixedSpace, nil];
     self.toolbar.barStyle = UIBarStyleBlackTranslucent;
     self.tableView.tableHeaderView = toolbar;
+    */
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:LibraryFailedUpdateNotification object:library];
@@ -107,6 +110,15 @@
     self.library = nil;
     self.toolbar = nil;
     self.longPressGestureRecognizer = nil;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    CGRect frame = self.view.frame;
+    
+    
+    //CGRect frame = self.view.frame;
+    CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
+    self.view.frame = newFrame;
 }
 
 #pragma mark - Toolbar Actions
@@ -269,7 +281,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"Button Index: %d", buttonIndex);
+    //NSLog(@"Button Index: %d", buttonIndex);
     if (alertView.tag == kDeleteAlertViewTag) {
         [library deleteIssueAtIndex:self.issueToDelete];
     }
@@ -334,8 +346,18 @@
             tapLayer.cornerRadius = 7.0;
             tapLayer.borderColor = [[UIColor whiteColor] CGColor];
             tapLayer.borderWidth = 1.0;
-
+            
         }
+        
+        CALayer *tapLayer = issueView.tapButton.layer;
+        if ([library issueDownloadedAtIndex:i]) {
+            issueView.alpha = 1.0;
+            tapLayer.backgroundColor =  [[UIColor blueColor] CGColor];
+        } else {
+            issueView.alpha = 0.6;
+            tapLayer.backgroundColor =  [[UIColor grayColor] CGColor];
+        }
+         
         
         if (self.deleting) {
             issueView.deleteImage.alpha = 1.0;
@@ -442,6 +464,7 @@
     // Download or View
     
     if ([library issueDownloadedAtIndex:issueNumber]) {
+        
         
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];

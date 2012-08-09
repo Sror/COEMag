@@ -9,15 +9,21 @@
 #import "Library.h"
 #import "Reachability.h"
 
+#define USE_TEST_SERVER 0
 
 static NSString *const IssuesPlist = @"Issues.plist";
 static NSString *const Host = @"curry.cse.psu.edu";
 static NSString *const IssuesURL = @"http://curry.cse.psu.edu/~hannan/COE/Issues.plist";
+
+#if USE_TEST_SERVER
 static NSString *const CoverURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Covers/";
 static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Issues/";
-//static NSString *const CoverURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/CoverImages/";
-//static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/";
+#endif
 
+#if !USE_TEST_SERVER
+static NSString *const CoverURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/CoverImages/";
+static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennStateMagazine/";
+#endif
 
 @interface Library ()
 //@property (nonatomic,strong) NSMutableArray* issues;
@@ -134,6 +140,15 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
 
 // download latest issues plist and update library
 -(void)checkForIssues {
+    
+    if (!USE_TEST_SERVER) {  // change this once plist is added to College Server
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"Issues" ofType:@"plist"];
+        NSDictionary *issuesDictionary =  [[NSDictionary alloc] initWithContentsOfFile:path];
+        NSArray *theIssues = [issuesDictionary objectForKey:@"Issues"];
+        [self addIssues:theIssues];
+        return;
+    }
+    
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:IssuesURL]];
     
     NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
@@ -403,8 +418,12 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
     
 }
 
--(void)updateIcon:(NSString *)iconPath {
-    
+-(void)updateIcon {  //:(NSString *)iconPath {
+    UIImage *img = [self coverImageOfIssueAtIndex:0];
+    if(img) {
+        [[UIApplication sharedApplication] setNewsstandIconImage:img];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
+    }
 }
 
 #pragma mark - NSURLConnectionDownloadDelegate Protocol
@@ -452,7 +471,7 @@ static NSString *const IssueURLBase = @"http://curry.cse.psu.edu/~hannan/COE/Iss
     NSNumber *number = [dictionary objectForKey:@"Index"];
     NSInteger index = [number intValue];
     if (index == 0) {
-        [self updateIcon:contentPath];
+        [self updateIcon]; //:contentPath];
     }
     
 }

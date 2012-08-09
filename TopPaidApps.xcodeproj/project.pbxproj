@@ -38,8 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AF4288FF15D30F0C00F60258 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		AF42890015D30F0C00F60258 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AF4288FF15D30F0C00F60258 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = COEMag/Reachability.h; sourceTree = "<group>"; };
+		AF42890015D30F0C00F60258 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = COEMag/Reachability.m; sourceTree = "<group>"; };
 		AF42890215D30F4A00F60258 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
@@ -135,6 +135,8 @@
 		AF5D61A71546FD960014B8FD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AF4288FF15D30F0C00F60258 /* Reachability.h */,
+				AF42890015D30F0C00F60258 /* Reachability.m */,
 				AF5D61A81546FDD50014B8FD /* Library.h */,
 				AF5D61A91546FDD50014B8FD /* Library.m */,
 				AFD485451538823B00B00D76 /* ModelController.h */,
@@ -147,7 +149,6 @@
 		AFD4851E1538823B00B00D76 = {
 			isa = PBXGroup;
 			children = (
-				AF42890215D30F4A00F60258 /* SystemConfiguration.framework */,
 				AFD485331538823B00B00D76 /* COEMag */,
 				AFD4852C1538823B00B00D76 /* Frameworks */,
 				AFD4852A1538823B00B00D76 /* Products */,
@@ -165,6 +166,7 @@
 		AFD4852C1538823B00B00D76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF42890215D30F4A00F60258 /* SystemConfiguration.framework */,
 				AF5D61921545D43A0014B8FD /* NewsstandKit.framework */,
 				AFA188BB153F1513007C9939 /* QuartzCore.framework */,
 				AFD4852D1538823B00B00D76 /* UIKit.framework */,
@@ -179,8 +181,6 @@
 			children = (
 				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
 				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
-				AF4288FF15D30F0C00F60258 /* Reachability.h */,
-				AF42890015D30F0C00F60258 /* Reachability.m */,
 				AF349D18154ECAD100FCAF2C /* View */,
 				AF5D61A61546F04B0014B8FD /* View Controllers */,
 				AF5D61A71546FD960014B8FD /* Model */,

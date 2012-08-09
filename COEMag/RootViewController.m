@@ -16,6 +16,7 @@
 //#define kthumbnailViewHeight 100
 #define ktimerDuration 3.0
 #define kanimateDuration 0.5
+#define kbarHeight 25.0
 
 @interface RootViewController ()
 @property (assign,nonatomic) CGPDFDocumentRef pdf;
@@ -23,6 +24,7 @@
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIScrollView *thumbnailScrollView;
 @property (nonatomic,strong) NSTimer *timer;
+@property (nonatomic,strong) UIView *bottomBar;
 
 @property BOOL toolbarHidden;
 -(void)hideToolbar;
@@ -40,14 +42,23 @@
 @synthesize scrollView, thumbnailScrollView;
 @synthesize toolbarHidden;
 @synthesize timer;
+@synthesize bottomBar;
 @synthesize delegate;
 @synthesize pdf;
 
-
+-(void)viewDidAppear:(BOOL)animated  {
+    self.view.backgroundColor = [UIColor redColor];
+    CGRect frame = self.view.frame;
+    
+    
+        CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
+        self.view.frame = newFrame;
+    
+}
 
 -(void)setPdf:(CGPDFDocumentRef)aPdf {
     CGPDFDocumentRelease(pdf);
-    self.pdf = aPdf;
+    pdf = aPdf;
     CGPDFDocumentRetain(pdf);
 }
 
@@ -61,11 +72,12 @@
     self.scrollView.bouncesZoom = YES;
     self.scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
     self.scrollView.delegate = self;
-    [self.scrollView setBackgroundColor:[UIColor grayColor]];
+    
     self.scrollView.maximumZoomScale = 5.0;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.scrollView];
+    self.scrollView.backgroundColor = [UIColor yellowColor];
 }
 
 
@@ -80,6 +92,9 @@
     
     // determine spine position for pageViewController
     UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    NSLog(@"Orientation: %d", orientation);
+    NSLog(@"Device: %d", [[UIDevice currentDevice] orientation]);
+    
     NSNumber *spine = [NSNumber numberWithInt:(UIDeviceOrientationIsLandscape(orientation)? UIPageViewControllerSpineLocationMid : UIPageViewControllerSpineLocationMin)];
     
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: spine, UIPageViewControllerOptionSpineLocationKey, nil];
@@ -87,6 +102,11 @@
     
     // set up the PageViewController
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:options];
+    CGRect pageFrame = self.pageViewController.view.frame;
+    CGRect newPageFrame = CGRectMake(0.0, 0.0, pageFrame.size.width, pageFrame.size.height);
+    self.pageViewController.view.frame = newPageFrame;
+    [self.pageViewController.view setBackgroundColor:[UIColor blueColor]];
+    
     self.pageViewController.delegate = self;
     //NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
     
@@ -112,17 +132,23 @@
     [self addChildViewController:self.pageViewController];
     [self.scrollView addSubview:self.pageViewController.view];
     
-    //NSLog(@"PageView: %f,%f", self.pageViewController.view.bounds.size.width, self.pageViewController.view.bounds.size.height);
+    /*
+    // add bar at bottom of pageView
+    CGRect barFrame = CGRectMake(0.0, pageFrame.size.height-kbarHeight, pageFrame.size.width, pageFrame.size.height);
+    self.bottomBar = [[UIView alloc] initWithFrame:barFrame];
+    self.bottomBar.backgroundColor = [UIColor blueColor];
+    self.bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:self.bottomBar belowSubview:self.scrollView];
+    */
     
-    // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
-//    CGRect pageViewRect = self.view.bounds;
-//    pageViewRect = CGRectInset(pageViewRect, 0.0, 0.0);
-//    self.pageViewController.view.frame = pageViewRect;
     
     [self.pageViewController didMoveToParentViewController:self];
     
     // Add the thumbnail scroll view
     CGRect bounds = self.view.bounds;
+    NSLog(@"Bounds: %f,%f,%f,%f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+    CGRect founds = self.view.frame;
+    NSLog(@"Frame: %f,%f,%f,%f", founds.origin.x, founds.origin.y,founds.size.width, founds.size.height);
     CGFloat yCoord = bounds.size.height-kthumbnailScrollViewHeight;
     CGFloat xCoord = bounds.size.width-kthumbnailScrollViewHeight;
     if (UIDeviceOrientationIsLandscape(orientation) && xCoord < yCoord)
@@ -169,7 +195,11 @@
 }
 
 
-
+-(void)viewWillAppear:(BOOL)animated {
+    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    NSLog(@"Appear Orientation: %d", orientation);
+    NSLog(@"Appear Device: %d", [[UIDevice currentDevice] orientation]);
+}
 //-(void)viewDidAppear:(BOOL)animated {
 //    // see if we're in landscape mode & need to move spine
 //    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation; //[UIDevice currentDevice].orientation;
@@ -411,6 +441,7 @@
     }
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
     
+    // add bar at bottom to cover blank space
     
     return UIPageViewControllerSpineLocationMid;
 }
