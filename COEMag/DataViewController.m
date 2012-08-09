@@ -43,7 +43,9 @@
     if (self) {
         self.page = p;
         self.nonempty = YES;
-    }
+        self.view.backgroundColor = [UIColor blueColor];
+        
+            }
     return self;
 }
 
@@ -59,6 +61,8 @@
     self.view.backgroundColor = [UIColor grayColor];
     
 }
+
+
 
 - (void)viewDidUnload
 {
@@ -133,6 +137,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (self.nonempty) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 65.0)];
+        label.center = CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height - 40.0);
+        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.numberOfLines = 2;
+        label.textAlignment = UITextAlignmentCenter;
+        label.text = @"College of Engineering\nThe Pennsylvania State University";
+        [self.view addSubview:label];
+    }
+        
+
     [self loadPage];
 }
 

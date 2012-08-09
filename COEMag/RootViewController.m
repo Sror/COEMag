@@ -48,11 +48,11 @@
 
 -(void)viewDidAppear:(BOOL)animated  {
     self.view.backgroundColor = [UIColor redColor];
-    CGRect frame = self.view.frame;
+    //CGRect frame = self.view.frame;
     
     
-        CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
-        self.view.frame = newFrame;
+        //CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
+        //self.view.frame = newFrame;
     
 }
 
@@ -80,16 +80,7 @@
     self.scrollView.backgroundColor = [UIColor yellowColor];
 }
 
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    // Configure the page view controller and add it as a child view controller.
-    
-        
-     [self setupScrollView];
-    
+-(void)setupPageView {
     // determine spine position for pageViewController
     UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     NSLog(@"Orientation: %d", orientation);
@@ -98,13 +89,16 @@
     NSNumber *spine = [NSNumber numberWithInt:(UIDeviceOrientationIsLandscape(orientation)? UIPageViewControllerSpineLocationMid : UIPageViewControllerSpineLocationMin)];
     
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: spine, UIPageViewControllerOptionSpineLocationKey, nil];
-       
+    
     
     // set up the PageViewController
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:options];
-    CGRect pageFrame = self.pageViewController.view.frame;
-    CGRect newPageFrame = CGRectMake(0.0, 0.0, pageFrame.size.width, pageFrame.size.height);
-    self.pageViewController.view.frame = newPageFrame;
+    self.pageViewController.view.frame = self.scrollView.bounds;
+    
+    //CGRect pageFrame = self.pageViewController.view.frame;
+    //CGRect newPageFrame = CGRectMake(0.0, 0.0, pageFrame.size.width, pageFrame.size.height);
+    //self.pageViewController.view.frame = newPageFrame;
+    
     [self.pageViewController.view setBackgroundColor:[UIColor blueColor]];
     
     self.pageViewController.delegate = self;
@@ -132,17 +126,11 @@
     [self addChildViewController:self.pageViewController];
     [self.scrollView addSubview:self.pageViewController.view];
     
-    /*
-    // add bar at bottom of pageView
-    CGRect barFrame = CGRectMake(0.0, pageFrame.size.height-kbarHeight, pageFrame.size.width, pageFrame.size.height);
-    self.bottomBar = [[UIView alloc] initWithFrame:barFrame];
-    self.bottomBar.backgroundColor = [UIColor blueColor];
-    self.bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.view insertSubview:self.bottomBar belowSubview:self.scrollView];
-    */
-    
-    
-    [self.pageViewController didMoveToParentViewController:self];
+     [self.pageViewController didMoveToParentViewController:self];
+}
+
+-(void)setupThumbnailView {
+    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     
     // Add the thumbnail scroll view
     CGRect bounds = self.view.bounds;
@@ -154,7 +142,7 @@
     if (UIDeviceOrientationIsLandscape(orientation) && xCoord < yCoord)
         yCoord = xCoord;  // seems like a hack
     CGRect frame = CGRectMake(0.0, yCoord, bounds.size.width, kthumbnailScrollViewHeight);
-       
+    
     self.thumbnailScrollView = [[UIScrollView alloc] initWithFrame:frame];
     self.thumbnailScrollView.backgroundColor = [UIColor lightGrayColor];
     self.thumbnailScrollView.alpha = 0.6;
@@ -162,13 +150,45 @@
     self.thumbnailScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self addThumbnails];
     
-//    UIView *backgroundView = [[UIView alloc] initWithFrame:self.thumbnailScrollView.bounds];
-//    backgroundView.backgroundColor = [UIColor lightGrayColor];
-//    backgroundView.alpha = 0.5;
+    //    UIView *backgroundView = [[UIView alloc] initWithFrame:self.thumbnailScrollView.bounds];
+    //    backgroundView.backgroundColor = [UIColor lightGrayColor];
+    //    backgroundView.alpha = 0.5;
     //[self.thumbnailScrollView addSubview:backgroundView];
     [self.view addSubview:thumbnailScrollView];
     [self.view bringSubviewToFront:self.thumbnailScrollView];
+
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    // Configure the page view controller and add it as a child view controller.
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    NSLog(@"Appear Orientation: %d", orientation);
+    NSLog(@"Appear Device: %d", [[UIDevice currentDevice] orientation]);
+        
+    [self setupScrollView];
+    [self setupPageView];
+    [self setupThumbnailView];
     
+   
+    
+    /*
+    // add bar at bottom of pageView
+    CGRect barFrame = CGRectMake(0.0, pageFrame.size.height-kbarHeight, pageFrame.size.width, pageFrame.size.height);
+    self.bottomBar = [[UIView alloc] initWithFrame:barFrame];
+    self.bottomBar.backgroundColor = [UIColor blueColor];
+    self.bottomBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:self.bottomBar belowSubview:self.scrollView];
+    */
+    
+    
+   
+       
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
     for (UIGestureRecognizer *gR in self.view.gestureRecognizers) {
@@ -195,18 +215,7 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated {
-    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    NSLog(@"Appear Orientation: %d", orientation);
-    NSLog(@"Appear Device: %d", [[UIDevice currentDevice] orientation]);
-}
-//-(void)viewDidAppear:(BOOL)animated {
-//    // see if we're in landscape mode & need to move spine
-//    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation; //[UIDevice currentDevice].orientation;
-//    if (UIDeviceOrientationIsLandscape(orientation)) {
-//        [self pageViewController:self.pageViewController spineLocationForInterfaceOrientation:orientation];
-//    }
-//}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

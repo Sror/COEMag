@@ -113,12 +113,12 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    CGRect frame = self.view.frame;
+    //CGRect frame = self.view.frame;
     
     
     //CGRect frame = self.view.frame;
-    CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
-    self.view.frame = newFrame;
+    //CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
+    //self.view.frame = newFrame;
 }
 
 #pragma mark - Toolbar Actions
