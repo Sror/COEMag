@@ -89,7 +89,7 @@
     CGRect frame;
     CGPoint origin;
     CGFloat width; // = self.superview.bounds.size.width;
-    UIDeviceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     if (UIDeviceOrientationIsPortrait(orientation)) {
         width = 768;
     } else {

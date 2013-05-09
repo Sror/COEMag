@@ -82,7 +82,7 @@
 
 -(void)setupPageView {
     // determine spine position for pageViewController
-    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
        
     NSNumber *spine = [NSNumber numberWithInt:(UIDeviceOrientationIsLandscape(orientation)? UIPageViewControllerSpineLocationMid : UIPageViewControllerSpineLocationMin)];
     
@@ -128,7 +128,7 @@
 }
 
 -(void)setupThumbnailView {
-    UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     
     // Add the thumbnail scroll view
     CGRect bounds = self.view.bounds;

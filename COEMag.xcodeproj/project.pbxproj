@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF3D820D173BD2B0009BC774 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */; };
+		AF3D820F173BD2B4009BC774 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D820E173BD2B4009BC774 /* Security.framework */; };
+		AF3D8211173BD2B9009BC774 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D8210173BD2B9009BC774 /* CFNetwork.framework */; };
+		AF3D8212173BD2D0009BC774 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FF631156689A90092407B /* Reachability.m */; };
 		AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D618D1545CED30014B8FD /* Icon@2x.png */; };
 		AF5D61911545CED80014B8FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61901545CED80014B8FD /* Icon.png */; };
 		AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5D61921545D43A0014B8FD /* NewsstandKit.framework */; };
@@ -38,6 +42,9 @@
 /* Begin PBXFileReference section */
 		AF2FF630156689A90092407B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		AF2FF631156689A90092407B /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		AF3D820E173BD2B4009BC774 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		AF3D8210173BD2B9009BC774 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		AF5D61921545D43A0014B8FD /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
@@ -84,6 +91,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF3D8211173BD2B9009BC774 /* CFNetwork.framework in Frameworks */,
+				AF3D820F173BD2B4009BC774 /* Security.framework in Frameworks */,
+				AF3D820D173BD2B0009BC774 /* SystemConfiguration.framework in Frameworks */,
 				AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */,
 				AFA188BC153F1513007C9939 /* QuartzCore.framework in Frameworks */,
 				AFD4852E1538823B00B00D76 /* UIKit.framework in Frameworks */,
@@ -145,6 +155,9 @@
 		AFD4851E1538823B00B00D76 = {
 			isa = PBXGroup;
 			children = (
+				AF3D8210173BD2B9009BC774 /* CFNetwork.framework */,
+				AF3D820E173BD2B4009BC774 /* Security.framework */,
+				AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */,
 				AFD485331538823B00B00D76 /* COEMag */,
 				AFD4852C1538823B00B00D76 /* Frameworks */,
 				AFD4852A1538823B00B00D76 /* Products */,
@@ -235,10 +248,10 @@
 		AFD485201538823B00B00D76 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Penn State University";
 			};
-			buildConfigurationList = AFD485231538823B00B00D76 /* Build configuration list for PBXProject "TopPaidApps" */;
+			buildConfigurationList = AFD485231538823B00B00D76 /* Build configuration list for PBXProject "COEMag" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -280,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF3D8212173BD2D0009BC774 /* Reachability.m in Sources */,
 				AFA188BA153F14D6007C9939 /* TiledPDFView.m in Sources */,
 				AFD4853A1538823B00B00D76 /* main.m in Sources */,
 				AFD4853E1538823B00B00D76 /* AppDelegate.m in Sources */,
@@ -322,6 +336,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -349,6 +367,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -400,7 +422,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AFD485231538823B00B00D76 /* Build configuration list for PBXProject "TopPaidApps" */ = {
+		AFD485231538823B00B00D76 /* Build configuration list for PBXProject "COEMag" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AFD4854B1538823B00B00D76 /* Debug */,
