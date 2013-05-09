@@ -138,13 +138,14 @@
 {
     [super viewWillAppear:animated];
     
-    if (self.nonempty) {
+    if (self.nonempty && [[self.view subviews] count] == 0) { // if >1, then label already appears
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 65.0)];
         label.center = CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height - 40.0);
         label.textColor = [UIColor whiteColor];
         label.backgroundColor = [UIColor clearColor];
         label.numberOfLines = 2;
         label.textAlignment = UITextAlignmentCenter;
+        label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
         label.text = @"College of Engineering\nThe Pennsylvania State University";
         [self.view addSubview:label];
     }
