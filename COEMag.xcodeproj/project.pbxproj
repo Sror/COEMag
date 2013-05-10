@@ -235,9 +235,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AFD485281538823B00B00D76 /* TopPaidApps */ = {
+		AFD485281538823B00B00D76 /* COEMag */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "TopPaidApps" */;
+			buildConfigurationList = AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "COEMag" */;
 			buildPhases = (
 				AFD485251538823B00B00D76 /* Sources */,
 				AFD485261538823B00B00D76 /* Frameworks */,
@@ -247,7 +247,7 @@
 			);
 			dependencies = (
 			);
-			name = TopPaidApps;
+			name = COEMag;
 			productName = COEMag;
 			productReference = AFD485291538823B00B00D76 /* TopPaidApps.app */;
 			productType = "com.apple.product-type.application";
@@ -273,7 +273,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AFD485281538823B00B00D76 /* TopPaidApps */,
+				AFD485281538823B00B00D76 /* COEMag */,
 			);
 		};
 /* End PBXProject section */
@@ -400,15 +400,15 @@
 		AFD4854E1538823B00B00D76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/TopPaidApps-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/TopPaidApps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = TopPaidApps;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -416,15 +416,15 @@
 		AFD4854F1538823B00B00D76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/TopPaidApps-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/TopPaidApps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = TopPaidApps;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -441,7 +441,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "TopPaidApps" */ = {
+		AFD4854D1538823B00B00D76 /* Build configuration list for PBXNativeTarget "COEMag" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AFD4854E1538823B00B00D76 /* Debug */,
