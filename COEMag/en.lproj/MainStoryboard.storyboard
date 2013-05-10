@@ -35,9 +35,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="261" y="-243"/>
+            <point key="canvasLocation" x="687" y="-417"/>
         </scene>
-        <!--Library Table View Controller-->
+        <!--Library Table View Controller - Library-->
         <scene sceneID="oRf-lZ-FXM">
             <objects>
                 <tableViewController id="2bj-X1-8Mi" customClass="LibraryTableViewController" sceneMemberID="viewController">
@@ -215,10 +215,13 @@
                             <outlet property="delegate" destination="2bj-X1-8Mi" id="tLa-1u-2zd"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Library" prompt="Hello?" id="9Uz-rh-GMw">
+                        <barButtonItem key="backBarButtonItem" title="Nothing" id="LmJ-K1-akf"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXn-jP-NGu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1221" y="-417"/>
+            <point key="canvasLocation" x="-247" y="-417"/>
         </scene>
         <!--Data View Controller-->
         <scene sceneID="7">
@@ -233,7 +236,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1248" y="-251"/>
+            <point key="canvasLocation" x="1626" y="-409"/>
         </scene>
     </scenes>
     <classes>

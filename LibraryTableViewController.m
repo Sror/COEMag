@@ -24,6 +24,8 @@
 @property NSInteger issueToDelete;
 @property (nonatomic,strong) UITextView *textView;
 
+@property (nonatomic,strong) UIBarButtonItem *deleteButton;
+
 -(void)showIssues;
 -(void)loadIssues;
 
@@ -36,30 +38,19 @@
 @synthesize textView;
 
 
-//- (id)initWithStyle:(UITableViewStyle)style
-//{
-//    self = [super initWithStyle:style];
-//    if (self) {
-//        // Custom initialization
-//        library = [Library sharedInstance];
-//    }
-//    return self;
-//}
-
-
-- (void)viewDidLoad
-{
+-(void)viewDidLoad {
     [super viewDidLoad];
-     library = [Library sharedInstance];
+    library = [Library sharedInstance];
+}
+
+/*
+- (void)viewDidLoad {
+    NSLog(@"Hello 1");
     
+    [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSLog(@"Hello 2");
     
-    /*
     // add a toolbar
     CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 66.0);
     self.toolbar = [[UIToolbar alloc] initWithFrame:frame];
@@ -71,7 +62,21 @@
     self.toolbar.items = [NSArray arrayWithObjects:fixedSpace, refreshButton, flexSpace, showingButton, fixedSpace, nil];
     self.toolbar.barStyle = UIBarStyleBlackTranslucent;
     self.tableView.tableHeaderView = toolbar;
-    */
+    
+     library = [Library sharedInstance];
+        
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationController.navigationBarHidden = NO;
+    
+    _deleteButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteIssues)];
+    
+    
+    
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
@@ -98,6 +103,7 @@
 //    [self.library addObserver:self forKeyPath:@"debugText" options:NSKeyValueObservingOptionNew context:NULL];
 
 }
+ */
 
 //-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 //    self.textView.text = [change objectForKey:NSKeyValueChangeNewKey];
@@ -120,6 +126,22 @@
     //CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
     //self.view.frame = newFrame;
 }
+
+#pragma mark - Navbar Actions
+-(void)setEditing:(BOOL)editing {
+    [super setEditing:editing];
+    if (editing) {
+        self.navigationItem.leftBarButtonItem = self.deleteButton;
+    } else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
+
+-(void)deleteIssues {
+    
+}
+
 
 #pragma mark - Toolbar Actions
 
