@@ -155,9 +155,6 @@
 		AFD4851E1538823B00B00D76 = {
 			isa = PBXGroup;
 			children = (
-				AF9C9120173C0EBF00761447 /* CFNetwork.framework */,
-				AF9C911E173C0EBB00761447 /* Security.framework */,
-				AF9C911C173C0EB700761447 /* SystemConfiguration.framework */,
 				AFD485331538823B00B00D76 /* COEMag */,
 				AFD4852C1538823B00B00D76 /* Frameworks */,
 				AFD4852A1538823B00B00D76 /* Products */,
@@ -175,6 +172,9 @@
 		AFD4852C1538823B00B00D76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF9C9120173C0EBF00761447 /* CFNetwork.framework */,
+				AF9C911E173C0EBB00761447 /* Security.framework */,
+				AF9C911C173C0EB700761447 /* SystemConfiguration.framework */,
 				AF5D61921545D43A0014B8FD /* NewsstandKit.framework */,
 				AFA188BB153F1513007C9939 /* QuartzCore.framework */,
 				AFD4852D1538823B00B00D76 /* UIKit.framework */,
@@ -187,8 +187,6 @@
 		AFD485331538823B00B00D76 /* COEMag */ = {
 			isa = PBXGroup;
 			children = (
-				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
-				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
 				AF349D18154ECAD100FCAF2C /* View */,
 				AF5D61A61546F04B0014B8FD /* View Controllers */,
 				AF5D61A71546FD960014B8FD /* Model */,
@@ -201,6 +199,8 @@
 		AFD485341538823B00B00D76 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AFD4853C1538823B00B00D76 /* AppDelegate.h */,
+				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
 				AF5D61901545CED80014B8FD /* Icon.png */,
 				AF5D618D1545CED30014B8FD /* Icon@2x.png */,
 				AFD485351538823B00B00D76 /* TopPaidApps-Info.plist */,
