@@ -73,6 +73,9 @@
     CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
     CGFloat pdfScale = width/pageRect.size.width;
     pageRect.size = CGSizeMake(pageRect.size.width*pdfScale, pageRect.size.height*pdfScale);
+    //NSLog(@"Width: %f", width);
+    //pageRect.origin  = CGPointMake(0.0, 3.0);
+    //NSLog(@"PageRect: %f,%f,%f,%f", pageRect.origin.x, pageRect.origin.y, pageRect.size.width, pageRect.size.height);
     
     self = [self initWithFrame:pageRect andScale:pdfScale];
     return self;

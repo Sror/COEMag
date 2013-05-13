@@ -43,7 +43,7 @@
     if (self) {
         self.page = p;
         self.nonempty = YES;
-        self.view.backgroundColor = [UIColor blueColor];
+        self.view.backgroundColor = [UIColor blackColor];
         
             }
     return self;
@@ -58,7 +58,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     //hide the toolbar
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor blackColor];
     
 }
 
@@ -70,6 +70,11 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
+
+
+
+// the background imageView provides a quick loading view of the page.  The tiled pdf view provides a better view that
+// can be scaled, but takes a little time to load
 
 -(void)loadPage {
     if (self.nonempty) {
@@ -113,8 +118,11 @@
         
         [backgroundImageView removeFromSuperview];
         [pdfView removeFromSuperview];
-
+        
+       
+        
         backgroundImageView = [UIImageView imageViewFromPage:page withWidth:self.view.frame.size.width];
+        
         
 //        backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
 //        backgroundImageView.frame = pageRect;
@@ -125,6 +133,7 @@
         
         // Create the TiledPDFView based on the size of the PDF page and scale it to fit the view.
 		//pdfView = [[TiledPDFView alloc] initWithFrame:pageRect andScale:pdfScale];
+       
         pdfView = [[TiledPDFView alloc] initWithPage:page withWidth:self.view.frame.size.width];
         
 		[pdfView setPage:page];
@@ -146,7 +155,7 @@
         label.numberOfLines = 2;
         label.textAlignment = UITextAlignmentCenter;
         label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-        label.text = @"College of Engineering\nThe Pennsylvania State University";
+        //label.text = @"College of Engineering\nThe Pennsylvania State University";
         [self.view addSubview:label];
     }
         
