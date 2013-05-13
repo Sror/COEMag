@@ -15,6 +15,9 @@
 #define kColumns 3
 #define kDeleteAlertViewTag 99
 
+#define kSpacer 90.0
+#define kIssueWidth 170
+
 
 @interface LibraryTableViewController ()
 @property (nonatomic,strong) UIToolbar *toolbar;
@@ -25,6 +28,7 @@
 @property (nonatomic,strong) UITextView *textView;
 
 @property (nonatomic,strong) UIBarButtonItem *deleteButton;
+@property (nonatomic,strong) NSMutableArray *issuesToDelete;
 
 -(void)showIssues;
 -(void)loadIssues;
@@ -38,19 +42,17 @@
 @synthesize textView;
 
 
--(void)viewDidLoad {
+
+- (void)viewDidLoad {
+
+    
     [super viewDidLoad];
     library = [Library sharedInstance];
-}
-
-/*
-- (void)viewDidLoad {
-    NSLog(@"Hello 1");
     
-    [super viewDidLoad];
+    _issuesToDelete = [[NSMutableArray alloc] initWithCapacity:10];
     
-    NSLog(@"Hello 2");
     
+    /*
     // add a toolbar
     CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 66.0);
     self.toolbar = [[UIToolbar alloc] initWithFrame:frame];
@@ -62,21 +64,20 @@
     self.toolbar.items = [NSArray arrayWithObjects:fixedSpace, refreshButton, flexSpace, showingButton, fixedSpace, nil];
     self.toolbar.barStyle = UIBarStyleBlackTranslucent;
     self.tableView.tableHeaderView = toolbar;
+    */
     
-     library = [Library sharedInstance];
+
         
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //self.navigationController.navigationBarHidden = NO;
     
     _deleteButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteIssues)];
-    
-    
-    
+    self.deleteButton.enabled = NO;  // gets enabled when issues selected for deletion
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:LibraryDidUpdateNotification object:library];
@@ -103,7 +104,7 @@
 //    [self.library addObserver:self forKeyPath:@"debugText" options:NSKeyValueObservingOptionNew context:NULL];
 
 }
- */
+
 
 //-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 //    self.textView.text = [change objectForKey:NSKeyValueChangeNewKey];
@@ -128,18 +129,30 @@
 }
 
 #pragma mark - Navbar Actions
--(void)setEditing:(BOOL)editing {
-    [super setEditing:editing];
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated{
+    [super setEditing:editing animated:animated];
     if (editing) {
         self.navigationItem.leftBarButtonItem = self.deleteButton;
+        [self.issuesToDelete removeAllObjects];  // make sure this is empty to start - shouldn't be necessary
     } else {
         self.navigationItem.leftBarButtonItem = nil;
     }
+    [self.tableView reloadData];
 }
 
 
+// delete all the issues that have been selected
 -(void)deleteIssues {
+    for (NSNumber *number in self.issuesToDelete) {
+        NSInteger issue = [number integerValue];
+        [library deleteIssueAtIndex:issue];
+       
+    }
+    [self.issuesToDelete removeAllObjects];
+    self.deleteButton.enabled = NO;
     
+    [self.tableView reloadData];
 }
 
 
@@ -159,9 +172,13 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
     return YES;
 //	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.tableView reloadData];
 }
 
 
@@ -332,13 +349,29 @@
     static NSString *CellIdentifier = @"IssueCell";
     IssueTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
    
-    cell.contentView.autoresizingMask=UIViewAutoresizingFlexibleWidth; //| UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin; 
+    cell.contentView.autoresizingMask=UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin; 
     cell.contentView.autoresizesSubviews=YES;
     
     
     
     // Configure the cell...
     NSInteger index = indexPath.row;
+    
+    // adjust spacing of issues in cell
+    CGFloat centerX = self.tableView.bounds.size.width/2.0;
+    CGRect frame1 = cell.issueView1.frame;
+    frame1.origin.x = centerX - kSpacer - 1.5*kIssueWidth;
+    cell.issueView1.frame = frame1;
+    
+    CGRect frame2 = cell.issueView2.frame;
+    frame2.origin.x = centerX - 0.5*kIssueWidth;
+    cell.issueView2.frame = frame2;
+
+    CGRect frame3 = cell.issueView3.frame;
+    frame3.origin.x = centerX + kSpacer + 0.5*kIssueWidth;
+    cell.issueView3.frame = frame3;
+
+    
     
     NSInteger numberOfIssues = [library numberOfIssues];
     // three issues per row (cell)
@@ -372,7 +405,8 @@
         }
         
         CALayer *tapLayer = issueView.tapButton.layer;
-        if ([library issueDownloadedAtIndex:i]) {
+        BOOL issueDownloaded = [library issueDownloadedAtIndex:i];
+        if (issueDownloaded) {
             issueView.alpha = 1.0;
             tapLayer.backgroundColor =  [[UIColor blueColor] CGColor];
         } else {
@@ -381,17 +415,25 @@
         }
          
         
-        if (self.deleting) {
-            issueView.deleteImage.alpha = 1.0;
-            [UIView animateWithDuration:0.1 delay:0.0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse |UIViewAnimationOptionAllowUserInteraction)
-                             animations:^{issueView.coverButton.transform = CGAffineTransformMakeRotation(0.1);} 
-                             completion:nil];
+        CALayer *coverLayer = issueView.coverButton.layer;
+        if (self.editing && [self.issuesToDelete containsObject:[NSNumber numberWithInt:i]]) {  // display mark if selected for deletion
+            issueView.deleteImage.alpha = 0.0;
+            coverLayer.borderColor = [[UIColor redColor] CGColor];
+            coverLayer.borderWidth = 3.0;
+            
+            // giggle
+//            [UIView animateWithDuration:0.1 delay:0.0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse |UIViewAnimationOptionAllowUserInteraction)
+//                             animations:^{issueView.coverButton.transform = CGAffineTransformMakeRotation(0.1);} 
+//                             completion:nil];
             //issueView.coverButton.enabled = NO;
             //issueView.coverButton.adjustsImageWhenHighlighted = NO;
             //issueView.deleteImage.userInteractionEnabled = YES;
         } else {
             issueView.deleteImage.alpha = 0.0;
-            issueView.coverButton.transform = CGAffineTransformIdentity;
+           
+            coverLayer.borderWidth = 0.0;
+            
+            //issueView.coverButton.transform = CGAffineTransformIdentity;
             
             //issueView.coverButton.enabled = YES;
             //issueView.coverButton.adjustsImageWhenHighlighted = YES;
@@ -401,14 +443,14 @@
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
-*/
+
 
 /*
 // Override to support editing the table view.
@@ -472,20 +514,37 @@
 */
 
 //user selects an issue (button) from the table View
+// three options: open for reading, download, or select for deletion
 -(void)issueSelected:(id)sender {
-    
-    // ignore if we're in delete mode
-    if (self.deleting) {
-        return;
-    }
     
     
     UIButton *button = (UIButton*)sender;
     NSInteger issueNumber = button.tag;
     
+    BOOL downloaded = [library issueDownloadedAtIndex:issueNumber];
+    // We're editing and user selected a downloaded issue, mark for deletion or unmark
+    if (self.editing) {
+        if (downloaded) {
+            NSNumber *issueObject = [NSNumber numberWithInt:issueNumber];
+            if ([self.issuesToDelete containsObject:issueObject]) {
+                [self.issuesToDelete removeObject:issueObject];  // unmark
+            } else {
+                [self.issuesToDelete addObject:issueObject];
+            }
+            
+            self.deleteButton.enabled  = ([self.issuesToDelete count] > 0);
+            
+            [self.tableView reloadData];
+        }
+        // else if not downloaded do nothing
+        return;
+    }
+    
+
+    
     // Download or View
     
-    if ([library issueDownloadedAtIndex:issueNumber]) {
+    if (downloaded) {
         
         
         
