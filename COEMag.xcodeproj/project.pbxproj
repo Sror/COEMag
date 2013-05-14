@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF3D820D173BD2B0009BC774 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */; };
-		AF3D820F173BD2B4009BC774 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D820E173BD2B4009BC774 /* Security.framework */; };
-		AF3D8211173BD2B9009BC774 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3D8210173BD2B9009BC774 /* CFNetwork.framework */; };
-		AF3D8212173BD2D0009BC774 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FF631156689A90092407B /* Reachability.m */; };
 		AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D618D1545CED30014B8FD /* Icon@2x.png */; };
 		AF5D61911545CED80014B8FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61901545CED80014B8FD /* Icon.png */; };
 		AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5D61921545D43A0014B8FD /* NewsstandKit.framework */; };
@@ -350,8 +346,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -366,6 +362,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -381,8 +379,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -391,6 +389,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
