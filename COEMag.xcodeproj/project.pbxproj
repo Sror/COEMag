@@ -16,6 +16,7 @@
 		AF5D61B1154729060014B8FD /* LibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5D61AF154729060014B8FD /* LibraryTableViewController.m */; };
 		AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61B0154729060014B8FD /* LibraryTableViewController.xib */; };
 		AF5D61B5154734880014B8FD /* IssueTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5D61B4154734880014B8FD /* IssueTableCell.m */; };
+		AF77BD781742C2FC00E160CF /* LibraryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF77BD771742C2FC00E160CF /* LibraryCollectionViewController.m */; };
 		AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */; };
 		AF9BC81F154C3F7300A623C1 /* defaultCover.png in Resources */ = {isa = PBXBuildFile; fileRef = AF9BC81E154C3F7300A623C1 /* defaultCover.png */; };
 		AF9BC822154D9CCA00A623C1 /* IssueView.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC821154D9CCA00A623C1 /* IssueView.m */; };
@@ -57,6 +58,8 @@
 		AF5D61B0154729060014B8FD /* LibraryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LibraryTableViewController.xib; sourceTree = "<group>"; };
 		AF5D61B3154734880014B8FD /* IssueTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueTableCell.h; sourceTree = "<group>"; };
 		AF5D61B4154734880014B8FD /* IssueTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueTableCell.m; sourceTree = "<group>"; };
+		AF77BD761742C2FC00E160CF /* LibraryCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollectionViewController.h; sourceTree = "<group>"; };
+		AF77BD771742C2FC00E160CF /* LibraryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryCollectionViewController.m; sourceTree = "<group>"; };
 		AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PDFPage.h"; sourceTree = "<group>"; };
 		AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+PDFPage.m"; sourceTree = "<group>"; };
 		AF9BC81E154C3F7300A623C1 /* defaultCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultCover.png; sourceTree = "<group>"; };
@@ -70,14 +73,14 @@
 		AFA188BB153F1513007C9939 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AFA196F9155D700600EEABEE /* XButtonSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XButtonSmall.png; sourceTree = "<group>"; };
 		AFD2A7AC153E071D001A7ADD /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DataViewController.xib; path = COEMag/DataViewController.xib; sourceTree = "<group>"; };
-		AFD485291538823B00B00D76 /* TopPaidApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopPaidApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD485291538823B00B00D76 /* COEMag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COEMag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD4852D1538823B00B00D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AFD4852F1538823B00B00D76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AFD485311538823B00B00D76 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		AFD485351538823B00B00D76 /* TopPaidApps-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TopPaidApps-Info.plist"; sourceTree = "<group>"; };
+		AFD485351538823B00B00D76 /* COEMag-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "COEMag-Info.plist"; sourceTree = "<group>"; };
 		AFD485371538823B00B00D76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AFD485391538823B00B00D76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AFD4853B1538823B00B00D76 /* TopPaidApps-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TopPaidApps-Prefix.pch"; sourceTree = "<group>"; };
+		AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "COEMag-Prefix.pch"; sourceTree = "<group>"; };
 		AFD4853C1538823B00B00D76 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AFD4853D1538823B00B00D76 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AFD4853F1538823B00B00D76 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = COEMag/RootViewController.h; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 		AF5D61A61546F04B0014B8FD /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AF77BD761742C2FC00E160CF /* LibraryCollectionViewController.h */,
+				AF77BD771742C2FC00E160CF /* LibraryCollectionViewController.m */,
 				AFD4853F1538823B00B00D76 /* RootViewController.h */,
 				AFD485401538823B00B00D76 /* RootViewController.m */,
 				AFD485421538823B00B00D76 /* DataViewController.h */,
@@ -170,7 +175,7 @@
 		AFD4852A1538823B00B00D76 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AFD485291538823B00B00D76 /* TopPaidApps.app */,
+				AFD485291538823B00B00D76 /* COEMag.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -209,10 +214,10 @@
 				AFD4853D1538823B00B00D76 /* AppDelegate.m */,
 				AF5D61901545CED80014B8FD /* Icon.png */,
 				AF5D618D1545CED30014B8FD /* Icon@2x.png */,
-				AFD485351538823B00B00D76 /* TopPaidApps-Info.plist */,
+				AFD485351538823B00B00D76 /* COEMag-Info.plist */,
 				AFD485361538823B00B00D76 /* InfoPlist.strings */,
 				AFD485391538823B00B00D76 /* main.m */,
-				AFD4853B1538823B00B00D76 /* TopPaidApps-Prefix.pch */,
+				AFD4853B1538823B00B00D76 /* COEMag-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -245,7 +250,7 @@
 			);
 			name = COEMag;
 			productName = COEMag;
-			productReference = AFD485291538823B00B00D76 /* TopPaidApps.app */;
+			productReference = AFD485291538823B00B00D76 /* COEMag.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -311,6 +316,7 @@
 				AF5D61B1154729060014B8FD /* LibraryTableViewController.m in Sources */,
 				AF5D61B5154734880014B8FD /* IssueTableCell.m in Sources */,
 				AF9BC822154D9CCA00A623C1 /* IssueView.m in Sources */,
+				AF77BD781742C2FC00E160CF /* LibraryCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,10 +409,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "COEMag/TopPaidApps-Prefix.pch";
-				INFOPLIST_FILE = "COEMag/TopPaidApps-Info.plist";
+				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
+				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = TopPaidApps;
+				PRODUCT_NAME = COEMag;
 				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				WRAPPER_EXTENSION = app;
@@ -419,10 +425,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "COEMag/TopPaidApps-Prefix.pch";
-				INFOPLIST_FILE = "COEMag/TopPaidApps-Info.plist";
+				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
+				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = TopPaidApps;
+				PRODUCT_NAME = COEMag;
 				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				WRAPPER_EXTENSION = app;

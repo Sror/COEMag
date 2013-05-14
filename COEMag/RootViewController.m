@@ -160,6 +160,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.
+    
+    self.toolbar.barStyle = UIBarStyleBlackTranslucent;
+    self.toolbar.translucent = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated {

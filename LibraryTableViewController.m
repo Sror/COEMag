@@ -51,6 +51,7 @@
     
     _issuesToDelete = [[NSMutableArray alloc] initWithCapacity:10];
     
+ 
     
     /*
     // add a toolbar
