@@ -77,7 +77,7 @@
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.scrollView];
-    self.scrollView.backgroundColor = [UIColor yellowColor];
+    self.scrollView.backgroundColor = [UIColor blackColor];
 }
 
 -(void)setupPageView {

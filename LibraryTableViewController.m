@@ -135,8 +135,10 @@
     if (editing) {
         self.navigationItem.leftBarButtonItem = self.deleteButton;
         [self.issuesToDelete removeAllObjects];  // make sure this is empty to start - shouldn't be necessary
+        self.title = @"Select Issues";
     } else {
         self.navigationItem.leftBarButtonItem = nil;
+        self.title = @"Library";
     }
     [self.tableView reloadData];
 }

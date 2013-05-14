@@ -78,6 +78,17 @@
 
 -(void)loadPage {
     if (self.nonempty) {
+        
+        //UIDeviceOrientation deviceOrientation =  [[UIDevice currentDevice] orientation];
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        //NSLog(@"Orientation 3 %d,%d", deviceOrientation,interfaceOrientation);
+        //CGRect bounds = self.view.bounds;
+        //NSLog(@"Bounds: %f,%f,%f,%f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+        
+        CGFloat width;
+        width = (interfaceOrientation != UIDeviceOrientationPortrait) ? 512.0 : self.view.bounds.size.width;
+
+        
         /*
         CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
         // NSLog(@"frame width:%f, pageWidth:%f", self.view.frame.size.width, pageRect.size.width);
@@ -121,7 +132,7 @@
         
        
         
-        backgroundImageView = [UIImageView imageViewFromPage:page withWidth:self.view.frame.size.width];
+        backgroundImageView = [UIImageView imageViewFromPage:page withWidth:width];
         
         
 //        backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
@@ -134,7 +145,7 @@
         // Create the TiledPDFView based on the size of the PDF page and scale it to fit the view.
 		//pdfView = [[TiledPDFView alloc] initWithFrame:pageRect andScale:pdfScale];
        
-        pdfView = [[TiledPDFView alloc] initWithPage:page withWidth:self.view.frame.size.width];
+        pdfView = [[TiledPDFView alloc] initWithPage:page withWidth:width];
         
 		[pdfView setPage:page];
 		
@@ -143,10 +154,16 @@
     }
 }
 
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+//    NSLog(@"Orientation 1 %d", orientation);
+//    CGRect bounds = self.view.bounds;
+//    NSLog(@"Bounds: %f,%f,%f,%f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
     
+    /*
     if (self.nonempty && [[self.view subviews] count] == 0) { // if >1, then label already appears
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 65.0)];
         label.center = CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height - 40.0);
@@ -158,10 +175,21 @@
         //label.text = @"College of Engineering\nThe Pennsylvania State University";
         [self.view addSubview:label];
     }
-        
+     */   
 
     [self loadPage];
 }
+ 
+
+//-(void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+//    NSLog(@"Orientation 2 %d", orientation);
+//    CGRect bounds = self.view.bounds;
+//    NSLog(@"Bounds: %f,%f,%f,%f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+//    
+//    [self loadPage];
+//}
 
 -(void)viewWillDisappear:(BOOL)animated {
     [backgroundImageView removeFromSuperview];
