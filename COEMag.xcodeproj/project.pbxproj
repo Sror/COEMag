@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF1266521743C41500C7D15A /* IssueCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1266511743C41500C7D15A /* IssueCollectionCell.m */; };
 		AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D618D1545CED30014B8FD /* Icon@2x.png */; };
 		AF5D61911545CED80014B8FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61901545CED80014B8FD /* Icon.png */; };
 		AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5D61921545D43A0014B8FD /* NewsstandKit.framework */; };
@@ -41,6 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF1266501743C41500C7D15A /* IssueCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueCollectionCell.h; sourceTree = "<group>"; };
+		AF1266511743C41500C7D15A /* IssueCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueCollectionCell.m; sourceTree = "<group>"; };
 		AF2FF630156689A90092407B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		AF2FF631156689A90092407B /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -124,6 +127,8 @@
 				AF5D61AC1547245F0014B8FD /* IssueTableCell.xib */,
 				AF9BC810154457E900A623C1 /* UIImageView+PDFPage.h */,
 				AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */,
+				AF1266501743C41500C7D15A /* IssueCollectionCell.h */,
+				AF1266511743C41500C7D15A /* IssueCollectionCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				AF5D61B5154734880014B8FD /* IssueTableCell.m in Sources */,
 				AF9BC822154D9CCA00A623C1 /* IssueView.m in Sources */,
 				AF77BD781742C2FC00E160CF /* LibraryCollectionViewController.m in Sources */,
+				AF1266521743C41500C7D15A /* IssueCollectionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

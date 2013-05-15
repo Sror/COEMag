@@ -569,7 +569,7 @@
         }
         NSInteger page = [self.modelController indexOfViewController:currentViewController];
         
-        
+        NSLog(@"Current Page: %d", page);
         
         // No previous page to page 1
         if (previous && page==1) {
@@ -589,7 +589,9 @@
         } else {
             direction = UIPageViewControllerNavigationDirectionForward;
         }
-
+        
+        NSLog(@"Turning to page %d", newPage);
+        
         [self turnToPage:newPage direction:direction];
         
     } else {  // show/hide toolbar

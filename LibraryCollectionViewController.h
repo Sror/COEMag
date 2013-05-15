@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RootViewController.h"
 
-@interface LibraryCollectionViewController : UICollectionViewController
+@interface LibraryCollectionViewController : UICollectionViewController <RootModal, UIAlertViewDelegate>
 
 @end
