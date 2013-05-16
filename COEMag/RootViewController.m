@@ -466,7 +466,7 @@
     NSArray *viewControllers = nil;
     
     NSUInteger indexOfCurrentViewController = [self.modelController indexOfViewController:currentViewController];
-    if (indexOfCurrentViewController == 0 || indexOfCurrentViewController % 2 == 0) {
+    if (indexOfCurrentViewController == 0 || indexOfCurrentViewController % 2 == 0) {  // even pages on left
         UIViewController *nextViewController = [self.modelController pageViewController:self.pageViewController viewControllerAfterViewController:currentViewController];
         viewControllers = [NSArray arrayWithObjects:currentViewController, nextViewController, nil];
         
