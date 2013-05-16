@@ -187,9 +187,10 @@
        
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
-    for (UIGestureRecognizer *gR in self.view.gestureRecognizers) {
-        gR.delegate = self;
-    }
+    // Changed 5/16/13
+//    for (UIGestureRecognizer *gR in self.view.gestureRecognizers) {
+//        gR.delegate = self;
+//    }
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapGesture.delegate = self;
@@ -349,6 +350,34 @@
         }
 }
 
+-(void)turnFromPage:(DataViewController*)currentViewController direction:(UIPageViewControllerNavigationDirection)direction {
+    NSArray *viewControllers;
+    BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
+    
+    if (portrait) {
+        UIViewController *newViewController = (direction == UIPageViewControllerNavigationDirectionForward) ?
+                [self.modelController pageViewController:self.pageViewController viewControllerAfterViewController:currentViewController] :
+        [self.modelController pageViewController:self.pageViewController viewControllerBeforeViewController:currentViewController];
+        viewControllers = [NSArray arrayWithObject:newViewController];
+        
+    } else {  // landscape - need the previous/next two view controllers
+        UIViewController *leftViewController;
+        UIViewController *rightViewController;
+        if (direction == UIPageViewControllerNavigationDirectionForward) {
+            leftViewController = [self.modelController pageViewController:self.pageViewController viewControllerAfterViewController:currentViewController];
+            rightViewController =  [self.modelController pageViewController:self.pageViewController viewControllerAfterViewController:leftViewController];
+        } else {
+            rightViewController = [self.modelController pageViewController:self.pageViewController viewControllerBeforeViewController:currentViewController];
+            leftViewController =  [self.modelController pageViewController:self.pageViewController viewControllerBeforeViewController:rightViewController];
+        }
+       
+        viewControllers = [NSArray arrayWithObjects: leftViewController, rightViewController,nil];
+        
+    }
+    [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
+    
+}
+
 -(void)turnToPage:(NSInteger)newPage direction:(UIPageViewControllerNavigationDirection)direction {
     NSArray *viewControllers;
     BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
@@ -364,7 +393,8 @@
         
     }
     [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
-
+    NSLog(@"Turned: %@", viewControllers);
+    NSLog(@"Turned: %@", [self.pageViewController viewControllers]);
     
 }
 
@@ -405,6 +435,7 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
+    NSLog(@"Previous: %@", previousViewControllers);
     [self.scrollView setZoomScale:1.0 animated:YES];
 }
 
@@ -592,7 +623,12 @@
         
         NSLog(@"Turning to page %d", newPage);
         
-        [self turnToPage:newPage direction:direction];
+        //[self turnToPage:newPage direction:direction];
+        
+        if (!portrait && previous) {
+            currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        }
+        [self turnFromPage:currentViewController direction:direction];
         
     } else {  // show/hide toolbar
     
