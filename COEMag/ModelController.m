@@ -149,7 +149,7 @@
     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
  
     NSUInteger index = [self.pageData indexOfObject:viewController];
-    NSLog(@"PageData: %d, %@, %@", index, viewController, self.pageData);
+    //NSLog(@"PageData: %d, %@, %@", index, viewController, self.pageData);
     
     return index;
 }

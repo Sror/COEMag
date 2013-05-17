@@ -26,6 +26,8 @@
 @property (nonatomic,strong) NSTimer *timer;
 @property (nonatomic,strong) UIView *bottomBar;
 
+@property (nonatomic,strong) DataViewController *savedViewController;
+
 @property BOOL toolbarHidden;
 -(void)hideToolbar;
 -(void)showToolbar;
@@ -213,14 +215,23 @@
 
 
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+-(BOOL)shouldAutorotate {
     return YES;
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//    return YES;
+//}
+
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     self.modelController.orientation = toInterfaceOrientation;
+    NSLog(@"Before Rotation: %@", self.pageViewController.viewControllers);
+    self.savedViewController = self.pageViewController.viewControllers[0];
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -376,6 +387,7 @@
     }
     [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
     
+    NSLog(@"Turn: %@", self.pageViewController.viewControllers);
 }
 
 -(void)turnToPage:(NSInteger)newPage direction:(UIPageViewControllerNavigationDirection)direction {
@@ -430,8 +442,13 @@
 //        [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
 }
 
+
 #pragma mark - UIPageViewController delegate methods
 
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
+    NSLog(@"WillTransition: %@", pendingViewControllers);
+}
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
@@ -442,6 +459,8 @@
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
+    NSLog(@"Spine: %@", pageViewController.viewControllers);
+    
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         // In portrait orientation: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to YES, so set it to NO here.
         DataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
@@ -461,7 +480,7 @@
     }
     
     // In landscape orientation: Set set the spine location to "mid" and the page view controller's view controllers array to contain two view controllers. If the current page is even, set it to contain the current and next view controllers; if it is odd, set the array to contain the previous and current view controllers.
-    DataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+    DataViewController *currentViewController =  self.savedViewController; //[self.pageViewController.viewControllers objectAtIndex:0];
     
     NSArray *viewControllers = nil;
     
