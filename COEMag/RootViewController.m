@@ -188,7 +188,8 @@
    
        
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
-    self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    //self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    
     // Changed 5/16/13
 //    for (UIGestureRecognizer *gR in self.view.gestureRecognizers) {
 //        gR.delegate = self;
@@ -230,7 +231,6 @@
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     self.modelController.orientation = toInterfaceOrientation;
-    NSLog(@"Before Rotation: %@", self.pageViewController.viewControllers);
     self.savedViewController = self.pageViewController.viewControllers[0];
 }
 
@@ -387,7 +387,7 @@
     }
     [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
     
-    NSLog(@"Turn: %@", self.pageViewController.viewControllers);
+ 
 }
 
 -(void)turnToPage:(NSInteger)newPage direction:(UIPageViewControllerNavigationDirection)direction {
@@ -405,8 +405,7 @@
         
     }
     [self.pageViewController setViewControllers:viewControllers direction:direction animated:YES completion:NULL];
-    NSLog(@"Turned: %@", viewControllers);
-    NSLog(@"Turned: %@", [self.pageViewController viewControllers]);
+ 
     
 }
 
@@ -447,19 +446,20 @@
 
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    NSLog(@"WillTransition: %@", pendingViewControllers);
+    //NSLog(@"WillTransition: %@", pendingViewControllers);
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    NSLog(@"Previous: %@", previousViewControllers);
+    //NSLog(@"Previous: %@", previousViewControllers);
     [self.scrollView setZoomScale:1.0 animated:YES];
 }
 
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
-    NSLog(@"Spine: %@", pageViewController.viewControllers);
+   // NSLog(@"Spine: %@", pageViewController.viewControllers);
+    [self.view bringSubviewToFront:self.toolbar];
     
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         // In portrait orientation: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to YES, so set it to NO here.
@@ -577,26 +577,58 @@
  */
 
 #pragma mark - Tap Gesture
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    NSLog(@"Gesture");
+    NSLog(@"Page: %@", self.pageViewController.delegate);
+    if ([touch.view isKindOfClass:[UIControl class]]) {
+        // we touched a button, slider, or other UIControl
+        NSLog(@"Ignored");
+        return NO; // ignore the touch
+    }
+    return YES; // handle the touch
+}
+
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    NSLog(@"Check for 2");
+//    return YES;
+//}
+
+/*
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // test if our control subview is on-screen
+    if (!self.toolbar.isHidden) {
+        if ([touch.view isDescendantOfView:self.toolbar]) {
+            // we touched our control surface
+            return NO; // ignore the touch
+        }
+    }
+    return YES; // handle the touch
+}
+*/
+
+/*
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     //CGPoint location = [touch locationInView:self.view];
-    //NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
-    //NSLog(@"Touched View: %@", touch.view.description);
+   NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
+    NSLog(@"Touched View: %@", touch.view.description);
     if ([touch.view isKindOfClass:[TiledPDFView class]])
         return YES;
     else {
         return NO;
     }
     
-    /*
-    if ([touch.view isKindOfClass:[UIButton class]] || [touch.view isKindOfClass:[UIBarButtonItem class]]) {      //change it to your condition
-        return NO;
-    }
-   if (location.y < self.toolbar.bounds.size.height) {
-        return NO;
-    }
-    return YES;
-     */
+    
+//    if ([touch.view isKindOfClass:[UIButton class]] || [touch.view isKindOfClass:[UIBarButtonItem class]]) {      //change it to your condition
+//        return NO;
+//    }
+//   if (location.y < self.toolbar.bounds.size.height) {
+//        return NO;
+//    }
+//    return YES;
+ 
 }
+*/
 
 // taps either show/hide toolbar or change pages, depending upon the x-coord of the touch
 -(void)handleTap:(id)sender {
@@ -621,7 +653,7 @@
         }
         NSInteger page = [self.modelController indexOfViewController:currentViewController];
         
-        NSLog(@"Current Page: %d", page);
+        //NSLog(@"Current Page: %d", page);
         
         // No previous page to page 1
         if (previous && page==1) {
@@ -642,7 +674,7 @@
             direction = UIPageViewControllerNavigationDirectionForward;
         }
         
-        NSLog(@"Turning to page %d", newPage);
+        //NSLog(@"Turning to page %d", newPage);
         
         //[self turnToPage:newPage direction:direction];
         
