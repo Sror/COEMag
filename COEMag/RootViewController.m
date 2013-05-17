@@ -99,7 +99,7 @@
     //CGRect newPageFrame = CGRectMake(0.0, 0.0, pageFrame.size.width, pageFrame.size.height);
     //self.pageViewController.view.frame = newPageFrame;
     
-    [self.pageViewController.view setBackgroundColor:[UIColor blueColor]];
+    [self.pageViewController.view setBackgroundColor:[UIColor blackColor]];
     
     self.pageViewController.delegate = self;
     //NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
@@ -463,9 +463,11 @@
     
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         // In portrait orientation: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to YES, so set it to NO here.
-        DataViewController *currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
+        DataViewController *currentViewController = self.savedViewController ? self.savedViewController : [self.pageViewController.viewControllers objectAtIndex:0];
         if ([currentViewController isBlank]) {  // we're currently showing blank/cover pages
             currentViewController = [self.pageViewController.viewControllers objectAtIndex:1];
+        } else {  // clear the next page - iOS6 bug?
+            [self.modelController clearPage:currentViewController.pageNumber+1];
         }
         
         NSArray *viewControllers = [NSArray arrayWithObject:currentViewController];

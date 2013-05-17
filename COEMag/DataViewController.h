@@ -12,8 +12,8 @@
 
 
 @property CGPDFPageRef page;
-//@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
--(id)initWithPage:(CGPDFPageRef)p;
+@property NSInteger pageNumber;
+-(id)initWithPage:(CGPDFPageRef)p atPageNumber:(NSInteger)num;
 -(void)loadPage;
 -(BOOL)isBlank;
 @end

@@ -20,5 +20,7 @@
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
 - (NSArray *)thumbnailViews;
 -(NSInteger)pageCount;
+-(void)clearModel;
+-(void)clearPage:(NSInteger)pageNumber;
 
 @end

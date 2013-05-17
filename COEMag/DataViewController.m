@@ -14,6 +14,7 @@
 @property CGFloat pdfScale;
 @property (nonatomic,strong) UIImageView *backgroundImageView;
 @property BOOL nonempty;
+
 @property (nonatomic,strong) TiledPDFView *pdfView, *oldPDFView;
 
 @end
@@ -38,10 +39,11 @@
     return self;
 }
 
--(id)initWithPage:(CGPDFPageRef)p {
+-(id)initWithPage:(CGPDFPageRef)p atPageNumber:(NSInteger)num{
     self = [super init];
     if (self) {
         self.page = p;
+        self.pageNumber = num;
         self.nonempty = YES;
         self.view.backgroundColor = [UIColor blackColor];
         
@@ -151,7 +153,7 @@
 		
 		[self.view addSubview:pdfView];
         
-    }
+    } 
 }
 
 

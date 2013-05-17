@@ -71,6 +71,16 @@
     return self;
 }
 
+-(void)clearModel {
+    for (int i=0; i<self.count; i++) {
+        [self.pageData replaceObjectAtIndex:i withObject:[NSNull null]];
+    }
+}
+
+-(void)clearPage:(NSInteger)pageNumber {
+    [self.pageData replaceObjectAtIndex:pageNumber withObject:[NSNull null]];
+}
+
 -(NSInteger)pageCount {
     return self.count;
 }
@@ -101,7 +111,7 @@
         } else {
             // Create a new view controller and pass suitable data.
             CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
-            dataViewController = [[DataViewController alloc] initWithPage:p];  
+            dataViewController = [[DataViewController alloc] initWithPage:p atPageNumber:index];
         }
         [pageData replaceObjectAtIndex:index withObject:dataViewController];
     } else {
@@ -134,7 +144,7 @@
     } else if ([pageData objectAtIndex:index] == [NSNull null]) {
             // Create a new view controller and pass suitable data.
             CGPDFPageRef p = CGPDFDocumentGetPage(pdf, index);
-            dataViewController = [[DataViewController alloc] initWithPage:p];   //[storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
+            dataViewController = [[DataViewController alloc] initWithPage:p atPageNumber:index];   //[storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
          [pageData replaceObjectAtIndex:index withObject:dataViewController];
     }
      else {
