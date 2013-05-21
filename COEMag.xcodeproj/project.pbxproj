@@ -21,7 +21,7 @@
 		AF9BC812154457EA00A623C1 /* UIImageView+PDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC811154457E900A623C1 /* UIImageView+PDFPage.m */; };
 		AF9BC81F154C3F7300A623C1 /* defaultCover.png in Resources */ = {isa = PBXBuildFile; fileRef = AF9BC81E154C3F7300A623C1 /* defaultCover.png */; };
 		AF9BC822154D9CCA00A623C1 /* IssueView.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9BC821154D9CCA00A623C1 /* IssueView.m */; };
-		AF9C911B173C0EAA00761447 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FF631156689A90092407B /* Reachability.m */; };
+		AF9C911B173C0EAA00761447 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FF631156689A90092407B /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AF9C911D173C0EB700761447 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9C911C173C0EB700761447 /* SystemConfiguration.framework */; };
 		AF9C911F173C0EBB00761447 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9C911E173C0EBB00761447 /* Security.framework */; };
 		AF9C9121173C0EBF00761447 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9C9120173C0EBF00761447 /* CFNetwork.framework */; };
@@ -49,6 +49,7 @@
 		AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AF3D820E173BD2B4009BC774 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AF3D8210173BD2B9009BC774 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		AF4EE79B174BBF3500FA0FAC /* COEMag.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = COEMag.entitlements; sourceTree = "<group>"; };
 		AF5D618D1545CED30014B8FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		AF5D61901545CED80014B8FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		AF5D61921545D43A0014B8FD /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
@@ -203,6 +204,7 @@
 		AFD485331538823B00B00D76 /* COEMag */ = {
 			isa = PBXGroup;
 			children = (
+				AF4EE79B174BBF3500FA0FAC /* COEMag.entitlements */,
 				AF349D18154ECAD100FCAF2C /* View */,
 				AF5D61A61546F04B0014B8FD /* View Controllers */,
 				AF5D61A71546FD960014B8FD /* Model */,
@@ -358,8 +360,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -374,8 +376,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -391,8 +391,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -401,8 +401,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -412,15 +410,16 @@
 		AFD4854E1538823B00B00D76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = COEMag/COEMag.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = COEMag;
-				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
+				PROVISIONING_PROFILE = "F9CA0BD2-2E9A-4AAD-8279-4306BB4AE3A8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9CA0BD2-2E9A-4AAD-8279-4306BB4AE3A8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -428,15 +427,16 @@
 		AFD4854F1538823B00B00D76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = COEMag/COEMag.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Hannan (SXQ3Y9D2S8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "COEMag/COEMag-Prefix.pch";
 				INFOPLIST_FILE = "COEMag/COEMag-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = COEMag;
-				PROVISIONING_PROFILE = "1BEF1706-EF82-451D-887A-23553E20B615";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1BEF1706-EF82-451D-887A-23553E20B615";
+				PROVISIONING_PROFILE = "F9CA0BD2-2E9A-4AAD-8279-4306BB4AE3A8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9CA0BD2-2E9A-4AAD-8279-4306BB4AE3A8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

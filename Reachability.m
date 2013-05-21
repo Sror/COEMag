@@ -61,7 +61,7 @@ static NSString *reachabilityFlags(SCNetworkReachabilityFlags flags)
 static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info) 
 {
 #pragma unused (target)
-    Reachability *reachability = ((__bridge Reachability*)info);
+    Reachability *reachability = (( Reachability*)info);
     
     // we probably dont need an autoreleasepool here as GCD docs state each queue has its own autorelease pool
     // but what the heck eh?
@@ -154,6 +154,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     }
 #ifdef DEBUG
     NSLog(@"Reachability: dealloc");
+    [super dealloc];
 #endif
 }
 
@@ -172,7 +173,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     // woah
     self.reachabilityObject = self;
     
-    context.info = (__bridge void *)self;
+    context.info = ( void *)self;
     
     if (!SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context)) 
     {

@@ -180,7 +180,7 @@
     NSInteger issue = indexPath.row;
     BOOL downloaded = [self.library issueDownloadedAtIndex:issue];
     NSString *title = [self.library titleOfIssueAtIndex:issue];
-    NSString *action = [self.library issueDownloadedAtIndex:issue] ? @"View" : @"Download";
+    //NSString *action = [self.library issueDownloadedAtIndex:issue] ? @"View" : @"Download";
     UIImage *image = [self.library coverImageOfIssueAtIndex:issue];
     
     cell.coverView.image = image;
@@ -253,7 +253,7 @@
         rootViewController.delegate = self;
         rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentModalViewController:rootViewController animated:YES];
+        [self presentViewController:rootViewController animated:YES completion:NULL];
         
         
     } else if ([self.library currentlyDownloadingIssue:issue])  {
@@ -294,7 +294,7 @@
 
 #pragma  mark - Root Modal Protocol
 -(void)dismissModal {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

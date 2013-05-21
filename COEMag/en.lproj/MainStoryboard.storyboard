@@ -307,7 +307,7 @@
         <!--Navigation Controller-->
         <scene sceneID="F0E-Z5-BH8">
             <objects>
-                <navigationController id="xGZ-lg-rpL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="OriginalNav" id="xGZ-lg-rpL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DeQ-Ka-ONh">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>

@@ -560,7 +560,7 @@
         rootViewController.delegate = self;
         rootViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         rootViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        [self presentModalViewController:rootViewController animated:YES];
+        [self presentViewController:rootViewController animated:YES completion:NULL];
         
         
     } else if ([library currentlyDownloadingIssue:issueNumber])  {
@@ -580,7 +580,7 @@
 
 #pragma  mark - Root Modal Protocol
 -(void)dismissModal {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

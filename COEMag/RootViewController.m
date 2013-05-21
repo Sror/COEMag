@@ -664,8 +664,8 @@
             return;
         }
         
-        NSInteger pageDelta = (portrait ? 1 : 2);
-        NSInteger newPage = (previous ? page - pageDelta : page + 1);
+        //NSInteger pageDelta = (portrait ? 1 : 2);
+        //NSInteger newPage = (previous ? page - pageDelta : page + 1);
         
          UIPageViewControllerNavigationDirection direction;
         if (previous) {
