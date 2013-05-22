@@ -339,7 +339,7 @@
             frame = CGRectMake(0, frame.size.height-20.0, frame.size.width, 20.0);
             UILabel *pageLabel = [[UILabel alloc] initWithFrame:frame];
             pageLabel.backgroundColor = [UIColor clearColor];
-            pageLabel.textAlignment = UITextAlignmentCenter;
+            pageLabel.textAlignment = NSTextAlignmentCenter;
             pageLabel.textColor = [UIColor blackColor];
             //pageLabel.shadowColor = [UIColor blueColor];
             if (portrait) {

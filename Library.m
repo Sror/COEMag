@@ -40,6 +40,7 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 @property  NetworkStatus internetStatus;
 @property  NetworkStatus hostStatus;
 @property BOOL statusUpdated;
+@property (nonatomic,strong) UIAlertView *alertView;
 @end
 
 @implementation Library
@@ -104,11 +105,17 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
     self.statusUpdated = YES;
     
     if (self.internetStatus == NotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"Check Network Status" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];	
+        if (!self.alertView) {  // only show one alertview
+            _alertView = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"Check Network Status" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [self.alertView show];
+        }
+       
     } else     if (self.hostStatus == NotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Service Not Available" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];	
+        if (!self.alertView) { // only show one alertview
+            _alertView = [[UIAlertView alloc] initWithTitle:@"Service Not Available" message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [self.alertView show];
+        }
+        
     } else    {  // We're Reachable!
         // download issues plist if library is empty
         if ([self numberOfIssues] == 0) {
@@ -118,6 +125,10 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 
     }
     
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    self.alertView = nil;
 }
 
 -(NKAssetDownload*)nkAssetForIssue:(NKIssue*)nkIssue 
