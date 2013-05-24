@@ -172,6 +172,9 @@ static NSString *const host = @"curry.cse.psu.edu/";
 	// !!! ( MUST START WITH / AND END WITH ? ). 
 	// !!! SAMPLE: "/path/to/apns.php?"
 	NSString *urlString = [NSString stringWithFormat:@"~hannan/COE/apns.php?task=%@&appname=%@&appversion=%@&deviceuid=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@", @"register", appName,appVersion, deviceUuid, deviceToken, deviceName, deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
+    
+//    NSString *urlString = [NSString stringWithFormat:@"~hannan/COE/apns.php?task=%@&appname=%@&appversion=%@&deviceuid=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@", @"register", appName,appVersion, deviceUuid, deviceToken, deviceName, deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
+
 	
 	// Register the Device Data
 	// !!! CHANGE "http" TO "https" IF YOU ARE USING HTTPS PROTOCOL
@@ -244,7 +247,7 @@ static NSString *const host = @"curry.cse.psu.edu/";
     UIApplicationState applicationState = [[UIApplication  sharedApplication] applicationState];
     if (applicationState == UIApplicationStateActive) {  //foreground, alert user
         [library checkForIssues];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Issue Available" message:@"Refresh Library to Download" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Issue Available" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alertView show];
     } else {  // in background so we'll download it
         NSString *issueName = [aps objectForKey:@"Name"];

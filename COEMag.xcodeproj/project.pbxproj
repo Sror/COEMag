@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF1266521743C41500C7D15A /* IssueCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1266511743C41500C7D15A /* IssueCollectionCell.m */; };
+		AF2294CD174FBE37004EEB5A /* lions.caf in Resources */ = {isa = PBXBuildFile; fileRef = AF2294CC174FBE37004EEB5A /* lions.caf */; };
 		AF5D618E1545CED30014B8FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D618D1545CED30014B8FD /* Icon@2x.png */; };
 		AF5D61911545CED80014B8FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AF5D61901545CED80014B8FD /* Icon.png */; };
 		AF5D61931545D43A0014B8FD /* NewsstandKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5D61921545D43A0014B8FD /* NewsstandKit.framework */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		AF1266501743C41500C7D15A /* IssueCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueCollectionCell.h; sourceTree = "<group>"; };
 		AF1266511743C41500C7D15A /* IssueCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueCollectionCell.m; sourceTree = "<group>"; };
+		AF2294CC174FBE37004EEB5A /* lions.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lions.caf; sourceTree = "<group>"; };
 		AF2FF630156689A90092407B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		AF2FF631156689A90092407B /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AF3D820C173BD2B0009BC774 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -232,6 +234,7 @@
 		AFD4858A1538ADC300B00D76 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AF2294CC174FBE37004EEB5A /* lions.caf */,
 				AFA196F9155D700600EEABEE /* XButtonSmall.png */,
 				AF9BC81E154C3F7300A623C1 /* defaultCover.png */,
 				AF5D61981545F2580014B8FD /* Issues.plist */,
@@ -301,6 +304,7 @@
 				AF5D61B2154729060014B8FD /* LibraryTableViewController.xib in Resources */,
 				AF9BC81F154C3F7300A623C1 /* defaultCover.png in Resources */,
 				AFA196FA155D700600EEABEE /* XButtonSmall.png in Resources */,
+				AF2294CD174FBE37004EEB5A /* lions.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
