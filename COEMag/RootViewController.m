@@ -29,6 +29,8 @@
 @property (nonatomic,strong) DataViewController *savedViewController;
 
 @property BOOL toolbarHidden;
+@property BOOL tapsEnabled;
+
 -(void)hideToolbar;
 -(void)showToolbar;
 -(void)addThumbnails;
@@ -50,12 +52,7 @@
 
 -(void)viewDidAppear:(BOOL)animated  {
     self.view.backgroundColor = [UIColor redColor];
-    //CGRect frame = self.view.frame;
-    
-    
-        //CGRect newFrame = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
-        //self.view.frame = newFrame;
-    
+    self.tapsEnabled = YES;
 }
 
 -(void)setPdf:(CGPDFDocumentRef)aPdf {
@@ -446,12 +443,14 @@
 
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    //NSLog(@"WillTransition: %@", pendingViewControllers);
+   
+    self.tapsEnabled = NO;  // avoid requests for a transition while in the middle of one
+  
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    //NSLog(@"Previous: %@", previousViewControllers);
+    self.tapsEnabled = YES;
     [self.scrollView setZoomScale:1.0 animated:YES];
 }
 
@@ -579,11 +578,10 @@
 #pragma mark - Tap Gesture
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    NSLog(@"Gesture");
-    NSLog(@"Page: %@", self.pageViewController.delegate);
+    
     if ([touch.view isKindOfClass:[UIControl class]]) {
         // we touched a button, slider, or other UIControl
-        NSLog(@"Ignored");
+      
         return NO; // ignore the touch
     }
     return YES; // handle the touch
@@ -632,6 +630,12 @@
 
 // taps either show/hide toolbar or change pages, depending upon the x-coord of the touch
 -(void)handleTap:(id)sender {
+    
+    // we disable taps while animating the appearance/disappearance of the toolbar & thumbnail views
+    if (!self.tapsEnabled) {
+        return;
+    }
+    
     UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
         
     CGPoint touchPoint = [tapGesture locationInView:self.view];
@@ -639,11 +643,14 @@
     CGFloat width = self.view.bounds.size.width;
     
     
-    if (xCoord <= 0.2*width || xCoord>=0.8*width) {
+    if (xCoord <= 0.2*width || xCoord>=0.8*width) {  // we're turning a page
+        
+        // disable taps right now - re-enabled after page animation finishes
+        self.tapsEnabled = NO;
 
         BOOL previous = (xCoord <= 0.2*width);
         BOOL portrait = UIDeviceOrientationIsPortrait(self.interfaceOrientation);
-        //NSArray *viewControllers = self.pageViewController.viewControllers;
+        
         
         DataViewController *currentViewController;
         if (portrait || previous) {
@@ -698,6 +705,14 @@
 }
 
 -(void)hideToolbar {
+    static BOOL hiding;
+    if (hiding) {
+        return;
+    } else {
+        hiding = YES;
+    }
+   
+    self.tapsEnabled = NO;
     [timer invalidate];
     CGRect toolbarFrame = self.toolbar.frame;
     CGRect newtoolbarFrame = CGRectOffset(toolbarFrame, 0.0, -toolbarFrame.size.height);
@@ -711,20 +726,29 @@
       
     [UIView animateWithDuration:kanimateDuration animations:^{
         self.toolbar.frame = newtoolbarFrame;
-        self.thumbnailScrollView.frame = newscrollbarFrame;}];
-    self.toolbarHidden = YES;
+        self.thumbnailScrollView.frame = newscrollbarFrame;} completion:^(BOOL finished) {
+            self.tapsEnabled = YES;
+            hiding = NO;
+            self.toolbarHidden = YES;
+        }];
+    
 }
 
 -(void)showToolbar {
+    self.tapsEnabled = NO;
     CGRect toolbarFrame = self.toolbar.frame;
     CGRect newtoolbarFrame = CGRectOffset(toolbarFrame, 0.0, +toolbarFrame.size.height);
     CGRect scrollbarFrame = self.thumbnailScrollView.frame;
     CGRect newscrollbarFrame = CGRectOffset(scrollbarFrame, 0.0, -scrollbarFrame.size.height);
     [UIView animateWithDuration:kanimateDuration animations:^{
         self.toolbar.frame = newtoolbarFrame;
-        self.thumbnailScrollView.frame = newscrollbarFrame;}];
+        self.thumbnailScrollView.frame = newscrollbarFrame;}
+     completion:^(BOOL finished) {
+         self.tapsEnabled = YES;
+         self.toolbarHidden = NO;
+     }];
     timer = [NSTimer scheduledTimerWithTimeInterval:ktimerDuration target:self selector:@selector(hideToolbar) userInfo:nil repeats:NO];
-    self.toolbarHidden = NO;
+   
 }
 
 

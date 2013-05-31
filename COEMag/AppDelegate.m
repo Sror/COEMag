@@ -48,7 +48,7 @@ static NSString *const host = @"curry.cse.psu.edu/";
         NSDictionary *aps = [payload objectForKey:@"aps"];
         
         NSString *issueName = [aps objectForKey:@"Name"];
-        NSLog(@"Name: %@", issueName);
+        //NSLog(@"Name: %@", issueName);
         Library *library = [Library sharedInstance];
         [library addAndDownloadIssueNamed:issueName];
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[[aps objectForKey:@"badge"] intValue]];
@@ -180,7 +180,7 @@ static NSString *const host = @"curry.cse.psu.edu/";
 	// !!! CHANGE "http" TO "https" IF YOU ARE USING HTTPS PROTOCOL
 	//NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:urlString]; //[urlString stringByExpandingTildeInPath]];
-    NSLog(@"URL: %@", url);
+    //NSLog(@"URL: %@", url);
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
     operationQueue = [[NSOperationQueue alloc] init];
@@ -190,7 +190,7 @@ static NSString *const host = @"curry.cse.psu.edu/";
         if (error) {
             NSLog(@"Error: %@", error);
         } else {
-            NSLog(@"Return Data: %@", data);
+           // NSLog(@"Return Data: %@", data);
         }
         
         }];

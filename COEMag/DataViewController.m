@@ -183,19 +183,18 @@
 }
  
 
-//-(void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-//    NSLog(@"Orientation 2 %d", orientation);
-//    CGRect bounds = self.view.bounds;
-//    NSLog(@"Bounds: %f,%f,%f,%f", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
-//    
-//    [self loadPage];
-//}
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+   
+   // [self loadPage];
+}
 
 -(void)viewWillDisappear:(BOOL)animated {
-    [backgroundImageView removeFromSuperview];
-    backgroundImageView = nil;
+    [super viewWillDisappear:animated];
+    
+   // these lines caused the tile-ation to show during page transitions
+    //[backgroundImageView removeFromSuperview];
+    //backgroundImageView = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -206,6 +205,15 @@
 //-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 //    [self loadPage];
 //}
+
+
+// During transitions we'll bring the imageview to the front to avoid tiles showing
+-(void)beginTransition {
+     [self.view  bringSubviewToFront:backgroundImageView];
+}
+-(void)endTransition {
+     [self.view  sendSubviewToBack:backgroundImageView];
+}
 
 
 

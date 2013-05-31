@@ -16,4 +16,7 @@
 -(id)initWithPage:(CGPDFPageRef)p atPageNumber:(NSInteger)num;
 -(void)loadPage;
 -(BOOL)isBlank;
+
+-(void)beginTransition;
+-(void)endTransition;
 @end
