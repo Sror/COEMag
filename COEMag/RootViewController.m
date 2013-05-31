@@ -99,7 +99,6 @@
     [self.pageViewController.view setBackgroundColor:[UIColor blackColor]];
     
     self.pageViewController.delegate = self;
-    //NSLog(@"PageView's Gestures: %@", self.pageViewController.view.gestureRecognizers);
     
     // start on page 1
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:1 storyboard:self.storyboard];
@@ -124,6 +123,8 @@
     [self.scrollView addSubview:self.pageViewController.view];
     
      [self.pageViewController didMoveToParentViewController:self];
+    
+   // NSLog(@"Recognizers: %@", self.pageViewController.gestureRecognizers);
 }
 
 -(void)setupThumbnailView {
@@ -445,7 +446,7 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
    
     self.tapsEnabled = NO;  // avoid requests for a transition while in the middle of one
-  
+   
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
@@ -457,7 +458,6 @@
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
-   // NSLog(@"Spine: %@", pageViewController.viewControllers);
     [self.view bringSubviewToFront:self.toolbar];
     
     if (UIInterfaceOrientationIsPortrait(orientation)) {
@@ -515,14 +515,12 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {
     if (aScrollView == self.thumbnailScrollView) {
-        //NSLog(@"Scrolling Ended");
         [self scheduleTimer];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)aScrollView willDecelerate:(BOOL)decelerate {
     if (aScrollView == self.thumbnailScrollView && !decelerate) {
-        //NSLog(@"Scrolling Ended");
         [self scheduleTimer];
     }
 }
@@ -579,16 +577,18 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     
+    NSLog(@"Gesture: %@", gestureRecognizer);
+    
     if ([touch.view isKindOfClass:[UIControl class]]) {
         // we touched a button, slider, or other UIControl
       
         return NO; // ignore the touch
-    }
+    }         
     return YES; // handle the touch
 }
 
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    NSLog(@"Check for 2");
+
 //    return YES;
 //}
 
@@ -608,8 +608,7 @@
 /*
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     //CGPoint location = [touch locationInView:self.view];
-   NSLog(@"Gesture: %@", [[gestureRecognizer class] description]);
-    NSLog(@"Touched View: %@", touch.view.description);
+
     if ([touch.view isKindOfClass:[TiledPDFView class]])
         return YES;
     else {
@@ -636,6 +635,8 @@
         return;
     }
     
+    NSLog(@"Tap Received");
+    
     UITapGestureRecognizer *tapGesture = (UITapGestureRecognizer*)sender;
         
     CGPoint touchPoint = [tapGesture locationInView:self.view];
@@ -645,6 +646,7 @@
     
     if (xCoord <= 0.2*width || xCoord>=0.8*width) {  // we're turning a page
         
+        /*  Let pageviewcontroller handle this tap?
         // disable taps right now - re-enabled after page animation finishes
         self.tapsEnabled = NO;
 
@@ -659,8 +661,6 @@
             currentViewController = [self.pageViewController.viewControllers objectAtIndex:1];
         }
         NSInteger page = [self.modelController indexOfViewController:currentViewController];
-        
-        //NSLog(@"Current Page: %d", page);
         
         // No previous page to page 1
         if (previous && page==1) {
@@ -680,15 +680,14 @@
         } else {
             direction = UIPageViewControllerNavigationDirectionForward;
         }
-        
-        //NSLog(@"Turning to page %d", newPage);
-        
+
         //[self turnToPage:newPage direction:direction];
         
         if (!portrait && previous) {
             currentViewController = [self.pageViewController.viewControllers objectAtIndex:0];
         }
         [self turnFromPage:currentViewController direction:direction];
+        */
         
     } else {  // show/hide toolbar
     

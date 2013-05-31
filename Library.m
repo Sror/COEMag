@@ -395,17 +395,21 @@ static NSString *const IssueURLBase = @"http://www.engr.psu.edu/EngineeringPennS
 //    NSDictionary *issueDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:issueName, @"Name", dateNow, @"Date", [NSNumber numberWithBool:NO], @"Downloaded", nil];
 //    [issues insertObject:issueDictionary atIndex:index];  // newest entry is first one
     
-    //create the issue in the library
+    //create the issue in the library if it doesn't exist (defensive programming here)
+
     NKLibrary *nkLib = [NKLibrary sharedLibrary];
-    NKIssue *nkIssue = [nkLib addIssueWithName:issueName date:dateNow];
+    if (![nkLib issueWithName:issueName]) {
+        NKIssue *nkIssue = [nkLib addIssueWithName:issueName date:dateNow];
+        
+        //download cover
+        NSString *imageName = [issueName stringByAppendingString:@".jpg"];
+        NKAssetDownload *nkAssetCover = [self nkAssetForIssue:nkIssue withName:imageName urlBase:CoverURLBase atIndex:index];
+        [nkAssetCover downloadWithDelegate:self];
+        
+        //download the pdf
+        [self downloadIssueAtIndex:index];
+    }
     
-    //download cover
-    NSString *imageName = [issueName stringByAppendingString:@".jpg"];
-    NKAssetDownload *nkAssetCover = [self nkAssetForIssue:nkIssue withName:imageName urlBase:CoverURLBase atIndex:index];
-    [nkAssetCover downloadWithDelegate:self];
-    
-    //download the pdf
-    [self downloadIssueAtIndex:index];
     
     
 }

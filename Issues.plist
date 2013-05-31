@@ -6,12 +6,6 @@
 	<array>
 		<dict>
 			<key>Name</key>
-			<string>2012winter</string>
-			<key>Date</key>
-			<date>2012-04-01T21:00:00Z</date>
-		</dict>
-		<dict>
-			<key>Name</key>
 			<string>2011spring</string>
 			<key>Date</key>
 			<date>2011-04-01T21:00:00Z</date>

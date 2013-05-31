@@ -180,7 +180,7 @@ static NSString *const host = @"curry.cse.psu.edu/";
 	// !!! CHANGE "http" TO "https" IF YOU ARE USING HTTPS PROTOCOL
 	//NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:urlString]; //[urlString stringByExpandingTildeInPath]];
-    //NSLog(@"URL: %@", url);
+
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
     operationQueue = [[NSOperationQueue alloc] init];
@@ -194,11 +194,7 @@ static NSString *const host = @"curry.cse.psu.edu/";
         }
         
         }];
-    
-	//NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    //NSLog(@"Return Data: %@", returnData);
-	//NSLog(@"Register URL: %@", url);
-	
+
 	
 #endif
 }
